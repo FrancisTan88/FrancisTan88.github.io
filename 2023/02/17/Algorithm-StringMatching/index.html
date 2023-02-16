@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Algorithm - String matching給兩個字串 T 和 P，找出 T 當中是否有一段字串正好是 P，並且找出其位置  字串搜尋當中，通常將兩字串的象徵符號取做 T 和 P  T 意指 Text P 意指 Pattern  可以想作是從長篇文字 T 之中搜索小段文字 P   若 P 在平移 s 個單位後（**T [s+1 … s+m] &#x3D; P [1 … m]**，0 ≦">
+  <meta name="description" content="String matching">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Algorithm - String Matching">
 <meta property="og:url" content="http://example.com/2023/02/17/Algorithm-StringMatching/index.html">
 <meta property="og:site_name" content="FrancisTan">
-<meta property="og:description" content="Algorithm - String matching給兩個字串 T 和 P，找出 T 當中是否有一段字串正好是 P，並且找出其位置  字串搜尋當中，通常將兩字串的象徵符號取做 T 和 P  T 意指 Text P 意指 Pattern  可以想作是從長篇文字 T 之中搜索小段文字 P   若 P 在平移 s 個單位後（**T [s+1 … s+m] &#x3D; P [1 … m]**，0 ≦">
+<meta property="og:description" content="String matching">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-02-16T20:18:08.000Z">
-<meta property="article:modified_time" content="2023-02-16T21:44:22.086Z">
+<meta property="article:modified_time" content="2023-02-16T21:58:30.500Z">
 <meta property="article:author" content="Francis">
 <meta property="article:tag" content="String matching">
 <meta name="twitter:card" content="summary">
@@ -155,7 +155,7 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/17/Algorithm-StringMatching/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Francis">
       <meta itemprop="description" content="">
     </span>
@@ -176,7 +176,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-02-17 04:18:08 / Modified: 05:44:22" itemprop="dateCreated datePublished" datetime="2023-02-17T04:18:08+08:00">2023-02-17</time>
+              <time title="Created: 2023-02-17 04:18:08 / Modified: 05:58:30" itemprop="dateCreated datePublished" datetime="2023-02-17T04:18:08+08:00">2023-02-17</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -199,8 +199,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <span id="more"></span>
-<h1 id="Algorithm-String-matching"><a href="#Algorithm-String-matching" class="headerlink" title="Algorithm - String matching"></a>Algorithm - String matching</h1><p>給兩個字串 T 和 P，找出 T 當中是否有一段字串正好是 P，並且找出其位置</p>
+        <h1 id="String-matching"><a href="#String-matching" class="headerlink" title="String matching"></a>String matching</h1><span id="more"></span>
+<p>給兩個字串 T 和 P，找出 T 當中是否有一段字串正好是 P，並且找出其位置</p>
 <blockquote>
 <p>字串搜尋當中，通常將兩字串的象徵符號取做 T 和 P</p>
 <ul>
@@ -701,14 +701,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Algorithm-String-matching"><span class="nav-number">1.</span> <span class="nav-text">Algorithm - String matching</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Naive-string-matching%EF%BC%88%E7%AA%AE%E8%88%89%E6%B3%95%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">Naive string matching（窮舉法）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rabin-Karp-%E6%BC%94%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">Rabin-Karp 演算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Knuth-Morris-Pratt-%E6%BC%94%E7%AE%97%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">Knuth-Morris-Pratt 演算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%82%E9%96%93%E8%A4%87%E9%9B%9C%E5%BA%A6%E5%88%86%E6%9E%90%EF%BC%88%E5%9D%87%E6%94%A4%E5%88%86%E6%9E%90%EF%BC%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">時間複雜度分析（均攤分析）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Failure-function"><span class="nav-number">1.3.2.</span> <span class="nav-text">Failure function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Morris-Pratt-Automaton"><span class="nav-number">1.3.3.</span> <span class="nav-text">Morris-Pratt Automaton</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#String-matching"><span class="nav-number">1.</span> <span class="nav-text">String matching</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Naive-string-matching%EF%BC%88%E7%AA%AE%E8%88%89%E6%B3%95%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">Naive string matching（窮舉法）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rabin-Karp-%E6%BC%94%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">Rabin-Karp 演算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Knuth-Morris-Pratt-%E6%BC%94%E7%AE%97%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">Knuth-Morris-Pratt 演算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%82%E9%96%93%E8%A4%87%E9%9B%9C%E5%BA%A6%E5%88%86%E6%9E%90%EF%BC%88%E5%9D%87%E6%94%A4%E5%88%86%E6%9E%90%EF%BC%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">時間複雜度分析（均攤分析）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Failure-function"><span class="nav-number">1.3.2.</span> <span class="nav-text">Failure function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Morris-Pratt-Automaton"><span class="nav-number">1.3.3.</span> <span class="nav-text">Morris-Pratt Automaton</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="Francis"
-      src="/images/avatar.jpg">
+      src="/images/avatar.gif">
   <p class="site-author-name" itemprop="name">Francis</p>
   <div class="site-description" itemprop="description"></div>
 </div>
