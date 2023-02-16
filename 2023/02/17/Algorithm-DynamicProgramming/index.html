@@ -28,7 +28,7 @@
 <meta property="og:description" content="Dynamic programming將已計算的結果記錄在表格中的技巧，目的是為了要避免重複計算相同子問題，以「Button up」的方式實踐。  為何要使用這種方法，以費氏數列程式開始討論。  $$F_n &#x3D; \left{\begin{matrix}0 &amp; , if ; n &#x3D; 0\1 &amp; , if ; n &#x3D; 1\F_{n-1} + F_{">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-02-16T20:30:45.000Z">
-<meta property="article:modified_time" content="2023-02-16T20:35:18.939Z">
+<meta property="article:modified_time" content="2023-02-16T20:54:07.886Z">
 <meta property="article:author" content="Francis">
 <meta property="article:tag" content="DynamicProgramming">
 <meta name="twitter:card" content="summary">
@@ -176,7 +176,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-02-17 04:30:45 / Modified: 04:35:18" itemprop="dateCreated datePublished" datetime="2023-02-17T04:30:45+08:00">2023-02-17</time>
+              <time title="Created: 2023-02-17 04:30:45 / Modified: 04:54:07" itemprop="dateCreated datePublished" datetime="2023-02-17T04:30:45+08:00">2023-02-17</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -208,7 +208,8 @@ tags: -->
 <ul>
 <li>為何要使用這種方法，以<strong>費氏數列程式</strong>開始討論。</li>
 </ul>
-<p>$$<br>F_n &#x3D; \left{\begin{matrix}<br>0 &amp; , if ; n &#x3D; 0\<br>1 &amp; , if ; n &#x3D; 1\<br>F_{n-1} + F_{n-2} &amp; , if ; n \geq 2<br>\end{matrix}\right.<br>$$<br>欲求出 $F_5$ ，以遞迴程式執行，會造成「Overlapping subproblem」，如下圖 $F_2$ 重複計算了 3 次，$F_3$ 重複計算 2 次。</p>
+<p>$$<br>F_n &#x3D; \left{\begin{matrix}<br>0 &amp; , if ; n &#x3D; 0\<br>1 &amp; , if ; n &#x3D; 1\<br>F_{n-1} + F_{n-2} &amp; , if ; n \geq 2<br>\end{matrix}\right.<br>$$</p>
+<p>欲求出 $F_5$ ，以遞迴程式執行，會造成「Overlapping subproblem」，如下圖 $F_2$ 重複計算了 3 次，$F_3$ 重複計算 2 次。</p>
 <!-- ![overlappingsubproblem](\willywangkaa\images\overlappingsubproblem.png) -->
 
 
@@ -993,7 +994,7 @@ tags: -->
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1002,7 +1003,7 @@ tags: -->
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

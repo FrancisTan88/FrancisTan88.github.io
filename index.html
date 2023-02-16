@@ -146,6 +146,257 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/17/Algorithm-RangeQueryProblem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Francis">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FrancisTan">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/02/17/Algorithm-RangeQueryProblem/" class="post-title-link" itemprop="url">Algorithm-RangeQueryProblem</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-02-17 04:56:01 / Modified: 04:57:57" itemprop="dateCreated datePublished" datetime="2023-02-17T04:56:01+08:00">2023-02-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <!-- title: Algorithm - Range query problem
+author: Willy Wang (willywangkaa)
+
+date: 2018-10-03 20:42:00
+--- -->
+
+<h1 id="Segement-tree"><a href="#Segement-tree" class="headerlink" title="Segement tree"></a>Segement tree</h1><p>用來存放紀錄在特定區間內 ( segement, interval ) 的資訊。</p>
+<ul>
+<li>Pros<ul>
+<li>可以動態的更新欲求數組之元素。</li>
+<li>數組區間的查詢<ul>
+<li>區間求和值</li>
+<li>區間最大值</li>
+<li>區間最小值</li>
+<li>區間<strong>異或值 ( Exclusive or；XOR )</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Cons<ul>
+<li>無法刪除數值</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>線段樹無法新增節點，只能更新節點的數值並保持區間的最大最小值仍保持正確。</p>
+</blockquote>
+<h2 id="實現"><a href="#實現" class="headerlink" title="實現"></a>實現</h2><ul>
+<li>特性<ul>
+<li>完全二元樹</li>
+<li>節點保存<strong>特定區間的訊息</strong></li>
+<li>採取 Buttom-up 的方式建構，從每一個葉節點建構</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+</blockquote>
+<!-- ![STree_1](\willywangkaa\images\STree_1.png) -->
+<blockquote>
+</blockquote>
+<!-- > - 上面的分段樹根節點保存 0 ~ 7 的資訊，2 號節點保存 0 ~ 3 的資訊，以此類推。 -->
+
+
+
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>在建構的過程中，內部節點之建構會使用兩個子節點的資訊，而建構的方式以處理的問題而作法不同 ( 最大、最小、和、XOR )。</p>
+<ul>
+<li>Segement create ( 求區間最小值 )<ul>
+<li>ST：線段樹</li>
+<li>A：欲判斷之數組資料</li>
+<li>線段樹因為為<strong>完全二元樹</strong>所以通常以陣列製作<ul>
+<li>陣列大小需求：$2 \times 2^{\lfloor\lg N\rfloor + 1}$，N 為數組大小</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- ![STree_2](\willywangkaa\images\STree_2.png) -->
+
+<ul>
+<li>程式碼 ( c++ )</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> vector&lt;<span class="type">int</span>&gt; vi;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ST:segement tree; A: target number array</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">st_create</span><span class="params">(vi &amp;ST, <span class="type">const</span> vi &amp;A)</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> len = <span class="number">2</span>&lt;&lt;(<span class="built_in">sizeof</span>(<span class="type">unsigned</span> <span class="type">int</span>) - __buildin_clz((<span class="type">unsigned</span> <span class="type">int</span>)A.<span class="built_in">size</span>()));</span><br><span class="line">	ST.<span class="built_in">assign</span>(len, <span class="number">0</span>); <span class="comment">// 線段樹歸零</span></span><br><span class="line">	<span class="built_in">st_build</span>(ST, A, <span class="number">1</span>, <span class="number">0</span>, (<span class="type">int</span>) A.<span class="built_in">size</span>()<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line">                    </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">st_build</span><span class="params">(vi &amp;ST, <span class="type">const</span> vi &amp;A, <span class="type">int</span> vetex, <span class="type">int</span> L, <span class="type">int</span> R)</span> </span>&#123;     </span><br><span class="line">	<span class="keyword">if</span> (L==R)</span><br><span class="line">        ST[vertex] = L;</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="type">int</span> nL =  vertex &lt;&lt; <span class="number">1</span>;</span><br><span class="line">		<span class="type">int</span> nR = (vertex &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>; </span><br><span class="line"></span><br><span class="line">		<span class="built_in">st_build</span>(ST, A, nL, L           , ((L+R)&gt;&gt;<span class="number">1</span>));</span><br><span class="line">		<span class="built_in">st_build</span>(ST, A, nR, ((L+R)&gt;&gt;<span class="number">1</span>)+<span class="number">1</span>, R         ); </span><br><span class="line">			</span><br><span class="line">		<span class="type">int</span> lContent=ST[nL], rContent=ST[nR];</span><br><span class="line">		<span class="type">int</span> lValue=A[lContent], rValue=A[rContent];</span><br><span class="line">		ST[vertex]=(lValue &lt;= rValue)? lContent : rContent;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>時間複雜度<ul>
+<li>$\Theta(\log n)$</li>
+</ul>
+</li>
+</ul>
+<h3 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h3><p>與建立線段樹的方法相同，將位於數組 <code>i</code> 的數字更新後，即從此葉節點向上執行更新至根節點。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以數值 v 更新 A[p]</span></span><br><span class="line"><span class="comment">// x: 數根</span></span><br><span class="line"><span class="comment">// L: 數組左端</span></span><br><span class="line"><span class="comment">// R: 數組右端</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">update</span> <span class="params">(vi &amp;ST, vi &amp;A, <span class="type">int</span> x, <span class="type">int</span> L, <span class="type">int</span> R, <span class="type">int</span> p, <span class="type">int</span> v)</span> </span>&#123;  </span><br><span class="line">	<span class="type">int</span> mid=L+(R-L)/<span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (L == R)</span><br><span class="line">		A[x] = v;</span><br><span class="line">	<span class="keyword">else</span> &#123;     </span><br><span class="line">		<span class="keyword">if</span> (p &lt;= mid)</span><br><span class="line">			<span class="built_in">update</span>(ST, A, x*<span class="number">2</span>  , L    , mid, p, v); <span class="comment">// 更新左子樹</span></span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="built_in">update</span>(ST, A, x*<span class="number">2</span>+<span class="number">1</span>, mid+<span class="number">1</span>, R  , p, v); <span class="comment">// 更新右子樹</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	ST[x] = (A[ST[x*<span class="number">2</span>]]&lt;=A[ST[x*<span class="number">2</span>+<span class="number">1</span>]])? ST[x*<span class="number">2</span>]:ST[x*<span class="number">2</span>+<span class="number">1</span>]; <span class="comment">// 以左右子樹的資訊更新母節點</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="查詢"><a href="#查詢" class="headerlink" title="查詢"></a>查詢</h3><p>分為三種情形討論，若<strong>當前節點所代表的區間</strong></p>
+<ul>
+<li><strong>完全位於</strong>欲求取之區間之<strong>外</strong></li>
+<li><strong>完全位於</strong>欲求取之區間之<strong>內</strong></li>
+<li><strong>部分位於</strong>欲求取之區間</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">query</span> <span class="params">(vi &amp;ST, <span class="type">const</span> vi &amp;A, <span class="type">int</span> x, <span class="type">int</span> L, <span class="type">int</span> R, <span class="type">int</span> ql, <span class="type">int</span> qr)</span> </span>&#123;  </span><br><span class="line">	</span><br><span class="line">	<span class="type">int</span> mid = (L+R)/<span class="number">2</span>, ans = <span class="number">-1</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 當前節點完全位於欲求取之區間之內</span></span><br><span class="line">	<span class="keyword">if</span> (L&gt;=ql &amp;&amp; R&lt;=qr)</span><br><span class="line">		<span class="comment">// 取出該區間值最小的位址</span></span><br><span class="line">		<span class="keyword">return</span> ST[x];</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 當前節點部分或無位於欲求取之區間之內</span></span><br><span class="line">	<span class="keyword">if</span> (ql&lt;=mid) &#123;</span><br><span class="line">		<span class="comment">// 取出左區間</span></span><br><span class="line">		ans = <span class="built_in">query</span>(ST, A, x*<span class="number">2</span>  , L    , mid, ql, qr);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (qr&gt;mid) &#123;</span><br><span class="line">		<span class="comment">// 取出右區間以及比較</span></span><br><span class="line">		<span class="type">int</span> tmp = </span><br><span class="line">		      <span class="built_in">query</span>(ST, A, x*<span class="number">2</span>+<span class="number">1</span>, mid+<span class="number">1</span>, R  , ql, qr);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (ans == <span class="number">-1</span>)</span><br><span class="line">			ans = tmp;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			ans = (A[ans] &lt; A[tmp])? ans:tmp;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="其它實現"><a href="#其它實現" class="headerlink" title="其它實現"></a>其它實現</h2><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Oq2E2yGadnU">Efficient Segment Tree Tutorial</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;limits&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SegmentTree</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">SegmentTree</span>(<span class="type">int</span> count) &#123;</span><br><span class="line">		n = count;</span><br><span class="line">		data = std::<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">2</span> * n, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">SegmentTree</span>(std::vector&lt;<span class="type">int</span>&gt; <span class="type">const</span> &amp;values) &#123;</span><br><span class="line">		n = values.<span class="built_in">size</span>();</span><br><span class="line">		data = std::<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">2</span> * n);</span><br><span class="line">		std::<span class="built_in">copy</span>(values.<span class="built_in">begin</span>(), values.<span class="built_in">end</span>(), &amp;data[<span class="number">0</span>] + n);</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> idx = n - <span class="number">1</span>; idx &gt; <span class="number">0</span>; idx--)</span><br><span class="line">			data[idx] = std::<span class="built_in">min</span>(data[idx * <span class="number">2</span>], data[idx * <span class="number">2</span> + <span class="number">1</span>]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(<span class="type">int</span> idx, <span class="type">int</span> value)</span> </span>&#123;</span><br><span class="line">		idx += n;</span><br><span class="line">		data[idx] = value;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">while</span> (idx &gt; <span class="number">1</span>) &#123;</span><br><span class="line">			idx /= <span class="number">2</span>;</span><br><span class="line">			data[idx] = std::<span class="built_in">min</span>(data[<span class="number">2</span> * idx], data[<span class="number">2</span> * idx + <span class="number">1</span>]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">minimum</span><span class="params">(<span class="type">int</span> left, <span class="type">int</span> right)</span> </span>&#123; <span class="comment">// interval [left, right)</span></span><br><span class="line">		<span class="type">int</span> ret = std::numeric_limits&lt;<span class="type">int</span>&gt;::<span class="built_in">max</span>();</span><br><span class="line">		left += n;</span><br><span class="line">		right += n;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">			<span class="keyword">if</span> (left &amp; <span class="number">1</span>) ret = std::<span class="built_in">min</span>(ret, data[left++]);</span><br><span class="line">			<span class="keyword">if</span> (right &amp; <span class="number">1</span>) ret = std::<span class="built_in">min</span>(ret, data[--right]);</span><br><span class="line">			left &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">			right &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">int</span> n;</span><br><span class="line">	std::vector&lt;<span class="type">int</span>&gt; data;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">SegmentTree <span class="title">st</span><span class="params">(<span class="number">5</span>)</span></span>;</span><br><span class="line">	st.<span class="built_in">update</span>(<span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">	st.<span class="built_in">update</span>(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">	st.<span class="built_in">update</span>(<span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">	st.<span class="built_in">update</span>(<span class="number">3</span>, <span class="number">1</span>);</span><br><span class="line">	st.<span class="built_in">update</span>(<span class="number">4</span>, <span class="number">4</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">		std::cout &lt;&lt; i &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; st.<span class="built_in">minimum</span>(i, i+<span class="number">1</span>) &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	std::cout &lt;&lt; st.<span class="built_in">minimum</span>(<span class="number">1</span>, <span class="number">4</span>) &lt;&lt; std::endl;</span><br><span class="line">	st.<span class="built_in">update</span>(<span class="number">3</span>, <span class="number">10</span>);</span><br><span class="line">	std::cout &lt;&lt; st.<span class="built_in">minimum</span>(<span class="number">1</span>, <span class="number">4</span>) &lt;&lt; std::endl;</span><br><span class="line">	std::cout &lt;&lt; st.<span class="built_in">minimum</span>(<span class="number">0</span>, <span class="number">5</span>) &lt;&lt; std::endl;</span><br><span class="line">	st.<span class="built_in">update</span>(<span class="number">4</span>, <span class="number">0</span>);</span><br><span class="line">	std::cout &lt;&lt; st.<span class="built_in">minimum</span>(<span class="number">1</span>, <span class="number">4</span>) &lt;&lt; std::endl;</span><br><span class="line">	std::cout &lt;&lt; st.<span class="built_in">minimum</span>(<span class="number">0</span>, <span class="number">5</span>) &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">	<span class="function">SegmentTree <span class="title">st2</span><span class="params">(&#123;<span class="number">5</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>&#125;)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="Sparse-table"><a href="#Sparse-table" class="headerlink" title="Sparse table"></a>Sparse table</h1><blockquote>
+<p>「Sparse table」為古代之稱，如今詞不達意</p>
+</blockquote>
+<ul>
+<li><p>Pros</p>
+<ul>
+<li>數組區間的查詢<ul>
+<li>區間最大值</li>
+<li>區間最小值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Cons</p>
+<ul>
+<li>不能更新、插入、刪除值</li>
+<li><strong>浪費空間</strong></li>
+<li>無法數組區間的<ul>
+<li>求和值</li>
+<li><strong>異或值 ( Exclusive or；XOR )</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="實現-1"><a href="#實現-1" class="headerlink" title="實現"></a>實現</h3><h4 id="初始化-1"><a href="#初始化-1" class="headerlink" title="初始化"></a>初始化</h4><ul>
+<li>Construct sparse table<ul>
+<li>N：資料量</li>
+<li>value[N]：數組</li>
+<li>cnt［logN］[N]：Sparse table</li>
+</ul>
+</li>
+</ul>
+<p>依序先求出寬度為 $2^0, 2^1, 2^2, \ldots, 2^{\lfloor\lg N\rfloor}$ 的區間<strong>最小值</strong>，區間的所有可能位置都要算一遍。兩個窄區間可以快速合成出一個寬區間。</p>
+<!-- ![STable_1](\willywangkaa\images\STable_1.png) -->
+
+
+
+<p>將所有區間算完存入 Sparse table</p>
+<!-- ![STable_2](\willywangkaa\images\STable_2.png) -->
+
+<blockquote>
+<p>實作時，通常表格中記錄的是索引值、指標，而不是直接記錄數值的最小值。(如下程式碼)</p>
+</blockquote>
+<ul>
+<li>程式碼 (c++)</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1000000</span>; <span class="comment">//No. of elements</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> logN = <span class="built_in">ceil</span>(<span class="built_in">log</span>(N));</span><br><span class="line"><span class="comment">//const int logN = sizeof(unsigned int) - __builtin_clz((unsigned int)dist) - 1;;</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> value[N];</span><br><span class="line"><span class="type">int</span> cnt[logN][N]; <span class="comment">//cnt[i][j]: RMQ index</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">construct_ST</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">//Initialization</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>; i&lt;N; ++i)</span><br><span class="line">		cnt[<span class="number">0</span>][i] = i;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 2^i - 1 &lt; N &lt;=&gt; i &lt; ceil(log(N))</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">1</span>; (<span class="number">1</span>&lt;&lt;i)<span class="number">-1</span> &lt; N; i++)</span><br><span class="line">        <span class="comment">// j + (2^i-1) &lt; N ; buttom-up 建立</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j=<span class="number">0</span>; j+(<span class="number">1</span>&lt;&lt;i)<span class="number">-1</span> &lt; N; j++) &#123;</span><br><span class="line">			<span class="type">int</span> L = cnt[i<span class="number">-1</span>][j];</span><br><span class="line">			<span class="type">int</span> R = cnt[i<span class="number">-1</span>][j+(<span class="number">1</span>&lt;&lt;(i<span class="number">-1</span>))];</span><br><span class="line">			cnt[i][j] = (value[L] &lt;= value[R])? L : R;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>時間複雜度</p>
+<ul>
+<li>$\Theta(N\log N)$</li>
+</ul>
+</li>
+<li><p>空間複雜度</p>
+<ul>
+<li>$\Theta(N \log N)$</li>
+</ul>
+</li>
+</ul>
+<h4 id="查詢-1"><a href="#查詢-1" class="headerlink" title="查詢"></a>查詢</h4><p>從表格中找到寬度略短於（相等於）查詢區間的區間，以靠左、靠右的兩條等寬區間，求得查詢區間的最小值：</p>
+<!-- ![STable_3](\willywangkaa\images\STable_3.png) -->
+
+
+
+<ul>
+<li>如何知道要查「Range」大小為何的表？<ul>
+<li>令 $k$ 為我們所求 → $k &#x3D; \lfloor \lg N \rfloor$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">query</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> dist = <span class="built_in">abs</span>(b - a) + <span class="number">1</span>;</span><br><span class="line">	<span class="comment">// 2^i &lt; N &lt;=&gt; i &lt; cel(logN) ; 區間計算</span></span><br><span class="line">	<span class="type">int</span> i = <span class="built_in">sizeof</span>(<span class="type">unsigned</span> <span class="type">int</span>) - __builtin_clz((<span class="type">unsigned</span> <span class="type">int</span>)dist) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="type">int</span> L = cnt[i][a];          <span class="comment">// 左區間</span></span><br><span class="line">	<span class="type">int</span> R = cnt[i][b-(<span class="number">1</span>&lt;&lt;i)+<span class="number">1</span>]; <span class="comment">// 右區間</span></span><br><span class="line">	<span class="keyword">return</span> value[L] &lt;= value[R]? L : R;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>時間複雜度<ul>
+<li>$\Theta(1)$</li>
+</ul>
+</li>
+</ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Yaokai_AssultMaster/article/details/79599809">线段树（segment tree)，看这一篇就够了</a></li>
+</ul>
+<!-- - 輔大張信宏老師講義 -->
+
+
+
+<!-- - [演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Sequence2.html#5) -->
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/17/Algorithm-Graph/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -160,7 +411,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/02/17/Algorithm-Graph/" class="post-title-link" itemprop="url">Algorithm-Graph</a>
+            <a href="/2023/02/17/Algorithm-Graph/" class="post-title-link" itemprop="url">Algorithm - Graph</a>
         </h2>
 
         <div class="post-meta">
@@ -171,7 +422,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-02-17 04:41:21 / Modified: 04:44:00" itemprop="dateCreated datePublished" datetime="2023-02-17T04:41:21+08:00">2023-02-17</time>
+              <time title="Created: 2023-02-17 04:41:21 / Modified: 04:48:39" itemprop="dateCreated datePublished" datetime="2023-02-17T04:41:21+08:00">2023-02-17</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -325,15 +576,10 @@ date: 2018-10-15 16:51:00
 
 
 <ul>
-<li><strong>Time complexity</strong><ul>
-<li><strong>有向圖</strong>（94 台大資工）<ul>
-<li>$\Theta(∣V∣+∣E∣)$</li>
-</ul>
-</li>
-<li><strong>無向圖</strong>（99 台大資工）<ul>
+<li><strong>Time complexity</strong><!-- - **有向圖**（94 台大資工） -->
+<ul>
+<li>$\Theta(∣V∣+∣E∣)$<!-- - **無向圖**（99 台大資工） --></li>
 <li>$\Theta(∣V∣)$</li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -1398,7 +1644,7 @@ http://mropengate.blogspot.tw/2016/01/leetcode-kmpimplement-strstr.html -->
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-02-17 04:30:45 / Modified: 04:35:18" itemprop="dateCreated datePublished" datetime="2023-02-17T04:30:45+08:00">2023-02-17</time>
+              <time title="Created: 2023-02-17 04:30:45 / Modified: 04:54:07" itemprop="dateCreated datePublished" datetime="2023-02-17T04:30:45+08:00">2023-02-17</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1430,7 +1676,8 @@ tags: -->
 <ul>
 <li>為何要使用這種方法，以<strong>費氏數列程式</strong>開始討論。</li>
 </ul>
-<p>$$<br>F_n &#x3D; \left{\begin{matrix}<br>0 &amp; , if ; n &#x3D; 0\<br>1 &amp; , if ; n &#x3D; 1\<br>F_{n-1} + F_{n-2} &amp; , if ; n \geq 2<br>\end{matrix}\right.<br>$$<br>欲求出 $F_5$ ，以遞迴程式執行，會造成「Overlapping subproblem」，如下圖 $F_2$ 重複計算了 3 次，$F_3$ 重複計算 2 次。</p>
+<p>$$<br>F_n &#x3D; \left{\begin{matrix}<br>0 &amp; , if ; n &#x3D; 0\<br>1 &amp; , if ; n &#x3D; 1\<br>F_{n-1} + F_{n-2} &amp; , if ; n \geq 2<br>\end{matrix}\right.<br>$$</p>
+<p>欲求出 $F_5$ ，以遞迴程式執行，會造成「Overlapping subproblem」，如下圖 $F_2$ 重複計算了 3 次，$F_3$ 重複計算 2 次。</p>
 <!-- ![overlappingsubproblem](\willywangkaa\images\overlappingsubproblem.png) -->
 
 
@@ -3505,7 +3752,7 @@ tags: -->
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -3514,7 +3761,7 @@ tags: -->
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
