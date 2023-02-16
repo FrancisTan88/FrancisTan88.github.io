@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Z 演算法可以線性時間在一段文本（Text） 裡面找到所有我們欲求的段落（Pattern）  文本（Text）的長度為 $n$  段落（Pattern）為 $m$  搜尋過程需要線性等級的時間複雜度：$O(m+n)$  雖然這個演算法需要的空間（Space complexity）與時間複雜度（Time complexity）都與KMP algorithm一致，但是這個演算法比起「KMP algo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Algorithm - Z 演算法">
+<meta property="og:url" content="http://example.com/2023/02/17/Algorithm-Z/index.html">
+<meta property="og:site_name" content="FrancisTan">
+<meta property="og:description" content="Z 演算法可以線性時間在一段文本（Text） 裡面找到所有我們欲求的段落（Pattern）  文本（Text）的長度為 $n$  段落（Pattern）為 $m$  搜尋過程需要線性等級的時間複雜度：$O(m+n)$  雖然這個演算法需要的空間（Space complexity）與時間複雜度（Time complexity）都與KMP algorithm一致，但是這個演算法比起「KMP algo">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-02-16T20:38:51.000Z">
+<meta property="article:modified_time" content="2023-02-16T20:40:41.116Z">
+<meta property="article:author" content="Francis">
+<meta property="article:tag" content="String">
+<meta property="article:tag" content="Substring">
+<meta property="article:tag" content="Z Algorithm">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/02/17/Algorithm-Z/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Algorithm - Z 演算法 | FrancisTan</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FrancisTan</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Just For Fun</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/17/Algorithm-Z/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Francis">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FrancisTan">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Algorithm - Z 演算法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-02-17 04:38:51 / Modified: 04:40:41" itemprop="dateCreated datePublished" datetime="2023-02-17T04:38:51+08:00">2023-02-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <!-- title: Algorithm - Z 演算法
+author: Willy Wang
+
+date: 2018-03-19 13:27:00
+--- -->
+<h1 id="Z-演算法"><a href="#Z-演算法" class="headerlink" title="Z 演算法"></a>Z 演算法</h1><p>可以線性時間在一段<strong>文本（Text）</strong> 裡面找到所有我們欲求的<strong>段落（Pattern）</strong></p>
+<ul>
+<li>文本（Text）的長度為 $n$ </li>
+<li>段落（Pattern）為 $m$</li>
+</ul>
+<p>搜尋過程需要線性等級的時間複雜度：$O(m+n)$</p>
+<blockquote>
+<p>雖然這個演算法需要的空間（Space complexity）與時間複雜度（Time complexity）都與<strong>KMP algorithm</strong>一致，但是這個演算法比起「KMP algorithm」還要容易了解</p>
+<p>KMP algorithm：每個前綴與其後綴的次長共同前綴（最長的後綴）<br>Z algorithm：每個後綴與母字串的最長共同前綴（單純的長度）</p>
+<p>首先，我們需要一個 $Z$陣列（$Z$ array）</p>
+</blockquote>
+<h2 id="Z-陣列"><a href="#Z-陣列" class="headerlink" title="$Z$ 陣列"></a>$Z$ 陣列</h2><p>當我們將欲檢索的文本存為一個字串 $ str[0 \ldots n-1] $ 時，同時也建立一個與字串一樣長的$Z$陣列。<br>在$Z$陣列中，第 $i$ 元素紀錄「**最長共同前總和 (Longest Common Prefix)**的長度」，而 <em>LCP 的長度</em> 是由「從 $i$ 開始的後總和 (Postfix)」與「該文本」共同決定。<br>( **注意： ** $Z[0]$ <strong>毫無意義可言，因為從第0個開始的後總和(Postfix) 必與原本的文本字串相同。</strong> )</p>
+<!-- 大致上我們可以看成如下的函式： -->
+
+<!-- ![Z演算法的表示法](\willywangkaa\images\Z演算法的表示法.png) -->
+
+<p>$Ex.$</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Index            0   1   2   3   4   5   6   7   8   9  10  11 </span><br><span class="line">Text             a   a   b   c   a   a   b   x   a   a   a   z</span><br><span class="line">Z values             1   0   0   3   1   0   0   2   2   1   0 </span><br></pre></td></tr></table></figure>
+<p>$More$ $ex.$</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">str  = &quot;aaaaaa&quot;</span><br><span class="line">Z[]  = &#123;x, 5, 4, 3, 2, 1&#125;</span><br><span class="line"></span><br><span class="line">str = &quot;aabaacd&quot;</span><br><span class="line">Z[] = &#123;x, 1, 0, 2, 1, 0, 0&#125;</span><br><span class="line"></span><br><span class="line">str = &quot;abababab&quot;</span><br><span class="line">Z[] = &#123;x, 0, 6, 0, 4, 0, 2, 0&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Z-陣列如何幫助演算法加速"><a href="#Z-陣列如何幫助演算法加速" class="headerlink" title="$Z$ 陣列如何幫助演算法加速?"></a>$Z$ 陣列如何幫助演算法加速?</h2><p>這個演算法的想法是將段落(pattern)與文本字串(text string)連接起來，若視段落(pattern)為「P」，視文本字串(text string)為「T」，並加上一個從未在段落與文本中出現過的<em>字元</em>「\$」再產生出如「P$T」的字串。</p>
+<p>最後，我們再產生一個屬於「P$T」的 Z陣列，在 Z陣列之中，若該 Z值等於段落(pattern)的長度，段落出現在該處。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Example:</span><br><span class="line">Pattern P = &quot;aab&quot;,  Text T = &quot;baabaa&quot;</span><br><span class="line"></span><br><span class="line">The concatenated string is</span><br><span class="line">&quot;a, a, b, $, b, a, a ,b ,a, a&quot;.</span><br><span class="line">Z array for above concatenated string is </span><br><span class="line">&#123;x, 1, 0, 0, 0, 3, 1, 0, 2, 1&#125;.</span><br><span class="line">                ^</span><br><span class="line">Since length of pattern is 3, the value 3 in Z array </span><br><span class="line">indicates presence of pattern.</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="如何建立-Z-陣列"><a href="#如何建立-Z-陣列" class="headerlink" title="如何建立 $Z$陣列"></a>如何建立 $Z$陣列</h2><p>最簡單的就是使用兩個迴圈，外層迴圈將整個「P$T」跑過一遍，內層迴圈則是看看到底 i 位置的<strong>後總和</strong>與「P$T」的LCP長度為何。<br>$Time$ $complexity:$<br>$$O(n^2)$$</p>
+<p>我們當然可以使用另一種方法讓建立陣列的時間複雜度降低。<br>此演算法的關鍵在於要維護一個區間$[L \ldots R]$，$R$ 的位置代表由 $L$ 處之後可以和整個字串最長的<strong>前總和</strong>重疊到的最後一個位置( 換句話說：$[L \ldots R]$是整個字串的<strong>前綴子字串</strong> )，若完全不重疊，則 $L$ 與 $R$相等。</p>
+<ul>
+<li>步驟 ($i$ 為當前位置)</li>
+</ul>
+<ol>
+<li>若 $i &gt; R$ ，就代表當前 $i$ 沒有經過任何<strong>「P$S」的前綴子字串</strong>，所以重置 $L$ 與 $R$ 的位置($L &#x3D; i, R &#x3D; i$)，經由比對<strong>「P$S」的前綴</strong>與 <strong>$i$ 之後的前綴</strong>，並找出最長的子字串($R$ 的位置)，計算新的 $L$ 與 $R$ 的位置，也一併將 $Z[i]$值算出來($&#x3D; R - L + 1$)。</li>
+<li>若 $i \leq R$ ，令 $K &#x3D; i - L$ ，再來我們知道 $Z[i] \geq  min(Z[K], R-i+1)$ 因為$String[i \ldots]$與$String[K\ldots]$共同前$R-i+1$個字元必然為[P$T]的<strong>前綴子字串</strong>。現在有兩種情形會發生：</li>
+</ol>
+<ul>
+<li>case1：<br>若$Z[K] &lt; R-i+1$ ，代表沒有任何<strong>「P$S」的前綴子字串</strong> 從 $i$ 位置開始(否則 $Z[K]$ 的值會更大)，所以也意味著$Z[i] &#x3D; Z[K]$，還有區間$[L\ldots R]$不變。</li>
+<li>case2：<br>若$Z[K] \geq R-i+1$，代表$String[i \ldots]$可以和$String[0\ldots]$ 繼續比對相同的字元，也就意味有可能拓展$[L \ldots R]$ 區間，因此，我們會設 $L &#x3D; i$ ，接著從 $R$ 之後開始繼續比對<strong>「P$S」的前綴子字串</strong>，最後我們會得到新的$R$，並更新$[L \ldots R]$ 區間與計算 $Z[i]$ $( &#x3D; R - L + 1)$。</li>
+</ul>
+<p>想要了解上述的演算法可以經由這個連結觀看<a target="_blank" rel="noopener" href="http://www.utdallas.edu/~besp/demo/John2010/z-algorithm.htm">動畫</a>。</p>
+<p><strong>小視窗</strong></p>
+<!-- ![Z演算法的子問題](\willywangkaa\images\Z演算法的子問題.png) -->
+
+<p>如果一個位置 $i$ 位於之前比過的那段 $[L, R]$ 當中，他是否跟 $Z[i − L]$ 相同呢？我們可以分成三種情形：</p>
+<ol>
+<li>要比的後綴根本不在以前比過的範圍$[L, R]$內     → 就去比吧！</li>
+<li>要比的後綴在以前比過的範圍$[L, R]$但長度未知 → 還是去比吧！</li>
+<li>要比的後綴在以前比過的範圍$[L, R]$但長度已知 → 直接記錄囉！</li>
+</ol>
+<h1 id="程式碼實作"><a href="#程式碼實作" class="headerlink" title="程式碼實作"></a>程式碼實作</h1><hr>
+<h2 id="台大資工PPT-by-nkng"><a href="#台大資工PPT-by-nkng" class="headerlink" title="台大資工PPT by nkng"></a><a target="_blank" rel="noopener" href="https://www.csie.ntu.edu.tw/~sprout/algo2016/ppt_pdf/Z_value.pdf">台大資工PPT by nkng</a></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">z_build</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *S, <span class="type">int</span> *Z)</span> </span>&#123;</span><br><span class="line">    Z[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> bst = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; S[i]; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(Z[bst] + bst &lt; i) Z[i] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span> Z[i] = <span class="built_in">min</span>(Z[bst]+bst-i, Z[i-bst]);</span><br><span class="line">        <span class="keyword">while</span>(S[Z[i]] == S[i+Z[i]]) Z[i]++;</span><br><span class="line">        <span class="keyword">if</span>(Z[i] + i &gt; Z[bst] + bst) bst = i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Z-algorithm-GeeksforGeeks"><a href="#Z-algorithm-GeeksforGeeks" class="headerlink" title="Z algorithm - GeeksforGeeks"></a><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/z-algorithm-linear-time-pattern-searching-algorithm/">Z algorithm - GeeksforGeeks</a></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A C++ program that implements Z algorithm for pattern searching</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">getZarr</span><span class="params">(string str, <span class="type">int</span> Z[])</span></span>;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//  prints all occurrences of pattern in text using Z algo</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">search</span><span class="params">(string text, string pattern)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// Create concatenated string &quot;P$T&quot;</span></span><br><span class="line">    string concat = pattern + <span class="string">&quot;$&quot;</span> + text;</span><br><span class="line">    <span class="type">int</span> l = concat.<span class="built_in">length</span>();</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// Construct Z array</span></span><br><span class="line">    <span class="type">int</span> Z[l];</span><br><span class="line">    <span class="built_in">getZarr</span>(concat, Z);</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//  now looping through Z array for matching condition</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; l; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// if Z[i] (matched region) is equal to pattern</span></span><br><span class="line">        <span class="comment">// length  we got the pattern</span></span><br><span class="line">        <span class="keyword">if</span> (Z[i] == pattern.<span class="built_in">length</span>())</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;Pattern found at index &quot;</span></span><br><span class="line">                 &lt;&lt;  i - pattern.<span class="built_in">length</span>() <span class="number">-1</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//  Fills Z array for given string str[]</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">getZarr</span><span class="params">(string str, <span class="type">int</span> Z[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n = str.<span class="built_in">length</span>();</span><br><span class="line">    <span class="type">int</span> L, R, k;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// [L,R] make a window which matches with prefix of s</span></span><br><span class="line">    L = R = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// if i&gt;R nothing matches so we will calculate.</span></span><br><span class="line">        <span class="comment">// Z[i] using naive way.</span></span><br><span class="line">        <span class="keyword">if</span> (i &gt; R)</span><br><span class="line">        &#123;</span><br><span class="line">            L = R = i;</span><br><span class="line"> </span><br><span class="line">            <span class="comment">// R-L = 0 in starting, so it will start</span></span><br><span class="line">            <span class="comment">// checking from 0&#x27;th index. For example,</span></span><br><span class="line">            <span class="comment">// for &quot;ababab&quot; and i = 1, the value of R</span></span><br><span class="line">            <span class="comment">// remains 0 and Z[i] becomes 0. For string</span></span><br><span class="line">            <span class="comment">// &quot;aaaaaa&quot; and i = 1, Z[i] and R become 5</span></span><br><span class="line">            <span class="keyword">while</span> (R&lt;n &amp;&amp; str[R-L] == str[R])</span><br><span class="line">                R++;</span><br><span class="line">            Z[i] = R-L;</span><br><span class="line">            R--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// k = i-L so k corresponds to number which</span></span><br><span class="line">            <span class="comment">// matches in [L,R] interval.</span></span><br><span class="line">            k = i-L;</span><br><span class="line"> </span><br><span class="line">            <span class="comment">// if Z[k] is less than remaining interval</span></span><br><span class="line">            <span class="comment">// then Z[i] will be equal to Z[k].</span></span><br><span class="line">            <span class="comment">// For example, str = &quot;ababab&quot;, i = 3, R = 5</span></span><br><span class="line">            <span class="comment">// and L = 2</span></span><br><span class="line">            <span class="keyword">if</span> (Z[k] &lt; R-i+<span class="number">1</span>)</span><br><span class="line">                 Z[i] = Z[k];</span><br><span class="line"> </span><br><span class="line">            <span class="comment">// For example str = &quot;aaaaaa&quot; and i = 2, R is 5,</span></span><br><span class="line">            <span class="comment">// L is 0</span></span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//  else start from R  and check manually</span></span><br><span class="line">                L = i;</span><br><span class="line">                <span class="keyword">while</span> (R&lt;n &amp;&amp; str[R-L] == str[R])</span><br><span class="line">                    R++;</span><br><span class="line">                Z[i] = R-L;</span><br><span class="line">                R--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Driver program</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string text = <span class="string">&quot;GEEKS FOR GEEKS&quot;</span>;</span><br><span class="line">    string pattern = <span class="string">&quot;GEEK&quot;</span>;</span><br><span class="line">    <span class="built_in">search</span>(text, pattern);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="建國中學-2012-年資訊能力競賽培訓講義-08"><a href="#建國中學-2012-年資訊能力競賽培訓講義-08" class="headerlink" title="建國中學 2012 年資訊能力競賽培訓講義 - 08"></a><a target="_blank" rel="noopener" href="http://pisces.ck.tp.edu.tw/~peng/index.php?action=showfile&file=fab7c1879e544bcefffb4b8717f2747436e1c425c">建國中學 2012 年資訊能力競賽培訓講義 - 08</a></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Z_maker</span><span class="params">( <span class="type">int</span> z[], <span class="type">char</span> s[], <span class="type">int</span> n )</span></span>&#123;</span><br><span class="line">    z[<span class="number">0</span>] = n;</span><br><span class="line">    <span class="type">int</span> L = <span class="number">0</span>, R = <span class="number">0</span>, i, x;</span><br><span class="line">    <span class="keyword">for</span>( i = <span class="number">1</span> ; i &lt; n ; i++ )&#123;</span><br><span class="line">        <span class="keyword">if</span>( R &lt; i || z[i-L] &gt;= R-i+<span class="number">1</span> )&#123;</span><br><span class="line">            R &lt; i ? x = i : x = R+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span>( x &lt; n &amp;&amp; s[x] == s[x-i] ) x++;</span><br><span class="line">            z[i] = x-i; <span class="keyword">if</span>( i &lt; x )&#123; L = i; R = x<span class="number">-1</span>; &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> z[i] = z[i-L];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Z-algorithm-codeforces"><a href="#Z-algorithm-codeforces" class="headerlink" title="Z algorithm - codeforces"></a><a target="_blank" rel="noopener" href="http://codeforces.com/willywangkaa/entry/3107">Z algorithm - codeforces</a></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> L = <span class="number">0</span>, R = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">  <span class="keyword">if</span> (i &gt; R) &#123;</span><br><span class="line">    L = R = i;</span><br><span class="line">    <span class="keyword">while</span> (R &lt; n &amp;&amp; s[R-L] == s[R]) R++;</span><br><span class="line">    z[i] = R-L; R--;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="type">int</span> k = i-L;</span><br><span class="line">    <span class="keyword">if</span> (z[k] &lt; R-i+<span class="number">1</span>) z[i] = z[k];</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      L = i;</span><br><span class="line">      <span class="keyword">while</span> (R &lt; n &amp;&amp; s[R-L] == s[R]) R++;</span><br><span class="line">      z[i] = R-L; R--;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Z-algorithm1-日月卦長的模板庫"><a href="#Z-algorithm1-日月卦長的模板庫" class="headerlink" title="Z algorithm1 - 日月卦長的模板庫"></a><a target="_blank" rel="noopener" href="http://sunmoon-template.blogspot.tw/2015/05/z-algorithm-linear-time-pattern.html">Z algorithm1 - 日月卦長的模板庫</a></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">z_alg1</span><span class="params">(<span class="type">char</span> *s,<span class="type">int</span> len,<span class="type">int</span> *z)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> l=<span class="number">0</span>,r=<span class="number">0</span>;</span><br><span class="line">	z[<span class="number">0</span>]=len;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;len;++i)&#123;</span><br><span class="line">		z[i]=r&gt;i?<span class="built_in">min</span>(r-i+<span class="number">1</span>,z[z[l]-(r-i+<span class="number">1</span>)]):<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span>(i+z[i]&lt;len&amp;&amp;s[z[i]]==s[i+z[i]])++z[i];</span><br><span class="line">		<span class="keyword">if</span>(i+z[i]<span class="number">-1</span>&gt;r)r=i+z[i]<span class="number">-1</span>,l=i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Z-algorithm2-日月卦長的模板庫"><a href="#Z-algorithm2-日月卦長的模板庫" class="headerlink" title="Z algorithm2 - 日月卦長的模板庫"></a><a target="_blank" rel="noopener" href="http://sunmoon-template.blogspot.tw/2015/05/z-algorithm-linear-time-pattern.html">Z algorithm2 - 日月卦長的模板庫</a></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">z_alg2</span><span class="params">(<span class="type">char</span> *s,<span class="type">int</span> len,<span class="type">int</span> *z)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> l=<span class="number">0</span>,r=<span class="number">0</span>;</span><br><span class="line">	z[<span class="number">0</span>]=len;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;len;++i)&#123;</span><br><span class="line">		z[i]=i&gt;r?<span class="number">0</span>:(i-l+z[i-l]&lt;z[l]?z[i-l]:r-i+<span class="number">1</span>);</span><br><span class="line">		<span class="keyword">while</span>(i+z[i]&lt;len&amp;&amp;s[i+z[i]]==s[z[i]])++z[i];</span><br><span class="line">		<span class="keyword">if</span>(i+z[i]<span class="number">-1</span>&gt;r)r=i+z[i]<span class="number">-1</span>,l=i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="培訓-4-字串-tioj"><a href="#培訓-4-字串-tioj" class="headerlink" title="培訓-4 字串- tioj"></a><a target="_blank" rel="noopener" href="https://tioj.infor.org/uploads/attachment/11/43/4.pdf">培訓-4 字串- tioj</a></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">z_build</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* S,<span class="type">int</span> *z)</span></span>&#123;</span><br><span class="line">    z[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> bst=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;S[i];i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(z[bst]+bst&lt;i) z[i]=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span> z[i]=std::<span class="built_in">min</span>(z[bst]+bst−i,z[i−bst]);</span><br><span class="line">        <span class="keyword">while</span>(S[z[i]]==S[i+z[i]]) z[i]++;</span><br><span class="line">        <span class="keyword">if</span>(z[i]+i&gt;z[bst]+bst) bst=i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="例題"><a href="#例題" class="headerlink" title="例題"></a>例題</h1><hr>
+<p><a target="_blank" rel="noopener" href="http://codingbeans.blogspot.tw/2016/03/tioj-1725z-algorithm-massacre-at-camp.html">TIOJ 1725_Z algorithm_Massacre at Camp Happy</a></p>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><hr>
+<p><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/z-algorithm-linear-time-pattern-searching-algorithm/">Z algorithm - GeeksforGeeks</a></p>
+<p><a target="_blank" rel="noopener" href="http://pisces.ck.tp.edu.tw/~peng/index.php?action=showfile&file=fab7c1879e544bcefffb4b8717f2747436e1c425c">建國中學 2012 年資訊能力競賽培訓講義 - 08</a></p>
+<p><a target="_blank" rel="noopener" href="https://tioj.infor.org/uploads/attachment/11/43/4.pdf">培訓-4 字串- tioj</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.csie.ntu.edu.tw/~sprout/algo2016/ppt_pdf/Z_value.pdf">台大資工講義 by nkng</a></p>
+<p><a target="_blank" rel="noopener" href="http://codeforces.com/willywangkaa/entry/3107">Z algorithm - codeforces</a></p>
+<p><a target="_blank" rel="noopener" href="http://momo-funnycodes.blogspot.tw/2012/07/gusfield-algorithm.html">Gusfield algorithm - momo funny codes</a></p>
+<p><a target="_blank" rel="noopener" href="http://sunmoon-template.blogspot.tw/2015/05/z-algorithm-linear-time-pattern.html">Z algorithm - 日月卦長的模板庫</a></p>
+<h1 id="待補充"><a href="#待補充" class="headerlink" title="待補充"></a>待補充</h1><!-- --- -->
+<!-- 
+## KMP 字串比對演算法
+
+http://mropengate.blogspot.tw/2016/01/leetcode-kmpimplement-strstr.html -->
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/String/" rel="tag"># String</a>
+              <a href="/tags/Substring/" rel="tag"># Substring</a>
+              <a href="/tags/Z-Algorithm/" rel="tag"># Z Algorithm</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/02/17/Algorithm-DynamicProgramming/" rel="prev" title="Algorithm - DynamicProgramming">
+      <i class="fa fa-chevron-left"></i> Algorithm - DynamicProgramming
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/02/17/Algorithm-Graph/" rel="next" title="Algorithm-Graph">
+      Algorithm-Graph <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Z-%E6%BC%94%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">Z 演算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Z-%E9%99%A3%E5%88%97"><span class="nav-number">1.1.</span> <span class="nav-text">$Z$ 陣列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Z-%E9%99%A3%E5%88%97%E5%A6%82%E4%BD%95%E5%B9%AB%E5%8A%A9%E6%BC%94%E7%AE%97%E6%B3%95%E5%8A%A0%E9%80%9F"><span class="nav-number">1.2.</span> <span class="nav-text">$Z$ 陣列如何幫助演算法加速?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%BB%BA%E7%AB%8B-Z-%E9%99%A3%E5%88%97"><span class="nav-number">1.3.</span> <span class="nav-text">如何建立 $Z$陣列</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC%E5%AF%A6%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">程式碼實作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%B0%E5%A4%A7%E8%B3%87%E5%B7%A5PPT-by-nkng"><span class="nav-number">2.1.</span> <span class="nav-text">台大資工PPT by nkng</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Z-algorithm-GeeksforGeeks"><span class="nav-number">2.2.</span> <span class="nav-text">Z algorithm - GeeksforGeeks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E5%9C%8B%E4%B8%AD%E5%AD%B8-2012-%E5%B9%B4%E8%B3%87%E8%A8%8A%E8%83%BD%E5%8A%9B%E7%AB%B6%E8%B3%BD%E5%9F%B9%E8%A8%93%E8%AC%9B%E7%BE%A9-08"><span class="nav-number">2.3.</span> <span class="nav-text">建國中學 2012 年資訊能力競賽培訓講義 - 08</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Z-algorithm-codeforces"><span class="nav-number">2.4.</span> <span class="nav-text">Z algorithm - codeforces</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Z-algorithm1-%E6%97%A5%E6%9C%88%E5%8D%A6%E9%95%B7%E7%9A%84%E6%A8%A1%E6%9D%BF%E5%BA%AB"><span class="nav-number">2.5.</span> <span class="nav-text">Z algorithm1 - 日月卦長的模板庫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Z-algorithm2-%E6%97%A5%E6%9C%88%E5%8D%A6%E9%95%B7%E7%9A%84%E6%A8%A1%E6%9D%BF%E5%BA%AB"><span class="nav-number">2.6.</span> <span class="nav-text">Z algorithm2 - 日月卦長的模板庫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%B9%E8%A8%93-4-%E5%AD%97%E4%B8%B2-tioj"><span class="nav-number">2.7.</span> <span class="nav-text">培訓-4 字串- tioj</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A1%8C"><span class="nav-number">3.</span> <span class="nav-text">例題</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">參考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BE%85%E8%A3%9C%E5%85%85"><span class="nav-number">5.</span> <span class="nav-text">待補充</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Francis</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Francis</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

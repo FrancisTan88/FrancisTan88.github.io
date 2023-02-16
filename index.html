@@ -146,6 +146,1997 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/17/Algorithm-Graph/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Francis">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FrancisTan">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/02/17/Algorithm-Graph/" class="post-title-link" itemprop="url">Algorithm-Graph</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-02-17 04:41:21 / Modified: 04:44:00" itemprop="dateCreated datePublished" datetime="2023-02-17T04:41:21+08:00">2023-02-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <!-- title: Algorithm - Graph algorithm
+author: Willy Wang (willywangkaa)
+
+date: 2018-10-15 16:51:00
+--- -->
+<h1 id="Graph-algorithm"><a href="#Graph-algorithm" class="headerlink" title="Graph algorithm"></a>Graph algorithm</h1><h2 id="Depth-first-search"><a href="#Depth-first-search" class="headerlink" title="Depth first search"></a>Depth first search</h2><ul>
+<li><p>考慮圖中一點 u</p>
+<ul>
+<li>color(u)：目前 u 節點的狀態<ul>
+<li>White<ul>
+<li>初始值，<strong>尚未訪查過</strong></li>
+</ul>
+</li>
+<li>Gray<ul>
+<li><strong>已被訪查過</strong>，但未訪查完其子節點</li>
+</ul>
+</li>
+<li>Black<ul>
+<li><strong>已經訪查完其子節點</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>d(u)<ul>
+<li>發現時間點（Discover time）</li>
+<li>第一次被訪查的時間點</li>
+</ul>
+</li>
+<li>f(u)<ul>
+<li>完結時間點（Finish time）</li>
+<li>訪查完其子節點的時間點</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>演算法（P.4-6）</p>
+<ul>
+<li>**DFS(G)**：自 G 中任一點開始做 DFS<ul>
+<li>dfs_visit(u)：訪查 u 節點</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">DFS</span><span class="params">(Graph G)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// initialize</span></span><br><span class="line">    foreach u ∈ G.V           <span class="comment">// G 的點集合</span></span><br><span class="line">        <span class="built_in">color</span>(u) = white;</span><br><span class="line">    time = <span class="number">0</span>;                 <span class="comment">// 紀錄目前的時間</span></span><br><span class="line"></span><br><span class="line">    foreach u ∈ G.<span class="function">V</span></span><br><span class="line"><span class="function">        <span class="title">if</span><span class="params">(color(u) == white)</span> <span class="comment">// 找到一個尚未被訪查過的節點</span></span></span><br><span class="line"><span class="function">            <span class="title">dfs_visit</span><span class="params">(u)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs_visit</span><span class="params">(Graph G, node u)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">color</span>(u) = gray;</span><br><span class="line">    <span class="built_in">d</span>(u)     = ++time;</span><br><span class="line"></span><br><span class="line">    foreach v ∈ G.<span class="built_in">adj</span>(u)</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">color</span>(v) == white)</span><br><span class="line">            <span class="built_in">dfs_visit</span>(G,v);</span><br><span class="line">    </span><br><span class="line">    time++;</span><br><span class="line">    <span class="built_in">f</span>(u)     = time;</span><br><span class="line">    <span class="built_in">color</span>(u) = black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>Time complexity<ul>
+<li>$\Theta(\vert V\vert+\vert E\vert)$ ：點數加上邊數</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>將整個圖的所有點與邊訪查一次</strong></p>
+</blockquote>
+<h3 id="應用"><a href="#應用" class="headerlink" title="應用"></a>應用</h3><h4 id="DFS-tree-Edge"><a href="#DFS-tree-Edge" class="headerlink" title="DFS tree - Edge"></a>DFS tree - Edge</h4><p>深度優先搜尋時，可以將圖中的邊分成四類：</p>
+<ol>
+<li><strong>Tree edge</strong><ul>
+<li>u 透過 (u,v) 邊以訪查 v 節點</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<ul>
+<li>可在訪查的過程表示為一個「DFS tree」</li>
+</ul>
+</blockquote>
+<ol start="2">
+<li><strong>Back edge</strong><ul>
+<li>不為「Tree edge」，而在「DFS tree」上由<strong>子孫節點至祖先節點</strong>的邊</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<ul>
+<li><strong>自旋邊（Self loop）亦為「Back edge」</strong></li>
+</ul>
+</blockquote>
+<ol start="3">
+<li><strong>Forward edge</strong><ul>
+<li>不為「Tree edge」，而在「DFS tree」上由<strong>祖先節點至子孫節點</strong>的邊</li>
+</ul>
+</li>
+<li><strong>Cross edge</strong><ul>
+<li>無祖孫關係的邊</li>
+</ul>
+</li>
+</ol>
+<p>在實現中，通常在執行 DFS 時就會直接以<strong>節點的狀態</strong>判斷邊的種類</p>
+<ol>
+<li><strong>Tree edge</strong></li>
+</ol>
+<p>$$<br>u_{灰} \rightarrow_{Tree–edge} v_{白}<br>$$</p>
+<ol start="2">
+<li><strong>Back edge</strong></li>
+</ol>
+<p>$$<br>u_{灰} \rightarrow_{Back–edge} v_{灰}<br>$$</p>
+<ol start="3">
+<li><strong>Forward edge</strong></li>
+</ol>
+<p>$$<br>u_{灰} \rightarrow_{Forward–edge} ｛v_{黑} ;＆＆ ; d(u)&lt;d(v) ｝<br>$$</p>
+<!-- ![forwardedge](\willywangkaa\images\forwardedge.png) -->
+
+
+
+<ol start="4">
+<li><strong>Cross edge</strong></li>
+</ol>
+<p>$$<br>u_{灰} \rightarrow_{Cross–edge} ｛v_{黑} ;＆＆ ; d(v)&lt;d(u) ｝<br>$$</p>
+<!-- ![crossedge](\willywangkaa\images\crossedge.png)
+
+- Ex （96 年台大資工） -->
+
+
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">DFS</span><span class="params">(Graph G)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// initialize</span></span><br><span class="line">    foreach u ∈ G.V &#123;          <span class="comment">// G 的點集合</span></span><br><span class="line">        <span class="built_in">color</span>(u) = white;</span><br><span class="line">        <span class="built_in">edge</span>(u)  = <span class="literal">NULL</span>;       <span class="comment">// DFS tree 初始化邊(雙向邊)</span></span><br><span class="line">    &#125;</span><br><span class="line">    time = <span class="number">0</span>;                  <span class="comment">// 紀錄目前的時間</span></span><br><span class="line"></span><br><span class="line">    foreach u ∈ G.<span class="function">V</span></span><br><span class="line"><span class="function">        <span class="title">if</span><span class="params">(color(u) == white)</span> <span class="comment">// 找到一個尚未被訪查過的節點</span></span></span><br><span class="line"><span class="function">            <span class="title">dfs_visit</span><span class="params">(G,u)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs_visit</span><span class="params">(Graph G,node u)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">color</span>(u) = gray;</span><br><span class="line">    <span class="built_in">d</span>(u)     = ++time;</span><br><span class="line"></span><br><span class="line">    foreach v ∈ G.<span class="built_in">adj</span>(u) &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">color</span>(v) == white) &#123;</span><br><span class="line">            <span class="built_in">edge</span>(v)               = u;       <span class="comment">// 相連節點設為 u</span></span><br><span class="line">            <span class="built_in">edge</span>(v).attribute     = tree;</span><br><span class="line">            <span class="built_in">dfs_visit</span>(G,v);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">color</span>(v) == gray) &#123;</span><br><span class="line">            <span class="built_in">edge</span>(v)               = u;       <span class="comment">// 相連節點設為 u</span></span><br><span class="line">            <span class="built_in">parent</span>(v).attribute   = back;</span><br><span class="line">			<span class="built_in">dfs_visit</span>(v);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;                             <span class="comment">// 黑節點</span></span><br><span class="line">            <span class="built_in">edge</span>(v)               = u;       <span class="comment">// 相連節點設為 u</span></span><br><span class="line">            </span><br><span class="line">			<span class="keyword">if</span>(<span class="built_in">d</span>(u) &gt; <span class="built_in">d</span>(v))                  <span class="comment">// 無祖孫關係</span></span><br><span class="line">				<span class="built_in">edge</span>(v).attribute = cross;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">d</span>(u) &lt; <span class="built_in">d</span>(v))             <span class="comment">// 有祖孫關係</span></span><br><span class="line">				<span class="built_in">edge</span>(v).attribute = forward;</span><br><span class="line">            </span><br><span class="line">			<span class="built_in">dfs_visit</span>(v);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	time++</span><br><span class="line">	<span class="built_in">f</span>(u)     = time;</span><br><span class="line">    <span class="built_in">color</span>(u) = black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="DFS-tree-Acyclic"><a href="#DFS-tree-Acyclic" class="headerlink" title="DFS tree - Acyclic"></a>DFS tree - Acyclic</h4><blockquote>
+<p><strong>存在「Back edge」時，代表有迴圈產生</strong></p>
+</blockquote>
+<!-- - 演算法（94 台大資工）（99 台大資工） -->
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">Acyclic</span><span class="params">(Graph G)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// initialize</span></span><br><span class="line">    foreach u ∈ G.V                      <span class="comment">// G 的點集合</span></span><br><span class="line">        <span class="built_in">color</span>(u) = white;</span><br><span class="line">    time = <span class="number">0</span>;                            <span class="comment">// 紀錄目前的時間</span></span><br><span class="line"></span><br><span class="line">    foreach u ∈ G.<span class="function">V</span></span><br><span class="line"><span class="function">        <span class="title">if</span><span class="params">(color(u) == white)</span>            <span class="comment">// 找到一個尚未被訪查過的節點</span></span></span><br><span class="line"><span class="function">            <span class="title">if</span><span class="params">(dfs_visit(G,u) == CYCLIC)</span></span></span><br><span class="line"><span class="function">                <span class="keyword">return</span> CYCLIC</span>;</span><br><span class="line">    <span class="keyword">return</span> ACYCLIC;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// CYCLIC = true, ACYCLIC = false</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">dfs_visit</span><span class="params">(Graph G, node u)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="built_in">color</span>(u) = gray;</span><br><span class="line">    <span class="built_in">d</span>(u)     = ++time;</span><br><span class="line"></span><br><span class="line">    foreach v ∈ G.<span class="built_in">adj</span>(u) &#123;</span><br><span class="line">        f = ACYCLIC;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">color</span>(v) == white)</span><br><span class="line">            f = f || <span class="built_in">dfs_visit</span>(G,v);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">color</span>(v) == gray)        <span class="comment">// 找到 Back-edge</span></span><br><span class="line">            f = f || CYCLIC;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    time++;</span><br><span class="line">    <span class="built_in">f</span>(u)     = time;</span><br><span class="line">    <span class="built_in">color</span>(u) = black;</span><br><span class="line">    <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><strong>Time complexity</strong><ul>
+<li><strong>有向圖</strong>（94 台大資工）<ul>
+<li>$\Theta(∣V∣+∣E∣)$</li>
+</ul>
+</li>
+<li><strong>無向圖</strong>（99 台大資工）<ul>
+<li>$\Theta(∣V∣)$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>無向圖</strong></p>
+<ul>
+<li><p>根據鴿籠原理，最多只要檢查 V 個邊即可知道此圖是否為「Cyclic」</p>
+<ul>
+<li>$\Theta(∣V∣+∣V∣) &#x3D; \Theta(∣V∣)$</li>
+</ul>
+</li>
+<li><p><strong>在無向圖中只含有</strong></p>
+<ul>
+<li><strong>Tree edge</strong></li>
+<li><strong>Back edge</strong></li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>有向圖</strong>不能以上述判斷</p>
+<p>Example</p>
+<ul>
+<li>兩節點 A、B<ul>
+<li>五條邊皆從 A 節點至 B 節點</li>
+<li><strong>此圖不包含「Cycle」</strong></li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="Minimum-spainning-tree"><a href="#Minimum-spainning-tree" class="headerlink" title="Minimum spainning tree"></a>Minimum spainning tree</h2><h3 id="問題探討"><a href="#問題探討" class="headerlink" title="問題探討"></a>問題探討</h3><ul>
+<li><strong>假設 (u,v) 為 G 權重最小的邊，則 (u,v) 必在 G 的某一個「最小生成樹」中</strong></li>
+</ul>
+<p>（<strong>反證法</strong>）</p>
+<!-- ![minimumspainingtree_1](\willywangkaa\images\minimumspainingtree_1.png) -->
+
+
+
+<ul>
+<li>假設 T 為 G 的一個最小生成樹<ul>
+<li>(u,v)∉T</li>
+<li>則 T ∪ {(u,v)} 會產生一個環路 C<ul>
+<li>C 存在一邊 e≠(u,v)，其 Weight(e) ≧ Weight(u,v)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>令 T’ &#x3D; T ∪ {(u,v)} - {e}<ul>
+<li>則 Weight(T’) ≦ Weight(T)</li>
+<li><strong>T 不為 G 的最小生成樹</strong></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>有兩種矛盾的現象產生</p>
+<ul>
+<li>當 $Weight(T’)&lt;Weight(T)$ 時<ul>
+<li>代表原本的生成樹不為最小生成樹</li>
+</ul>
+</li>
+<li>當 $Weight(T’) &#x3D; Weight(T)$ 時<ul>
+<li>代表該最小生成樹的集合中，必有一個樹包含 (u,v) 邊</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>「Cycle」：<strong>由三條邊組成的環路</strong></p>
+</blockquote>
+<ul>
+<li>☆ 假設 (u,v) 為 G 中「權重」（Weight）<strong>第二小</strong>的邊<ul>
+<li>則 (u,v) 必在 G 的某一個「最小生成樹」中</li>
+</ul>
+</li>
+</ul>
+<p>（<strong>反證法</strong>）</p>
+<!-- > 前提為該圖 G 各個權重不相等，否則反例如下：
+>
+> ![minimumspainingtree_2](\willywangkaa\images\minimumspainingtree_2.png) -->
+
+
+<ul>
+<li>假設 T 為 G 的一個最小生成樹<ul>
+<li>(u,v)∉T</li>
+<li>則 T ∪ {(u,v)} 會產生一個環路 C<ul>
+<li>因為環路必由三個邊組成<ul>
+<li>C 存在一邊 e≠(u,v)，其 Weight(e) ≧ Weight(u,v)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>令 T’ &#x3D; T ∪ {(u,v)} - {e}<ul>
+<li>則 Weight(T’) ≦ Weight(T)</li>
+<li><strong>T 不為 G 的最小生成樹</strong></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>G 中<strong>權重第三小</strong>的邊不一定存在於 G 的某一個「最小生成樹」中</p>
+</blockquote>
+<!-- > - Counter example -->
+<blockquote>
+</blockquote>
+<!-- ![minimumspainingtree_3](\willywangkaa\images\minimumspainingtree_3.png) -->
+
+
+
+<h4 id="Kruskal’s-algorithm-的正確性"><a href="#Kruskal’s-algorithm-的正確性" class="headerlink" title="Kruskal’s algorithm 的正確性"></a>Kruskal’s algorithm 的正確性</h4><ul>
+<li>T&#x3D;(V,E)<ul>
+<li>使用「Kruskal’s algorithm」找出的生成樹</li>
+</ul>
+</li>
+<li>T’&#x3D;(V,E’)<ul>
+<li>真正的最小生成樹</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>若 T &#x3D; T’​ <ul>
+<li>得證</li>
+</ul>
+</li>
+<li>若 T ≠ T’<ul>
+<li>T 必有邊不包含在 T’ 之中<ul>
+<li>則挑一權重最小的邊 e ∈ E - E’</li>
+<li>T’ ∪ {e} 形成一環路 C</li>
+<li>T’ ∪ {e} 存在 e’ ≠ e 且 w(e’) ≧ w(e)<ul>
+<li>若 w(e’) &lt; w(e)，「Kruskal’s algorithm」執行時必優先選擇 e’（矛盾）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>可造一個生成樹 T’’ &#x3D; (V, <strong>(E’ - {e’})</strong> ∪ {e})<ul>
+<li>Weight(T’’) ≦ Weight(T’)</li>
+</ul>
+</li>
+<li>重複上述步驟<ul>
+<li>$T’ \xrightarrow{用;T;有而;T’;沒有的邊做替換} T’’ \xrightarrow{用;T;有而;T’’;沒有的邊做替換} \dots \rightarrow T$ </li>
+<li>其過程中生成樹的權重不會增加<ul>
+<li>則可以證明 Weight(T’) &#x3D; Weight(T)</li>
+<li>T 為最小生成樹</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Flow-network"><a href="#Flow-network" class="headerlink" title="Flow network"></a>Flow network</h2><p>「流量網路圖論模型」為一<strong>有向圖</strong> G&#x3D;(V,E) 滿足：</p>
+<ul>
+<li><p>含有唯一「<strong>in-degree &#x3D; 0</strong>」的點 S（Source；源點）</p>
+</li>
+<li><p>含有唯一「<strong>out-degree &#x3D; 0</strong>」的點 T（Sink；匯點）</p>
+</li>
+<li><p>對於 (u,v) ∈ E</p>
+<ul>
+<li>定義<strong>容量 c：</strong>$E→R^+$<ul>
+<li>通常其加權有向邊 (u,v) 代表其<strong>容量</strong></li>
+</ul>
+</li>
+<li>定義<strong>流量 f：</strong>$E → R$<ul>
+<li><strong>每個點流入水量等於流出水量</strong></li>
+</ul>
+</li>
+<li>容量限制（Capacity constraints）<ul>
+<li>$\forall(u,v )\in  E \Rightarrow f(u,v)\leq c(u,v)$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>假設一流量網路 G&#x3D;(V,E)，其「殘餘網路」（Residual network）為</p>
+<ul>
+<li>有向圖 $G_f &#x3D; (V, E_f)$<ul>
+<li>$E_f &#x3D; ｛(u,v)︱^{（1）}0&lt;f(u,v)&lt;c(u,v) ;或; ^{（2）}f(u,v)&lt;0｝$</li>
+<li>上述意旨 $(u,v)\in E_f$ 代表<strong>其邊「尚有容量可以自 u 至 v」</strong><ul>
+<li>假設 $f(u,v)&gt;0$ 代表有流量自 u 至 v，則其邊有容量的可能有二<ul>
+<li><strong>（1）其流量尚未達到容量（</strong>$f(u,v) &lt; c(u,v)$<strong>）</strong><ul>
+<li>殘餘容量：$c_f(u,v) &#x3D; c(u,v)-f(u,v)$</li>
+</ul>
+</li>
+<li><strong>（2）流量可以使其產生「回推容量」</strong><ul>
+<li>因為 $f(u,v)$ 代表<strong>「u 至 v 有流量通過」</strong><ul>
+<li>則<strong>「v 至 u」</strong>可將通過的流量<strong>回推</strong>，進而產生<strong>容量</strong></li>
+</ul>
+</li>
+<li>殘餘容量：$c_f(v,u) &#x3D; f(u,v) &#x3D; -f(v,u)$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>「流量網路」的邊在「殘餘網路」中<strong>至多會被拆成兩條邊</strong><ul>
+<li>$∣E_f∣ \leq 2∣E∣$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>假設在 $G_f$ 中，<strong>從「源點」至「匯點」存在一條路徑</strong><ul>
+<li><strong>代表「源點」至「匯點」尚有容量</strong></li>
+<li>假設其路徑中可以產生最小流量 $f’$<ul>
+<li>原流量網路的流量可增加為 $f+f’$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>增廣路徑定裡</strong></p>
+<ul>
+<li><strong>「一個網路達到最大流」</strong>$\Leftrightarrow$ <strong>「其殘餘網路中『源點』至『匯點』沒有路徑」</strong></li>
+</ul>
+</blockquote>
+<h3 id="Max-flow-problem"><a href="#Max-flow-problem" class="headerlink" title="Max flow problem"></a>Max flow problem</h3><ul>
+<li>Input<ul>
+<li>一個「Flow network」 G &#x3D; (V,E)</li>
+</ul>
+</li>
+<li>Output<ul>
+<li>此網路的最大流量（源點最大流至匯點的水量）</li>
+</ul>
+</li>
+</ul>
+<!-- ![flownetwork](\willywangkaa\images\flownetwork.png) -->
+
+
+
+<h4 id="Ford-Fulkerson-algorithm"><a href="#Ford-Fulkerson-algorithm" class="headerlink" title="Ford-Fulkerson algorithm"></a>Ford-Fulkerson algorithm</h4><p>步驟</p>
+<ol>
+<li>先將「流量網路」G 轉換為「殘餘網路」$G_f$</li>
+<li>在 $G_f$ 中自 s → t 找一條增廣路徑 p（隨便的方法找一條路徑，如：DFS）<ul>
+<li>令 f 為 p 上最小的權重<ul>
+<li>$\overrightarrow{P}$ 上每一邊的容量減少 f</li>
+<li>$\overleftarrow{P}$上的每一邊容量增加 f<strong>（回推容量）</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>重複第二步直到找不到增廣路徑 p</li>
+<li>指向頂點 s 邊，其容量總和即為「最大流量」</li>
+</ol>
+<ul>
+<li>Algorithm</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Graph <span class="title">fordfulkerson</span><span class="params">(Graph G, node s, node t)</span> </span>&#123;</span><br><span class="line">    G_f = <span class="built_in">residualnetwork</span>(G);</span><br><span class="line">    path = <span class="built_in">exist_path</span>(G_f,s,t);</span><br><span class="line">    <span class="keyword">while</span>(path) &#123;</span><br><span class="line">        G_f = <span class="built_in">add_argumenting_path</span>(G_f, path);</span><br><span class="line">        path = <span class="built_in">exist_path</span>(G_f,s,t);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> G_f;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>Time complexity<ul>
+<li>$O(∣f^＊∣\cdot E)$<ul>
+<li>$∣f^＊∣$ 為最大流量</li>
+<li><strong>效能差</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<ul>
+<li><strong>每次在第二個步找到的最小流量 f 為 1</strong><ul>
+<li>每次找增廣路徑的時間複雜度為 O(∣V∣+∣E∣)</li>
+<li><strong>必重複</strong> $∣f^＊∣$ <strong>回合找到最後總流量</strong><ul>
+<li>$O(∣f^＊∣\cdot(∣V∣+∣E∣)) &#x3D; O(∣f^＊∣\cdot E)$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<!-- > ![1549795349837](\willywangkaa\images\1549795349837.png) -->
+
+
+
+
+
+<blockquote>
+<p><strong>利用「已經求取完最大流量」的 Residual network 可得到「原本流量網路」的 Minimum cut</strong></p>
+<ul>
+<li>Minimum cut：有 (S,T) 兩個子圖，滿足<ul>
+<li>S $\cup$ T &#x3D; V 且 S $\cap$ T &#x3D; $\phi$</li>
+<li>從子圖 S 連至子圖 T 之所有邊的權重和為所有「Cut」中最小</li>
+</ul>
+</li>
+</ul>
+<p>在求完最大流量的「Residual network」中，令</p>
+<ul>
+<li>S：｛自 S 可以到達的節點｝</li>
+<li>T：｛自 T 可以到達的節點｝</li>
+</ul>
+<p>則 (S, T) 是原本「Flow network」的「Minimum cut」</p>
+</blockquote>
+<h4 id="Edmond-Karp-algorithm"><a href="#Edmond-Karp-algorithm" class="headerlink" title="Edmond-Karp algorithm"></a>Edmond-Karp algorithm</h4><p>步驟</p>
+<ol>
+<li>先將「流量網路」G 轉換為「殘餘網路」$G_f$</li>
+<li>自 s 作「<strong>Breadth first search</strong>」至 t 找到路徑 p<ul>
+<li>令 f 為 p 上最小的權重<ul>
+<li>$\overrightarrow{P}$ 上每一邊的容量減少 f</li>
+<li>$\overleftarrow{P}$上的每一邊容量增加 f<strong>（回推容量）</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>重複第二步直到找不到增廣路徑 p</li>
+<li>指向頂點 s 邊，其容量總和即為「最大流量」</li>
+</ol>
+<ul>
+<li>Time complexity<ul>
+<li>以「Breadth first search」找最多 O(∣V∣∣E∣) 條「增廣路徑」<ul>
+<li>「鄰接矩陣」：$O(∣V∣^2∣V∣∣E∣) &#x3D; O(∣V∣^3∣E∣)$</li>
+<li>「鄰接串列」：$O((∣V∣+∣E∣)(∣V∣∣E∣)) &#x3D; O(∣V∣∣E∣^2)$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="時間複雜度證明"><a href="#時間複雜度證明" class="headerlink" title="時間複雜度證明"></a>時間複雜度證明</h5><p><strong>證明最短增廣路徑（Argument path）的長度「非遞減」（反證法）</strong></p>
+<blockquote>
+<p>$G_f &#x3D; (V, E_f)$：<strong>某次增廣前的「殘餘網路圖」</strong></p>
+<p>$G_{f’} &#x3D; (V, E_{f’})$：<strong>某次增廣後的「殘餘網路圖」</strong></p>
+<ul>
+<li>$\forall x \in V$<ul>
+<li>$\delta_f (s, x)$ 為源點 s 到 x 頂點在 $G_f$ <strong>最短路徑</strong></li>
+<li>$\delta_{f’} (s, x)$ 為源點 s 到 x 頂點在 $G_f$ <strong>最短路徑</strong></li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ol>
+<li><p>假設 v 頂點是「在某次增廣後 $\delta_{f} (s, v)$ 長度變小的頂點」</p>
+<ul>
+<li>$\Rightarrow \delta_f(s,v) &gt; \delta_{f’}(s,v)$</li>
+</ul>
+</li>
+<li><p>假設 u 頂點為最短路徑 $\delta_{f’}(s,v)$ 裡 v 的前一個頂點（<strong>在該次增廣後其最短路徑有可能變長或不變</strong>）</p>
+<ul>
+<li>$\Rightarrow \delta_{f’}(s,v) &#x3D; \delta_{f’}(s,u)+1$</li>
+<li>因為「增廣前 s 至 u 的最短路徑」≦「增廣後 s 至 u 的最短路徑」<ul>
+<li>$\Rightarrow \delta_f(s,u) \leq \delta_{f’}(s,u) $<ul>
+<li>則 $\Rightarrow \delta_f(s,u)+1 \leq \delta_{f’}(s,u)+1 &#x3D; \delta_{f’}(s,v) &lt; \delta_f(s,v)\ \Rightarrow \delta_f(s,v)&gt; \delta_f(s,u)+1 ;……（1）$</li>
+</ul>
+</li>
+<li>如果 $(u,v) \in E_f$<ul>
+<li>由於三角定裡則「s 至 v 的最短路徑」必小於等於「s 至 u 的最短路徑」加上 (u,v) 邊<ul>
+<li>$\Rightarrow \delta_f(s,v) \leq \delta(s,u)+1$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>因為（1）則 $(u,v)\notin E_f$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>因為 $(u,v) \in E_{f’}$ 且 $(u,v) \notin E_f$</p>
+<ul>
+<li>所以可以知道<strong>「此次增廣必經過 (v, u)」</strong><ul>
+<li>則「s 至 u 的最短路徑」等於「s 至 v 的最短路徑」+ 1<ul>
+<li>$\Rightarrow \delta_f(s,u) &#x3D; \delta_f(s,v)+1 ;…..（2）$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>將（2）帶入（1）中<ul>
+<li>$\Rightarrow \delta_f(s,v) &gt; (\delta_f(s,v) + 1)+1 $（矛盾）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>所以 v 頂點不存在，證明<strong>「最短增廣路徑」長度非遞減</strong></p>
+</li>
+</ol>
+<p><strong>證明增廣次數為 O(∣V∣∣E∣)</strong></p>
+<blockquote>
+<ul>
+<li>在一次增廣中<ul>
+<li><strong>定義「Critical edge」為該增廣路徑中容量最小的邊（</strong>若有多條取其一即可）</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ol>
+<li>假設 (u,v) 為 k-th 增廣中的「Critical edge」<ul>
+<li>則 k-th 增廣後 $(u,v) \notin E_{f’}$</li>
+<li>若在 k-th 增廣之後的 i-th 增廣後 (u,v) 再度出現（i &gt; k）<ul>
+<li>則 i-th 增廣必定沿著 (u,v) 進行增廣</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>對 k-th 與 i-th 進行討論<ul>
+<li>在 k-th 增廣前，存在 $\delta_{f^{作 ;k–th ; 之前}}(s,v)+1 &#x3D; \delta_{f^{作 ;k–th ; 之前}}(s,u)$</li>
+<li>在 i-th 增廣前，存在 $\delta_{f^{作 ;i–th ; 之前}}(s,u)+1 &#x3D; \delta_{f^{作 ;i–th ; 之前}}(s,v)$</li>
+<li>然而已知「最短增廣路徑長度非遞減」<ul>
+<li>故 $\delta_{f^{作 ;k–th ; 之前}}(s,v)+2 \leq \delta_{f^{作 ;i–th ; 之前}}(s,u)$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>最短增廣路的長度不超過 ∣V∣-1<ul>
+<li>因為一條邊為「Critical edge」時，其增廣路徑會不斷累加 2<ul>
+<li>故一條邊成為「Critical edge」的次數不超過 $\frac{∣V∣-1}{2}$</li>
+</ul>
+</li>
+<li>每次增廣最少有一條「Critical edge」<ul>
+<li>由定義可以知道 $∣E_f∣ \leq 2∣E∣$</li>
+</ul>
+</li>
+<li>所以最差的情況就是每條邊都被選成為增廣路徑<ul>
+<li>$O(\frac{∣V∣-1}{2}\cdot 2∣E∣) &#x3D;O(∣V∣∣E∣) $</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="Dinic-algorithm"><a href="#Dinic-algorithm" class="headerlink" title="Dinic algorithm"></a>Dinic algorithm</h4><p>「Shortest augmenting path algorithm」改良版，作一次可以找到所有「一樣長的最短擴充路徑」</p>
+<p>步驟</p>
+<ol>
+<li>計算「剩餘網路」各點到源點（匯點）的最短距離</li>
+<li>建立「容許網路」（Admissible network）<ul>
+<li>尋找「阻塞流」（Blocking flow），並擴充其流量</li>
+</ul>
+</li>
+<li>重覆步驟 1、2 最多 V-1 次，直到無法擴充流量</li>
+</ol>
+<blockquote>
+<ul>
+<li><p>在「剩餘網路」中</p>
+<ul>
+<li>以阻塞流擴充流量，就斷絕了所有「一樣長的最短擴充路徑」</li>
+</ul>
+</li>
+<li><p>在「容許網路」中</p>
+<ul>
+<li>所有「由源點到匯點的最短路徑」都被阻塞<ul>
+<li>在「剩餘網路」中，在「Edmond-Karp algorithm」中已證明源點到匯點的最短距離會增加</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>「擴充路徑」的長度範圍是 1 到 V-1 （Simple path）</p>
+<ul>
+<li>故最多找 V-1 次阻塞流</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>時間複雜度<ul>
+<li>O(∣V∣²∣E∣)<ul>
+<li>找一個阻塞流：O(∣V∣∣E∣) </li>
+<li>最多找：O(∣V∣)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="容許網路"><a href="#容許網路" class="headerlink" title="容許網路"></a>容許網路</h5><p>在「剩餘網路」上以源點（匯點）作為起點，計算源點（匯點）到每一點的<strong>最短距離</strong></p>
+<ul>
+<li>在剩餘網路中<ul>
+<li>一條由<strong>源點往匯點方向</strong>的邊<ul>
+<li>若兩其端點最短距離相差一<ul>
+<li>稱作「容許邊」（Admissible edge）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>所有容許邊，整體視作一張圖<ul>
+<li>稱作「容許網路」（Admissible Network）</li>
+</ul>
+</li>
+</ul>
+<p>「流量網路」G &#x3D; (V,E)</p>
+<!-- ![1549793031130](\willywangkaa\images\1549793031130.png) -->
+
+
+
+<p>其「剩餘網路」$G_f &#x3D; (V, E_f)$</p>
+<!-- ![1549793298592](\willywangkaa\images\1549793298592.png) -->
+
+
+
+<p>一種由源點開始的「容許網路」</p>
+<!-- ![1549793355647](\willywangkaa\images\1549793355647.png) -->
+
+
+
+<p>一種由匯點開始的「容許網路」</p>
+<!-- ![1549793388148](\willywangkaa\images\1549793388148.png) -->
+
+
+
+<blockquote>
+<ul>
+<li>容許網路<ul>
+<li>為有向無環圖（DAG）或稱作分層圖（Level graph）<ul>
+<li>容許網路可以畫成一層一層的模樣，只有相鄰的層有邊</li>
+</ul>
+</li>
+<li>任意一條由源點到匯點的路徑<ul>
+<li>為最短擴充路徑</li>
+</ul>
+</li>
+<li>藉由容許網路，可以迅速找到所有「一樣長的最短擴充路徑」</li>
+</ul>
+</li>
+</ul>
+<p>容許網路就是剩餘網路的「最短路徑圖」</p>
+</blockquote>
+<!-- > ![1549793497499](\willywangkaa\images\1549793497499.png) -->
+<blockquote>
+</blockquote>
+<!-- > （左圖為源點開始的「容許網路」分層圖；右圖為匯點開始的「容許網路」分層圖） -->
+
+
+
+<h5 id="阻塞流"><a href="#阻塞流" class="headerlink" title="阻塞流"></a>阻塞流</h5><p>在容許網路中一個源點到匯點的流，無法再擴充流量稱作「阻塞流」（通常會出現許多種選擇，不必選其最大流）</p>
+<ol>
+<li>逐次建立的「容許網路」中<ul>
+<li><strong>會找到所有「一樣長的最短擴充路徑」</strong></li>
+</ul>
+</li>
+<li>在該「容許網路」中<strong>讓擴充的流量到達瓶頸</strong><ul>
+<li>整體形成「阻塞流」</li>
+</ul>
+</li>
+</ol>
+<!-- ![1549794137394](\willywangkaa\images\1549794137394.png) -->
+
+<blockquote>
+<ul>
+<li><p>容許網路上尋找最短擴充路徑</p>
+<ul>
+<li>不必作溯洄沖減（溯洄沖減會增加路徑長度，最後得到的不是最短擴充路徑）</li>
+</ul>
+</li>
+<li><p>源點隨意往匯點走，若遇到死胡同，就重頭開始走，下次避免再走到死胡同</p>
+<ul>
+<li><strong>改由匯點隨意往源點走，就不會遇到死胡同</strong></li>
+</ul>
+</li>
+<li><p>若順利走到匯點，就形成一條最短擴充路徑，並且擴充流量</p>
+<ul>
+<li><strong>一條最短擴充路徑</strong><ul>
+<li>至少有<strong>一條邊</strong>是瓶頸</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>容許網路最多只有 E 條邊能作為瓶頸</p>
+<ul>
+<li>所以一個阻塞流最多只有 E 條最短擴充路徑</li>
+<li>從源點走到匯點並擴充流量需時 O(∣V∣)<ul>
+<li>最多有 O(∣E∣) 條最短擴充路徑，所以找出一個阻塞流的時間複雜度為 O(∣V∣∣E∣)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h4 id="補充例題"><a href="#補充例題" class="headerlink" title="補充例題"></a>補充例題</h4><p><strong>Example</strong>（P.4-80 ex.20；<strong>Escape problem</strong>）</p>
+<!-- ![escapeproblem](\willywangkaa\images\escapeproblem.png) -->
+
+
+
+<blockquote>
+<p>將問題轉換成「邊與點均有 <strong>Capacity</strong> 的最大流量問題」</p>
+<p><strong>（將問題「Reduce」至「Flow network」中解決）</strong></p>
+</blockquote>
+<!-- ![escapeproblem_sol](\willywangkaa\images\escapeproblem_sol.png) -->
+
+
+
+<p>給定一個「Escape problem」的格子圖 ( Grid；有 m 個<strong>起點</strong>與 4n-4 個<strong>出口</strong> )</p>
+<p>建立「Flow network」G&#x3D;(V,E)：</p>
+<ol>
+<li>建立一個「Source」節點 S 並與逃生問題中的<strong>起點</strong>（藍色節點）相接</li>
+<li>建立一個「Sink」節點 T 並與逃生問題中的<strong>邊界點</strong>（黃色區塊）的點相接</li>
+<li>「Grid」上的每一條無向邊 (u,v) ，在 G 中建立相對應的有向邊 (u,v) 與 (v,u)</li>
+<li>將每一個節點與邊的流量接設定為 1</li>
+</ol>
+<p>若在 G 中能找到最大流量為 m，則亦可以在「Grid」中找到一個逃生的方法。</p>
+<blockquote>
+<p><strong>點與邊均有「Capacity」 的流量網路可以用傳統的流量網路實現</strong></p>
+</blockquote>
+<!-- ![escapeproblem_solconti](\willywangkaa\images\escapeproblem_solconti.png) -->
+
+
+
+
+
+<!-- **Example（2）（101交通大學資料結構與演算法）** -->
+
+<p>This question is about the max flow problem</p>
+<ul>
+<li><strong>Which of the following statements is wrong?</strong><ul>
+<li>（A）By the Ford-Fulkerson algorithm we can find the maximum flow.</li>
+<li>（B）Given a flow network G&#x3D;(V,E), Edmond-Karp algorithm has time complexity $O(∣V∣∣E∣^2)$.</li>
+<li>（C）The time complexity of Ford-Fulkerson algorithm depend on the capacity.</li>
+<li><strong>（D）If each edge has a different capacity, then there exists a unique minimum cut.</strong></li>
+<li>（E）The maximum flow is equal to the capacity of a minimum cut.</li>
+</ul>
+</li>
+</ul>
+<!-- ![1549709412486](\willywangkaa\images\1549709412486.png) -->
+
+<ul>
+<li><strong>Which statement is wrong for a flow network G&#x3D;(V,E)?</strong><ul>
+<li>（A）If f is a maximum flow in G, <strong>then the corresponding residual network contains no augmenting path.</strong></li>
+<li>（B）For any cut (S,T), the capacity of the cut is not smaller than the value of the flow crossing this cut.</li>
+<li>（C）The value of any flow f in G is bounded above by the capacity of any cut of G.</li>
+<li><strong>（D）If all edges of G have different capacities, then there exists a unique flow f that gives the maximum flow.</strong></li>
+<li>（E）The capacity of each edge of G can be any non-negative number.</li>
+</ul>
+</li>
+</ul>
+<!-- ![1549708938056](\willywangkaa\images\1549708938056.png) -->
+
+
+
+<ul>
+<li><strong>Let G&#x3D;(V,E) be a bipartite graph, where V &#x3D; L ∪ R. Which statement is wrong about finding a maximum  bipartite matching?</strong><ul>
+<li>（A）It can be solved by constructing a corresponding flow network and finding the maximum flow.</li>
+<li>（B）The corresponding flow network can be obtained by adding two vertices s, t and edges from s to vertices in L, and edges from vertices in R to t.</li>
+<li>（C）The capacity of each edge in the corresponding flow network is set to 1.</li>
+<li><strong>（D）The maximum flow of the corresponding flow network is always integral and the flow value of each edge is integral as well.</strong></li>
+<li>（E）The cardinality of a maximum matching of G is equal to the maximum flow of the corresponding flow network.</li>
+</ul>
+</li>
+</ul>
+<p><strong>「Maximum flow」必為整數，但是 Edge 上的「Flow」未必</strong></p>
+<!-- ![1549709744238](\willywangkaa\images\1549709744238.png) -->
+
+
+
+
+
+<h2 id="其它問題"><a href="#其它問題" class="headerlink" title="其它問題"></a>其它問題</h2><ul>
+<li><strong>問題的要求即使有小變化，可能使其難度改變很大</strong><ul>
+<li>Shortest path problem（Polynomial）與 <strong>Longest path problem（Non-deterministic polynomial）</strong></li>
+<li>Minimum cut（Polynomial）與 <strong>Maximum cut（Non-deterministic polynomial）</strong></li>
+<li><strong>Euler circuit（Polynomial）</strong>與 Hamilton cycle（NP-Complete）</li>
+</ul>
+</li>
+<li><strong>同一個問題，若給的環境不同，難度亦可能相差很多</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Graph</th>
+<th>Tree</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Longest path problem</strong></td>
+<td>NPC</td>
+<td>Linear time（4-66 ex.6）</td>
+</tr>
+<tr>
+<td><strong>Minimum vertex cover</strong></td>
+<td>NPC</td>
+<td>Linear time（Polynomial）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Vertex cover：會和圖上所有邊相連的一個<strong>點集合</strong></p>
+<p>下圖的「Vertex cover」為｛b, d, f｝</p>
+</blockquote>
+<!-- ![vertexcover](\willywangkaa\images\vertexcover.png) -->
+
+
+
+<h1 id="補充例題-1"><a href="#補充例題-1" class="headerlink" title="補充例題"></a>補充例題</h1><!-- Example（100 交通大學資料結構與演算法） -->
+
+<ul>
+<li>Suppose there are several cities along a highway (from the left to the right on the map), which has no forks</li>
+<li>Given the distances between the neighboring cities, we can compute the distance between any two cities<ul>
+<li>For example, given 4 cities, in order, (A,B,C,D) and the distances between neighboring cities are: distance(A,B)&#x3D;1, distance(B, C)&#x3D;2, distance(C,D)&#x3D;4</li>
+<li>Then we can compute the distance matrix</li>
+</ul>
+</li>
+<li>In this problem, we consider the reverse problem<ul>
+<li>Given the distance between all pair of the cities, we want to recover the order of the cities along the highway</li>
+<li>Suppose there are N cities and we only know the distances between all pairs of cities, that is, there are $\frac{N(N-1)}{2}$ number in arbitrary order</li>
+<li>For convenience, let the leftmost city be the first city and the rightmost city be the last one and order cities accordingly</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>1</td>
+<td>3</td>
+<td>7</td>
+</tr>
+<tr>
+<td>B</td>
+<td></td>
+<td>2</td>
+<td>6</td>
+</tr>
+<tr>
+<td>C</td>
+<td></td>
+<td></td>
+<td>4</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>（中譯）</p>
+<ul>
+<li>假設有數個在「無岔路高速公路」旁的城市（在地圖上為由左至右）</li>
+<li>當每個相鄰城市的距離得知時，我們可以計算出任兩個城市之間的距離<ul>
+<li>舉例來說，依序給定四個城市（A、B、C、D）與每個相鄰城市的距離：<ul>
+<li>A 與 B 距離 &#x3D; 1</li>
+<li>B 與 C 距離 &#x3D; 2</li>
+<li>C 與 D 距離 &#x3D; 4</li>
+</ul>
+</li>
+<li>則我們可以計算出其距離矩陣</li>
+</ul>
+</li>
+<li>在此問題中要考慮的是「逆向工程問題」<ul>
+<li>給定任兩個城市之間的距離（未給出是哪兩個城市，只知道距離資訊），欲將原始相鄰城市的距離求出</li>
+<li>假設知道 N 個城市與城市的距離，也就是說會給定一串大小為 $\frac{N(N-1)}{2}$ 且無序的數字數列</li>
+<li>為了方便計算，讓最左邊的城市當作第一個城市最右邊的城市為最後一個城市</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p><strong>Which of the following is false?</strong></p>
+<ol>
+<li>The largest value must be the distance of <strong>the first city and last city along the highway</strong></li>
+<li>It can be solved by <strong>searching</strong></li>
+<li>If the input has an answer, <strong>then it is unique</strong></li>
+<li>The second largest value can be the distance of the first city and second to the last city along the highway</li>
+<li>The second largest value can be the distance of <strong>the second city and the last city along the highway</strong></li>
+</ol>
+<p><strong>Ans: (3)</strong></p>
+<p><strong>Suppose there are 6 cities and the distance between each pair of the cities are: 9, 8, 8, 7, 6, 6, 5, 5, 3, 3, 3, 2, 2, 1, 1. Which of the following is correct ?</strong></p>
+<ol>
+<li>There is no solution for this input</li>
+<li>The distance of the second city and the third city is 3</li>
+<li>The distance of the fourth city and the fifth city is 1</li>
+<li>The distance of the third city and the fourth city is 3</li>
+<li>The distance of the second city and the third city is 8</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>6</td>
+<td>8</td>
+<td>9</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td>2</td>
+<td>5</td>
+<td>7</td>
+<td>8</td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td></td>
+<td>3</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td></td>
+<td></td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>5</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p><strong>Ans: (4)</strong></p>
+<!-- Example（105 成功大學資料結構與演算法） -->
+
+<p>（參考：<a target="_blank" rel="noopener" href="http://cs.jhu.edu/~cs363/fall2013/assign8_sln.pdf">600.363&#x2F;463 Algorithms - Fall 2013 Solution to Assignment 8 - JHU CS</a>、<a target="_blank" rel="noopener" href="https://www.ptt.cc/bbs/Grad-ProbAsk/M.1550727264.A.BB0.html">105成大資演第7題</a>）</p>
+<ul>
+<li>We are given a direct graph G&#x3D;(V,E) on which each edge (u,v)∈E has an associated value <strong>r(u,v), which is a read number in the range 0≦r(u,v)≦1 that represents the reliability of a communication channel from u to v</strong></li>
+<li>We interpret r(u,v) as <strong>the probabilities that the channel from u to v will not fail</strong>, and we assume that these probabilities are independent</li>
+<li>Given an efficient algorithm to find the most reliability path between two given vertices</li>
+</ul>
+<blockquote>
+<p>欲找到自 u 至 v 最可靠的路徑，最大化其路徑上的成功傳送機率乘積</p>
+<ul>
+<li>令 s 為起點、 t 為終點<ul>
+<li>p&#x3D;($v_0, v_1, \ldots, v_k$)<ul>
+<li>$v_0 &#x3D; s, v_k &#x3D; t$</li>
+</ul>
+</li>
+<li>p&#x3D;argument path, $max(\prod_{i &#x3D; 0}^k r(v_{i-1},v_i))$</li>
+</ul>
+</li>
+<li>將其問題轉換成「Single source shortest path problem」<ul>
+<li><strong>轉換權重</strong><ul>
+<li>用對數含函數轉換<ul>
+<li>$\Rightarrow \log r(u,v)$</li>
+<li>連乘轉換為連加<ul>
+<li>$max(\sum_{i &#x3D; 0}^k r(v_{i-1},v_i))​$</li>
+</ul>
+</li>
+<li><strong>對數函數不改變權重單調性</strong><ul>
+<li><a href="%5Cwillywangkaa%5C2018%5C12%5C02%5CData-structure-graph#johnsons-algorithm">單調性改變範例 - Johnson’s algorithm</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>轉換為「最短路徑問題」<ul>
+<li><strong>取其負值將最大路徑問題轉換為最小路徑問題</strong></li>
+<li>$\Rightarrow w(u,v) &#x3D; -\log r(u,v)$<ul>
+<li>$min(\sum_{i &#x3D; 0}^k w(v_{i-1},v_i))$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>以「Dijkstra’s algorithm」解決轉換後的問題</strong><ul>
+<li>p&#x3D;argument path, $min(\sum_{i &#x3D; 0}^k w(v_{i-1},v_i))$</li>
+<li>時間複雜度：O(∣V∣log∣V∣+∣E∣)</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/17/Algorithm-Z/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Francis">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FrancisTan">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/02/17/Algorithm-Z/" class="post-title-link" itemprop="url">Algorithm - Z 演算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-02-17 04:38:51 / Modified: 04:40:41" itemprop="dateCreated datePublished" datetime="2023-02-17T04:38:51+08:00">2023-02-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <!-- title: Algorithm - Z 演算法
+author: Willy Wang
+
+date: 2018-03-19 13:27:00
+--- -->
+<h1 id="Z-演算法"><a href="#Z-演算法" class="headerlink" title="Z 演算法"></a>Z 演算法</h1><p>可以線性時間在一段<strong>文本（Text）</strong> 裡面找到所有我們欲求的<strong>段落（Pattern）</strong></p>
+<ul>
+<li>文本（Text）的長度為 $n$ </li>
+<li>段落（Pattern）為 $m$</li>
+</ul>
+<p>搜尋過程需要線性等級的時間複雜度：$O(m+n)$</p>
+<blockquote>
+<p>雖然這個演算法需要的空間（Space complexity）與時間複雜度（Time complexity）都與<strong>KMP algorithm</strong>一致，但是這個演算法比起「KMP algorithm」還要容易了解</p>
+<p>KMP algorithm：每個前綴與其後綴的次長共同前綴（最長的後綴）<br>Z algorithm：每個後綴與母字串的最長共同前綴（單純的長度）</p>
+<p>首先，我們需要一個 $Z$陣列（$Z$ array）</p>
+</blockquote>
+<h2 id="Z-陣列"><a href="#Z-陣列" class="headerlink" title="$Z$ 陣列"></a>$Z$ 陣列</h2><p>當我們將欲檢索的文本存為一個字串 $ str[0 \ldots n-1] $ 時，同時也建立一個與字串一樣長的$Z$陣列。<br>在$Z$陣列中，第 $i$ 元素紀錄「**最長共同前總和 (Longest Common Prefix)**的長度」，而 <em>LCP 的長度</em> 是由「從 $i$ 開始的後總和 (Postfix)」與「該文本」共同決定。<br>( **注意： ** $Z[0]$ <strong>毫無意義可言，因為從第0個開始的後總和(Postfix) 必與原本的文本字串相同。</strong> )</p>
+<!-- 大致上我們可以看成如下的函式： -->
+
+<!-- ![Z演算法的表示法](\willywangkaa\images\Z演算法的表示法.png) -->
+
+<p>$Ex.$</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Index            0   1   2   3   4   5   6   7   8   9  10  11 </span><br><span class="line">Text             a   a   b   c   a   a   b   x   a   a   a   z</span><br><span class="line">Z values             1   0   0   3   1   0   0   2   2   1   0 </span><br></pre></td></tr></table></figure>
+<p>$More$ $ex.$</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">str  = &quot;aaaaaa&quot;</span><br><span class="line">Z[]  = &#123;x, 5, 4, 3, 2, 1&#125;</span><br><span class="line"></span><br><span class="line">str = &quot;aabaacd&quot;</span><br><span class="line">Z[] = &#123;x, 1, 0, 2, 1, 0, 0&#125;</span><br><span class="line"></span><br><span class="line">str = &quot;abababab&quot;</span><br><span class="line">Z[] = &#123;x, 0, 6, 0, 4, 0, 2, 0&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Z-陣列如何幫助演算法加速"><a href="#Z-陣列如何幫助演算法加速" class="headerlink" title="$Z$ 陣列如何幫助演算法加速?"></a>$Z$ 陣列如何幫助演算法加速?</h2><p>這個演算法的想法是將段落(pattern)與文本字串(text string)連接起來，若視段落(pattern)為「P」，視文本字串(text string)為「T」，並加上一個從未在段落與文本中出現過的<em>字元</em>「\$」再產生出如「P$T」的字串。</p>
+<p>最後，我們再產生一個屬於「P$T」的 Z陣列，在 Z陣列之中，若該 Z值等於段落(pattern)的長度，段落出現在該處。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Example:</span><br><span class="line">Pattern P = &quot;aab&quot;,  Text T = &quot;baabaa&quot;</span><br><span class="line"></span><br><span class="line">The concatenated string is</span><br><span class="line">&quot;a, a, b, $, b, a, a ,b ,a, a&quot;.</span><br><span class="line">Z array for above concatenated string is </span><br><span class="line">&#123;x, 1, 0, 0, 0, 3, 1, 0, 2, 1&#125;.</span><br><span class="line">                ^</span><br><span class="line">Since length of pattern is 3, the value 3 in Z array </span><br><span class="line">indicates presence of pattern.</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="如何建立-Z-陣列"><a href="#如何建立-Z-陣列" class="headerlink" title="如何建立 $Z$陣列"></a>如何建立 $Z$陣列</h2><p>最簡單的就是使用兩個迴圈，外層迴圈將整個「P$T」跑過一遍，內層迴圈則是看看到底 i 位置的<strong>後總和</strong>與「P$T」的LCP長度為何。<br>$Time$ $complexity:$<br>$$O(n^2)$$</p>
+<p>我們當然可以使用另一種方法讓建立陣列的時間複雜度降低。<br>此演算法的關鍵在於要維護一個區間$[L \ldots R]$，$R$ 的位置代表由 $L$ 處之後可以和整個字串最長的<strong>前總和</strong>重疊到的最後一個位置( 換句話說：$[L \ldots R]$是整個字串的<strong>前綴子字串</strong> )，若完全不重疊，則 $L$ 與 $R$相等。</p>
+<ul>
+<li>步驟 ($i$ 為當前位置)</li>
+</ul>
+<ol>
+<li>若 $i &gt; R$ ，就代表當前 $i$ 沒有經過任何<strong>「P$S」的前綴子字串</strong>，所以重置 $L$ 與 $R$ 的位置($L &#x3D; i, R &#x3D; i$)，經由比對<strong>「P$S」的前綴</strong>與 <strong>$i$ 之後的前綴</strong>，並找出最長的子字串($R$ 的位置)，計算新的 $L$ 與 $R$ 的位置，也一併將 $Z[i]$值算出來($&#x3D; R - L + 1$)。</li>
+<li>若 $i \leq R$ ，令 $K &#x3D; i - L$ ，再來我們知道 $Z[i] \geq  min(Z[K], R-i+1)$ 因為$String[i \ldots]$與$String[K\ldots]$共同前$R-i+1$個字元必然為[P$T]的<strong>前綴子字串</strong>。現在有兩種情形會發生：</li>
+</ol>
+<ul>
+<li>case1：<br>若$Z[K] &lt; R-i+1$ ，代表沒有任何<strong>「P$S」的前綴子字串</strong> 從 $i$ 位置開始(否則 $Z[K]$ 的值會更大)，所以也意味著$Z[i] &#x3D; Z[K]$，還有區間$[L\ldots R]$不變。</li>
+<li>case2：<br>若$Z[K] \geq R-i+1$，代表$String[i \ldots]$可以和$String[0\ldots]$ 繼續比對相同的字元，也就意味有可能拓展$[L \ldots R]$ 區間，因此，我們會設 $L &#x3D; i$ ，接著從 $R$ 之後開始繼續比對<strong>「P$S」的前綴子字串</strong>，最後我們會得到新的$R$，並更新$[L \ldots R]$ 區間與計算 $Z[i]$ $( &#x3D; R - L + 1)$。</li>
+</ul>
+<p>想要了解上述的演算法可以經由這個連結觀看<a target="_blank" rel="noopener" href="http://www.utdallas.edu/~besp/demo/John2010/z-algorithm.htm">動畫</a>。</p>
+<p><strong>小視窗</strong></p>
+<!-- ![Z演算法的子問題](\willywangkaa\images\Z演算法的子問題.png) -->
+
+<p>如果一個位置 $i$ 位於之前比過的那段 $[L, R]$ 當中，他是否跟 $Z[i − L]$ 相同呢？我們可以分成三種情形：</p>
+<ol>
+<li>要比的後綴根本不在以前比過的範圍$[L, R]$內     → 就去比吧！</li>
+<li>要比的後綴在以前比過的範圍$[L, R]$但長度未知 → 還是去比吧！</li>
+<li>要比的後綴在以前比過的範圍$[L, R]$但長度已知 → 直接記錄囉！</li>
+</ol>
+<h1 id="程式碼實作"><a href="#程式碼實作" class="headerlink" title="程式碼實作"></a>程式碼實作</h1><hr>
+<h2 id="台大資工PPT-by-nkng"><a href="#台大資工PPT-by-nkng" class="headerlink" title="台大資工PPT by nkng"></a><a target="_blank" rel="noopener" href="https://www.csie.ntu.edu.tw/~sprout/algo2016/ppt_pdf/Z_value.pdf">台大資工PPT by nkng</a></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">z_build</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *S, <span class="type">int</span> *Z)</span> </span>&#123;</span><br><span class="line">    Z[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> bst = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; S[i]; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(Z[bst] + bst &lt; i) Z[i] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span> Z[i] = <span class="built_in">min</span>(Z[bst]+bst-i, Z[i-bst]);</span><br><span class="line">        <span class="keyword">while</span>(S[Z[i]] == S[i+Z[i]]) Z[i]++;</span><br><span class="line">        <span class="keyword">if</span>(Z[i] + i &gt; Z[bst] + bst) bst = i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Z-algorithm-GeeksforGeeks"><a href="#Z-algorithm-GeeksforGeeks" class="headerlink" title="Z algorithm - GeeksforGeeks"></a><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/z-algorithm-linear-time-pattern-searching-algorithm/">Z algorithm - GeeksforGeeks</a></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A C++ program that implements Z algorithm for pattern searching</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">getZarr</span><span class="params">(string str, <span class="type">int</span> Z[])</span></span>;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//  prints all occurrences of pattern in text using Z algo</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">search</span><span class="params">(string text, string pattern)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// Create concatenated string &quot;P$T&quot;</span></span><br><span class="line">    string concat = pattern + <span class="string">&quot;$&quot;</span> + text;</span><br><span class="line">    <span class="type">int</span> l = concat.<span class="built_in">length</span>();</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// Construct Z array</span></span><br><span class="line">    <span class="type">int</span> Z[l];</span><br><span class="line">    <span class="built_in">getZarr</span>(concat, Z);</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//  now looping through Z array for matching condition</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; l; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// if Z[i] (matched region) is equal to pattern</span></span><br><span class="line">        <span class="comment">// length  we got the pattern</span></span><br><span class="line">        <span class="keyword">if</span> (Z[i] == pattern.<span class="built_in">length</span>())</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;Pattern found at index &quot;</span></span><br><span class="line">                 &lt;&lt;  i - pattern.<span class="built_in">length</span>() <span class="number">-1</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//  Fills Z array for given string str[]</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">getZarr</span><span class="params">(string str, <span class="type">int</span> Z[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n = str.<span class="built_in">length</span>();</span><br><span class="line">    <span class="type">int</span> L, R, k;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// [L,R] make a window which matches with prefix of s</span></span><br><span class="line">    L = R = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// if i&gt;R nothing matches so we will calculate.</span></span><br><span class="line">        <span class="comment">// Z[i] using naive way.</span></span><br><span class="line">        <span class="keyword">if</span> (i &gt; R)</span><br><span class="line">        &#123;</span><br><span class="line">            L = R = i;</span><br><span class="line"> </span><br><span class="line">            <span class="comment">// R-L = 0 in starting, so it will start</span></span><br><span class="line">            <span class="comment">// checking from 0&#x27;th index. For example,</span></span><br><span class="line">            <span class="comment">// for &quot;ababab&quot; and i = 1, the value of R</span></span><br><span class="line">            <span class="comment">// remains 0 and Z[i] becomes 0. For string</span></span><br><span class="line">            <span class="comment">// &quot;aaaaaa&quot; and i = 1, Z[i] and R become 5</span></span><br><span class="line">            <span class="keyword">while</span> (R&lt;n &amp;&amp; str[R-L] == str[R])</span><br><span class="line">                R++;</span><br><span class="line">            Z[i] = R-L;</span><br><span class="line">            R--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// k = i-L so k corresponds to number which</span></span><br><span class="line">            <span class="comment">// matches in [L,R] interval.</span></span><br><span class="line">            k = i-L;</span><br><span class="line"> </span><br><span class="line">            <span class="comment">// if Z[k] is less than remaining interval</span></span><br><span class="line">            <span class="comment">// then Z[i] will be equal to Z[k].</span></span><br><span class="line">            <span class="comment">// For example, str = &quot;ababab&quot;, i = 3, R = 5</span></span><br><span class="line">            <span class="comment">// and L = 2</span></span><br><span class="line">            <span class="keyword">if</span> (Z[k] &lt; R-i+<span class="number">1</span>)</span><br><span class="line">                 Z[i] = Z[k];</span><br><span class="line"> </span><br><span class="line">            <span class="comment">// For example str = &quot;aaaaaa&quot; and i = 2, R is 5,</span></span><br><span class="line">            <span class="comment">// L is 0</span></span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//  else start from R  and check manually</span></span><br><span class="line">                L = i;</span><br><span class="line">                <span class="keyword">while</span> (R&lt;n &amp;&amp; str[R-L] == str[R])</span><br><span class="line">                    R++;</span><br><span class="line">                Z[i] = R-L;</span><br><span class="line">                R--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Driver program</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string text = <span class="string">&quot;GEEKS FOR GEEKS&quot;</span>;</span><br><span class="line">    string pattern = <span class="string">&quot;GEEK&quot;</span>;</span><br><span class="line">    <span class="built_in">search</span>(text, pattern);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="建國中學-2012-年資訊能力競賽培訓講義-08"><a href="#建國中學-2012-年資訊能力競賽培訓講義-08" class="headerlink" title="建國中學 2012 年資訊能力競賽培訓講義 - 08"></a><a target="_blank" rel="noopener" href="http://pisces.ck.tp.edu.tw/~peng/index.php?action=showfile&file=fab7c1879e544bcefffb4b8717f2747436e1c425c">建國中學 2012 年資訊能力競賽培訓講義 - 08</a></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Z_maker</span><span class="params">( <span class="type">int</span> z[], <span class="type">char</span> s[], <span class="type">int</span> n )</span></span>&#123;</span><br><span class="line">    z[<span class="number">0</span>] = n;</span><br><span class="line">    <span class="type">int</span> L = <span class="number">0</span>, R = <span class="number">0</span>, i, x;</span><br><span class="line">    <span class="keyword">for</span>( i = <span class="number">1</span> ; i &lt; n ; i++ )&#123;</span><br><span class="line">        <span class="keyword">if</span>( R &lt; i || z[i-L] &gt;= R-i+<span class="number">1</span> )&#123;</span><br><span class="line">            R &lt; i ? x = i : x = R+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span>( x &lt; n &amp;&amp; s[x] == s[x-i] ) x++;</span><br><span class="line">            z[i] = x-i; <span class="keyword">if</span>( i &lt; x )&#123; L = i; R = x<span class="number">-1</span>; &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> z[i] = z[i-L];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Z-algorithm-codeforces"><a href="#Z-algorithm-codeforces" class="headerlink" title="Z algorithm - codeforces"></a><a target="_blank" rel="noopener" href="http://codeforces.com/willywangkaa/entry/3107">Z algorithm - codeforces</a></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> L = <span class="number">0</span>, R = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">  <span class="keyword">if</span> (i &gt; R) &#123;</span><br><span class="line">    L = R = i;</span><br><span class="line">    <span class="keyword">while</span> (R &lt; n &amp;&amp; s[R-L] == s[R]) R++;</span><br><span class="line">    z[i] = R-L; R--;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="type">int</span> k = i-L;</span><br><span class="line">    <span class="keyword">if</span> (z[k] &lt; R-i+<span class="number">1</span>) z[i] = z[k];</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      L = i;</span><br><span class="line">      <span class="keyword">while</span> (R &lt; n &amp;&amp; s[R-L] == s[R]) R++;</span><br><span class="line">      z[i] = R-L; R--;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Z-algorithm1-日月卦長的模板庫"><a href="#Z-algorithm1-日月卦長的模板庫" class="headerlink" title="Z algorithm1 - 日月卦長的模板庫"></a><a target="_blank" rel="noopener" href="http://sunmoon-template.blogspot.tw/2015/05/z-algorithm-linear-time-pattern.html">Z algorithm1 - 日月卦長的模板庫</a></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">z_alg1</span><span class="params">(<span class="type">char</span> *s,<span class="type">int</span> len,<span class="type">int</span> *z)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> l=<span class="number">0</span>,r=<span class="number">0</span>;</span><br><span class="line">	z[<span class="number">0</span>]=len;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;len;++i)&#123;</span><br><span class="line">		z[i]=r&gt;i?<span class="built_in">min</span>(r-i+<span class="number">1</span>,z[z[l]-(r-i+<span class="number">1</span>)]):<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span>(i+z[i]&lt;len&amp;&amp;s[z[i]]==s[i+z[i]])++z[i];</span><br><span class="line">		<span class="keyword">if</span>(i+z[i]<span class="number">-1</span>&gt;r)r=i+z[i]<span class="number">-1</span>,l=i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Z-algorithm2-日月卦長的模板庫"><a href="#Z-algorithm2-日月卦長的模板庫" class="headerlink" title="Z algorithm2 - 日月卦長的模板庫"></a><a target="_blank" rel="noopener" href="http://sunmoon-template.blogspot.tw/2015/05/z-algorithm-linear-time-pattern.html">Z algorithm2 - 日月卦長的模板庫</a></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">z_alg2</span><span class="params">(<span class="type">char</span> *s,<span class="type">int</span> len,<span class="type">int</span> *z)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> l=<span class="number">0</span>,r=<span class="number">0</span>;</span><br><span class="line">	z[<span class="number">0</span>]=len;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;len;++i)&#123;</span><br><span class="line">		z[i]=i&gt;r?<span class="number">0</span>:(i-l+z[i-l]&lt;z[l]?z[i-l]:r-i+<span class="number">1</span>);</span><br><span class="line">		<span class="keyword">while</span>(i+z[i]&lt;len&amp;&amp;s[i+z[i]]==s[z[i]])++z[i];</span><br><span class="line">		<span class="keyword">if</span>(i+z[i]<span class="number">-1</span>&gt;r)r=i+z[i]<span class="number">-1</span>,l=i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="培訓-4-字串-tioj"><a href="#培訓-4-字串-tioj" class="headerlink" title="培訓-4 字串- tioj"></a><a target="_blank" rel="noopener" href="https://tioj.infor.org/uploads/attachment/11/43/4.pdf">培訓-4 字串- tioj</a></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">z_build</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* S,<span class="type">int</span> *z)</span></span>&#123;</span><br><span class="line">    z[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> bst=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;S[i];i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(z[bst]+bst&lt;i) z[i]=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span> z[i]=std::<span class="built_in">min</span>(z[bst]+bst−i,z[i−bst]);</span><br><span class="line">        <span class="keyword">while</span>(S[z[i]]==S[i+z[i]]) z[i]++;</span><br><span class="line">        <span class="keyword">if</span>(z[i]+i&gt;z[bst]+bst) bst=i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="例題"><a href="#例題" class="headerlink" title="例題"></a>例題</h1><hr>
+<p><a target="_blank" rel="noopener" href="http://codingbeans.blogspot.tw/2016/03/tioj-1725z-algorithm-massacre-at-camp.html">TIOJ 1725_Z algorithm_Massacre at Camp Happy</a></p>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><hr>
+<p><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/z-algorithm-linear-time-pattern-searching-algorithm/">Z algorithm - GeeksforGeeks</a></p>
+<p><a target="_blank" rel="noopener" href="http://pisces.ck.tp.edu.tw/~peng/index.php?action=showfile&file=fab7c1879e544bcefffb4b8717f2747436e1c425c">建國中學 2012 年資訊能力競賽培訓講義 - 08</a></p>
+<p><a target="_blank" rel="noopener" href="https://tioj.infor.org/uploads/attachment/11/43/4.pdf">培訓-4 字串- tioj</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.csie.ntu.edu.tw/~sprout/algo2016/ppt_pdf/Z_value.pdf">台大資工講義 by nkng</a></p>
+<p><a target="_blank" rel="noopener" href="http://codeforces.com/willywangkaa/entry/3107">Z algorithm - codeforces</a></p>
+<p><a target="_blank" rel="noopener" href="http://momo-funnycodes.blogspot.tw/2012/07/gusfield-algorithm.html">Gusfield algorithm - momo funny codes</a></p>
+<p><a target="_blank" rel="noopener" href="http://sunmoon-template.blogspot.tw/2015/05/z-algorithm-linear-time-pattern.html">Z algorithm - 日月卦長的模板庫</a></p>
+<h1 id="待補充"><a href="#待補充" class="headerlink" title="待補充"></a>待補充</h1><!-- --- -->
+<!-- 
+## KMP 字串比對演算法
+
+http://mropengate.blogspot.tw/2016/01/leetcode-kmpimplement-strstr.html -->
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/17/Algorithm-DynamicProgramming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Francis">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FrancisTan">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/02/17/Algorithm-DynamicProgramming/" class="post-title-link" itemprop="url">Algorithm - DynamicProgramming</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-02-17 04:30:45 / Modified: 04:35:18" itemprop="dateCreated datePublished" datetime="2023-02-17T04:30:45+08:00">2023-02-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <!-- title: Algorithm - Dynamic programming -->
+<!-- author: Willy Wang (willywangkaa) -->
+<!-- date: 2018-09-23 10:46:21
+tags: -->
+
+<h1 id="Dynamic-programming"><a href="#Dynamic-programming" class="headerlink" title="Dynamic programming"></a>Dynamic programming</h1><p>將已<strong>計算的結果</strong>記錄在<strong>表格中</strong>的技巧，目的是為了要避免<strong>重複計算相同子問題</strong>，以<strong>「Button up」</strong>的方式實踐。</p>
+<ul>
+<li>為何要使用這種方法，以<strong>費氏數列程式</strong>開始討論。</li>
+</ul>
+<p>$$<br>F_n &#x3D; \left{\begin{matrix}<br>0 &amp; , if ; n &#x3D; 0\<br>1 &amp; , if ; n &#x3D; 1\<br>F_{n-1} + F_{n-2} &amp; , if ; n \geq 2<br>\end{matrix}\right.<br>$$<br>欲求出 $F_5$ ，以遞迴程式執行，會造成「Overlapping subproblem」，如下圖 $F_2$ 重複計算了 3 次，$F_3$ 重複計算 2 次。</p>
+<!-- ![overlappingsubproblem](\willywangkaa\images\overlappingsubproblem.png) -->
+
+
+
+<!-- 使用動態表格執行之，可以省去很多不必要的重複計算，如下圖。
+
+
+
+![fibonassidp](\willywangkaa\images\fibonassidp.png) -->
+
+
+<!-- 
+- 構思動態規劃題目的流程
+  - Optimal substructure：一個**母問題的最佳解**如何由**其子問題的最佳**解構成。
+
+
+
+![observedp](\willywangkaa\images\observedp.png) -->
+
+
+
+<h2 id="Shortest-path-problem"><a href="#Shortest-path-problem" class="headerlink" title="Shortest path problem"></a>Shortest path problem</h2><ul>
+<li><strong>Optimal substructure</strong></li>
+</ul>
+<!-- ![shortestpathproblem_subproblem](\willywangkaa\images\shortestpathproblem_subproblem.png) -->
+
+
+
+<!-- > 問 longest path problem 有無 optimal substructure。
+>
+>  無，所以不可以使用動態規劃解此問題。 -->
+<blockquote>
+</blockquote>
+<!-- ![longestpathproblem](\willywangkaa\images\longestpathproblem.png) -->
+<blockquote>
+</blockquote>
+<!-- > **但是**如果此圖加上「Acyclic」、「Direct」等條件限制之後，可以用動態規劃解「longest path problem」。 -->
+
+
+
+<blockquote>
+<p>通常要在各種條件之下都可以使用<strong>動態規劃解此問題</strong>，才可以<strong>宣稱此問題可以使用動態規劃解</strong>。</p>
+</blockquote>
+<!-- - Ex (99 交大) -->
+<ul>
+<li>下列何者<strong>正確</strong>？<ul>
+<li>（a）Dynamic programming always provides polynominal time algorithm.</li>
+<li>（b）Huffman coding for compresion is a typical dynamic programming algorithm.</li>
+<li>（c）Dynamic programming use the table to design the algorithm.</li>
+<li>（d）Optimal is a important element in the dynamic programming.</li>
+<li>（e）<strong>Single source all shortest path problem</strong> has optimal substructure.</li>
+</ul>
+</li>
+<li>Ans<ul>
+<li>（a）：false。反例為 Subset-sum problem (暴力法：$O(2^n)、動態規劃法：$$O(n2^{\frac n2})$)</li>
+<li>（b）：false。為典型的 Greedy algorithm。</li>
+<li><strong>（c）</strong></li>
+<li><strong>（d）</strong></li>
+<li><strong>（e）</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="Knapsack-problem"><a href="#Knapsack-problem" class="headerlink" title="Knapsack problem"></a>Knapsack problem</h2><h3 id="Fractional-knapsack-problem"><a href="#Fractional-knapsack-problem" class="headerlink" title="Fractional knapsack problem"></a>Fractional knapsack problem</h3><blockquote>
+<ol>
+<li>此方法僅限於物品重量為正整數時</li>
+<li>0&#x2F;1 KP 為 NP - Completed 問題</li>
+</ol>
+</blockquote>
+<ul>
+<li><p>Input：</p>
+<ul>
+<li>n 個物件<ul>
+<li>第 i 個重量為 $w_i$ ，價值為 $v_i$。</li>
+</ul>
+</li>
+<li>背包最大負重<ul>
+<li>$W$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Output：</p>
+<ul>
+<li>最大的獲利值</li>
+</ul>
+</li>
+<li><p>限制條件：</p>
+<ul>
+<li>取得物品的總重量 $\leq$ W</li>
+<li>可取物品的<strong>部分</strong></li>
+</ul>
+</li>
+<li><p>想法</p>
+<ul>
+<li><strong>Greedy</strong>：從目前 $\frac{v_i}{w_i}$ 最高的物品開始拿取，直到物品取完，或是取得物品負重已達 W。</li>
+</ul>
+</li>
+<li><p>Time Complexity</p>
+<ul>
+<li>$\Theta(n\log n)$</li>
+</ul>
+</li>
+<li><p>Ex ( W &#x3D; 5 )</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>$v_i$</th>
+<th>$w_i$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>10</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>12</td>
+<td>3</td>
+</tr>
+</tbody></table>
+<p>$$<br>\frac{v_2}{w_2} &#x3D; 6 \geq \frac{v_1}{w_1} &#x3D; 5 \geq \frac{v_3}{w_3} &#x3D; 4<br>$$</p>
+<ol>
+<li>取物品 2，取該物品之 1 單位重量，背包剩餘空間 4 單位重量，獲利 6 單位價值。</li>
+<li>取物品 1，取物品之 2 單位重量，背包剩餘空間 2 單位重量，獲利 16 單位價值。</li>
+<li>取物品 3，取物品之 2 單位重量，背包剩餘空間 0 單位重量，<strong>獲利 24 單位價值</strong>。</li>
+</ol>
+<!-- ![kpdp](\willywangkaa\images\kpdp.png) -->
+
+
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0</td>
+<td>6</td>
+<td>10</td>
+<td>16</td>
+<td>16</td>
+<td>16</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0</td>
+<td>6</td>
+<td>10</td>
+<td>16</td>
+<td>18</td>
+<td><strong>22</strong></td>
+</tr>
+</tbody></table>
+<!-- - Ex ( 98 交大 ) P.3-66 ex10 -->
+<ul>
+<li>Maximize $\sum_{i &#x3D; 1}^n v_ix_i ;  subject; to \sum_{i &#x3D; 1}^n w_ix_i \leq W, 0 \leq x_i \leq 1$ </li>
+<li>Greedy choise property ( $\frac{v_1}{w_1} \geq \frac{v_2}{w_2} \geq\ldots$ )</li>
+<li>最佳解的 $x_1$ 需取多少。</li>
+</ul>
+<p>$$<br>x_n &#x3D; \left{\begin{matrix}<br>1 &amp; , if ; w_1 \leq W \<br>\frac{W}{w_1} &amp; , if ; w1 &gt; W \<br>\end{matrix}\right.<br>$$</p>
+<h3 id="0-1-Knapsack-problem"><a href="#0-1-Knapsack-problem" class="headerlink" title="0-1 Knapsack problem"></a>0-1 Knapsack problem</h3><ul>
+<li><p>Input：</p>
+<ul>
+<li>n 個物件<ul>
+<li>第 i 個重量為 $w_i$ ，價值為 $v_i$。</li>
+</ul>
+</li>
+<li>背包最大負重<ul>
+<li>$W$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Output：</p>
+<ul>
+<li>最大的獲利值</li>
+</ul>
+</li>
+<li><p>限制條件：</p>
+<ul>
+<li>取得物品的總重量 $\leq$ W</li>
+<li>只能取物品的<strong>整體</strong></li>
+</ul>
+</li>
+<li><p>想法</p>
+<ul>
+<li><p>無法使用 Greedy method 解決</p>
+</li>
+<li><p><strong>使用動態規劃解決，物品的重量必為正整數</strong></p>
+<ul>
+<li>遞迴結構：(令 $C[i][k]$ 在負重 k 之下考慮物品 1 … i 之最大獲利</li>
+</ul>
+<p>$$<br>C[i][k] &#x3D; \left{\begin{matrix}<br>0 &amp; , if ;i &#x3D; 0;OR; k &#x3D; 0 \<br>max(C[i-1][k-w_i]+v_i, C[i-1][k] )&amp; , if ; w_i \leq k \<br>C[i-1][k] &amp; , if ; w_i &gt; k \<br>\end{matrix}\right.<br>$$</p>
+</li>
+</ul>
+</li>
+<li><p>Algorithm ( Bottom up )</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">for k &lt;- 0 to w</span><br><span class="line">	c[0, k] &lt;- 0</span><br><span class="line">for i &lt;- 1 to n</span><br><span class="line">&#123;</span><br><span class="line">    c[i, 0] &lt;- 0</span><br><span class="line">    for k &lt;- 1 to w</span><br><span class="line">    &#123;</span><br><span class="line">        if k &lt; w_i</span><br><span class="line">        	c[i, k] &lt;- c[i-1, k]</span><br><span class="line">        else</span><br><span class="line">        	c[i, k] &lt;- max(c[i-1, k], c[i-1, k-w_i]+v_i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>Time complexity<ul>
+<li>$\Theta( nW )$  <strong>Pseudo-polynominal</strong></li>
+</ul>
+</li>
+<li>Space complexity<ul>
+<li>$\Theta( nW )$</li>
+</ul>
+</li>
+</ul>
+<h3 id="Branch-and-bound-解-0-1-Knapsack-problem"><a href="#Branch-and-bound-解-0-1-Knapsack-problem" class="headerlink" title="Branch and bound 解 0-1 Knapsack problem"></a>Branch and bound 解 0-1 Knapsack problem</h3><blockquote>
+<ul>
+<li>對於一個 NP-Completed 問題來說，可以使用「Branch and bound」來解決</li>
+<li>「Branch and bound」演算法中，<strong>「Bounding function」</strong>的設計會是影響整體效能最大的關鍵 ( 收斂快慢 )。</li>
+<li>Time complexity：O( 葉節點個數 )<ul>
+<li>葉節點個數取決問題本身。<ul>
+<li>組合性問題：$2^n$ </li>
+<li>排列性問題：$n!$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>將球最佳解的過程視為在一個「State space tree」中尋找最好的節點。</p>
+</li>
+<li><p>實務上，通常是設計一 個<strong>「Bounding function」</strong>以估計目前狀態可到最佳解的可能性。</p>
+<ul>
+<li>建構「State space tree」時，每次都先<strong>展開「Bounding function」的節點。( Branch )</strong></li>
+<li>在每次展開的過程中，都可以得到一個<strong>目前最佳解 (葉節點)，接著，之後不展開「Bounding function 值</strong> $\leq$ <strong>目前最佳解」</strong>的內部節點。**( Bound )**</li>
+</ul>
+</li>
+<li><p>以 Branch and bound 解 0-1 Knapsack problem</p>
+<ul>
+<li>每個節點須紀錄<ul>
+<li><strong>目前的獲利</strong></li>
+<li><strong>目前的負重</strong></li>
+<li><strong>「Bounding function」算出的值</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>為了計算「Bounding funciton」括號中要估計「Fractional knapsack」的未來最大值，需要將物品依照 $\frac{v_i}{w_i}$ 排序。</li>
+</ol>
+<p>$w  &#x3D; 4$ </p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>$v_i$</th>
+<th>$w_i$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>10</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>12</td>
+<td>3</td>
+</tr>
+</tbody></table>
+<p>$$<br>\frac{v_2}{w_2} &#x3D; 6 \geq \frac{v_1}{w_1} &#x3D; 5 \geq \frac{v_3}{w_3} &#x3D; 4<br>$$</p>
+<ol start="2">
+<li><strong>設計「Bounding function」。(括號部分就是用來估計以目前節點拓展，獲利的上限)</strong></li>
+</ol>
+<p>$$<br>Bounding ;funciotn(目前的節點)\<br>&#x3D; 在「目前的節點」上可得的獲利 + \<br>(將背包剩餘的重量以「Fractional ;knapsack ;problem」拿取剩下的物品的獲利)<br>$$</p>
+<!-- ![KPstatesearchtree](\willywangkaa\images\KPstatesearchtree.png) -->
+
+
+
+<ol start="3">
+<li>拓展節點<ol>
+<li>展開 <strong>Root</strong></li>
+<li>因為該節點「Bounding function」最大，所以展開 <strong>A</strong></li>
+<li>展開節點 <strong>C</strong></li>
+<li><strong>E</strong> 節點因為超重所以為「Infeasiable solution」</li>
+<li><strong>F</strong> 為一可能解，使 $Max &#x3D; 16$</li>
+<li>因為節點 <strong>D</strong> 在樹中較深處，先展開之</li>
+<li><strong>G</strong> 與 <strong>H</strong> 均為一解，設 $Max &#x3D; 18$ </li>
+<li>因為節點 <strong>B</strong> 的「Bounding function」$\leq$ <strong>Max</strong>，不展開該節點</li>
+</ol>
+</li>
+<li>Ans：18 ( 取<strong>物品一</strong>與<strong>物品三</strong> )</li>
+</ol>
+<h2 id="Longest-Common-Subsequence"><a href="#Longest-Common-Subsequence" class="headerlink" title="Longest Common Subsequence"></a>Longest Common Subsequence</h2><ul>
+<li>Sequence<ul>
+<li>X &#x3D; ＜a, b, c, a＞</li>
+</ul>
+</li>
+<li>Subsequence<ul>
+<li>＜a, c＞ 為 X 的「Subsequence」</li>
+</ul>
+</li>
+<li>Prefix ( 前綴 )<ul>
+<li>$X_3 &#x3D; ＜a, b, c＞$</li>
+</ul>
+</li>
+<li>Common subsequence<ul>
+<li>Y &#x3D; ＜a, c, b, c＞</li>
+<li>則＜a, c＞為 X 與 Y 的「Common subsequence」</li>
+</ul>
+</li>
+<li>Longest common subsequence<ul>
+<li>＜a, b, c＞ 為 X 與 Y 的「LCS」</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>「LCS」不一定唯一</p>
+</blockquote>
+<ul>
+<li>遞迴結構<ul>
+<li>令 $c[i , j]$ 為 $LCS(X_i, Y_j)$ 的長，則：</li>
+</ul>
+</li>
+</ul>
+<p>$$<br>c[i, j] &#x3D; \left{\begin{matrix}<br>0 &amp; , if ;i &#x3D; 0;OR; j &#x3D; 0 &amp; \<br>c[i-1, j-1] + 1 &amp; , if ; X[i] &#x3D; Y[j] &amp; \<br>max(c[i-1, j], c[i, j-1])&amp; , if ; X[i] \ne Y[j] ; &amp; （該兩個字絕對不會同時出現在LCS）<br>\end{matrix}\right.<br>$$</p>
+<ul>
+<li>演算法 ( Bottom-up )</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">for j &lt;- 0 to n</span><br><span class="line">	c[0, j] &lt;- 0</span><br><span class="line">for i &lt;- 0 to m</span><br><span class="line">	c[i, 0] &lt;- 0</span><br><span class="line">for i &lt;- 1 to m</span><br><span class="line">	for j &lt;- 1 to n</span><br><span class="line">	&#123;</span><br><span class="line">        if(X[i] = Y[i])</span><br><span class="line">        	c[i, j] = c[i-1, j-1] + 1</span><br><span class="line">        else</span><br><span class="line">        	c[i, j] = max(c[i-1, j], c[i, j-1])</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>Time complexity</p>
+<ul>
+<li>$\Theta(mn)$</li>
+</ul>
+</li>
+<li><p>Space complexity</p>
+<ul>
+<li>$\Theta(mn)$</li>
+</ul>
+</li>
+<li><p>Ex</p>
+<ul>
+<li>X &#x3D; ＜a, b, a, c＞</li>
+<li>Y &#x3D; ＜a, b, c, a＞</li>
+<li>求「LCS」</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">-</th>
+<th align="center">-</th>
+<th align="center">-</th>
+<th align="center">“a”</th>
+<th align="center">“b”</th>
+<th align="center">“a”</th>
+<th align="center">“c”</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>-</strong></td>
+<td align="center"><strong>-</strong></td>
+<td align="center"><strong>0</strong></td>
+<td align="center"><strong>1</strong></td>
+<td align="center"><strong>2</strong></td>
+<td align="center"><strong>3</strong></td>
+<td align="center"><strong>4</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>-</strong></td>
+<td align="center"><strong>0</strong></td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center"><strong>“a”</strong></td>
+<td align="center"><strong>1</strong></td>
+<td align="center">0</td>
+<td align="center">1（↖）</td>
+<td align="center">1（←）</td>
+<td align="center">1（↖）</td>
+<td align="center">1（←）</td>
+</tr>
+<tr>
+<td align="center"><strong>“b”</strong></td>
+<td align="center"><strong>2</strong></td>
+<td align="center">0</td>
+<td align="center">1（↑）</td>
+<td align="center">2（↖）</td>
+<td align="center">2（←）</td>
+<td align="center">2（←）</td>
+</tr>
+<tr>
+<td align="center"><strong>“c”</strong></td>
+<td align="center"><strong>3</strong></td>
+<td align="center">0</td>
+<td align="center">1（↑）</td>
+<td align="center">2（↑）</td>
+<td align="center">2（←）</td>
+<td align="center">3（↖）</td>
+</tr>
+<tr>
+<td align="center"><strong>“a”</strong></td>
+<td align="center"><strong>4</strong></td>
+<td align="center">0</td>
+<td align="center">1（↖）</td>
+<td align="center">2（↑）</td>
+<td align="center">3（↖）</td>
+<td align="center">3（←）</td>
+</tr>
+</tbody></table>
+<h3 id="Longest-Increasing-Subsequence"><a href="#Longest-Increasing-Subsequence" class="headerlink" title="Longest Increasing Subsequence"></a>Longest Increasing Subsequence</h3><ul>
+<li><p>Ex</p>
+<ul>
+<li>X &#x3D; ＜5, 1, 3, 2, 4＞</li>
+<li>LIS(X) &#x3D; ＜1, 2, 4＞</li>
+</ul>
+</li>
+<li><p>演算法</p>
+<ol>
+<li>Y &lt;- sort(X)</li>
+<li>LCS(X, Y)</li>
+</ol>
+</li>
+<li><p>Time complexity</p>
+<ul>
+<li>$\Theta(n^2)$<ul>
+<li>排序：$\Theta(n\lg n)$</li>
+<li>LCS：$\Theta(n^2)$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Longest-Common-Substring"><a href="#Longest-Common-Substring" class="headerlink" title="Longest Common Substring"></a>Longest Common Substring</h3><ul>
+<li>Ex<ul>
+<li>X &#x3D; ＜a, b, a, c＞</li>
+<li>Y &#x3D; ＜a, b, c, a＞</li>
+<li><strong>Output：＜a, b＞</strong></li>
+</ul>
+</li>
+</ul>
+<p>$$<br>c[i, j] &#x3D; \left{\begin{matrix}<br>0 &amp; , if ;i &#x3D; 0;OR; j &#x3D; 0 &amp; \<br>c[i-1, j-1] + 1 &amp; , if ; X[i] &#x3D; Y[j] &amp; \<br>0&amp; , if ; X[i] \ne Y[j] ; &amp; （該兩個字絕對不會同時出現在LCS）<br>\end{matrix}\right.<br>$$</p>
+<ul>
+<li>Algorithm</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// X[1...n]</span><br><span class="line">// Y[1...m]</span><br><span class="line">lcstring = &#123;&#125;</span><br><span class="line">length = 0</span><br><span class="line">// initialize</span><br><span class="line">for i &lt;- 0 to n</span><br><span class="line">    c[0, i] &lt;- 0</span><br><span class="line">for i &lt;- 0 to m</span><br><span class="line">    c[i, 0] &lt;- 0</span><br><span class="line"></span><br><span class="line">for i &lt;- 1 to m</span><br><span class="line">    for j &lt;- 1 to n &#123;</span><br><span class="line">        if(X[i] != Y[i])</span><br><span class="line">            c[i, j] = 0</span><br><span class="line">        else &#123;</span><br><span class="line">            c[i, j] = c[i-1, j-1] + 1</span><br><span class="line">            if(length &lt; c[i, j]) &#123;</span><br><span class="line">                length = c[i, j]</span><br><span class="line">                lcstring = X[(i-length+1)...i]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="Matrix-Chain-Multiplication"><a href="#Matrix-Chain-Multiplication" class="headerlink" title="Matrix Chain Multiplication"></a>Matrix Chain Multiplication</h2><ul>
+<li>Input：<ul>
+<li><strong>n</strong> 個矩陣的<strong>大小 P[0 … n]</strong> ( 其中$A_i$ 的大小為 $P_{i-1}\times P_i$ )</li>
+</ul>
+</li>
+<li>Output：<ul>
+<li>算出 $A_1 \times A_2 \times \ldots \times A_n$ 所需最少的<strong>純量乘法數</strong></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>n 個矩陣的「Matrix chain」有 $C_{n-1} &#x3D; \frac{1}{(n-1)+1}\binom{2(n-1)}{(n-1)}$ 相異種乘法可能，所以列出所有乘法順序需要<strong>指數時間</strong>。 </p>
+</blockquote>
+<ul>
+<li>Ex. 給定三個矩陣的大小如下<ul>
+<li>$A_1：10 \times 100$</li>
+<li>$A_2：100 \times 5$</li>
+<li>$A_3：5 \times 50$</li>
+<li>求算出 $A_1 \times A_2 \times A_3$ 所需最少的純量乘法數。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>若每一個矩陣均為相同大小的「方陣」，改變乘法的順序無法影響所需的純量乘法數，只能使用<strong>「Strassen’s algorithm」以加速。</strong></p>
+</blockquote>
+<ul>
+<li>遞迴結構<ul>
+<li>令 m[i, j] 為算出 $A_i \times \ldots \times A_j$ 所需最少乘法數</li>
+</ul>
+</li>
+</ul>
+<p>$$<br>m[i, j] &#x3D; \left{\begin{matrix}<br>0 &amp; , if ;i \geq j\<br>MIN_{i\leq k \leq j-1}(m[i, k] + m[k+1, j] + P_i\times P_k \times P_j) &amp; , if ; i &lt; j<br>\end{matrix}\right.<br>$$</p>
+<ul>
+<li>演算法</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">for i &lt;- 1 to n (「Matrix chain」長度為一)</span><br><span class="line">	m[i, i] &lt;- 0</span><br><span class="line">for l &lt;- 2 to n (「Matrix chain」長度為二以上)</span><br><span class="line">	for i &lt;- 1 to n-l+1 (起點)</span><br><span class="line">		&#123;</span><br><span class="line">            j &lt;- i+l-1 (終點)</span><br><span class="line">            m[i, j] &lt;- infinity</span><br><span class="line">            for k &lt;- i to j-1</span><br><span class="line">            &#123;</span><br><span class="line">            	tmp &lt;- m[i, k] + m[k+1, j] + P_i-1 * P_k * P_j</span><br><span class="line">                if tmp &lt; m[i, j]</span><br><span class="line">                	m[i, j] &lt;- tmp  (純量乘法數)</span><br><span class="line">                	s[i, j] &lt;- k    (切點)</span><br><span class="line">            &#125;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>Time complexity</p>
+<ul>
+<li>$\Theta(n^3)$：$\sum_{l&#x3D;2}^n \sum_{i &#x3D; 1}^{n-l+1}\sum_{k &#x3D; i}^{i+l-2} 1$</li>
+</ul>
+</li>
+<li><p>Space complexity</p>
+<ul>
+<li>$\Theta(n^2)$</li>
+</ul>
+</li>
+<li><p>Ex</p>
+<ul>
+<li>$A_1：3 \times 3$</li>
+<li>$A_2：3 \times 7$ </li>
+<li>$A_3：7 \times 2$</li>
+<li>$A_4：2 \times 9$</li>
+<li>$A_5：9 \times 4$</li>
+<li>算出 $A_1 \times A_2 \times \ldots \times A_5$ 最少的乘法數。</li>
+</ul>
+</li>
+</ul>
+<!-- ![matrixchaindp](\willywangkaa\images\matrixchaindp.png)
+
+
+
+
+
+![martixchainproblem_2](\willywangkaa\images\martixchainproblem_2.png) -->
+
+
+
+
+
+<table>
+<thead>
+<tr>
+<th>m (乘法數)</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>0</td>
+<td>63（←）</td>
+<td>60（←）</td>
+<td>114（↓）</td>
+<td><strong>156</strong>（↓）</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td>0</td>
+<td>42（←）</td>
+<td>96（↓）</td>
+<td>138（↓）</td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td></td>
+<td>0</td>
+<td>126（←）</td>
+<td>128（←）</td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+<td>72（←）</td>
+</tr>
+<tr>
+<td>5</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>s (切點)</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td></td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td></td>
+<td></td>
+<td>4</td>
+</tr>
+</tbody></table>
+<p>最少乘法數：156</p>
+<p>最佳乘法順序：$(A_1\times (A_2 \times A_3)) \times (A_4 \times A_5)$</p>
+<h1 id="補充例題"><a href="#補充例題" class="headerlink" title="補充例題"></a>補充例題</h1><!-- Example（107交通大學資料結構與演算法） -->
+
+<ul>
+<li>We define the maximum subarray of an array A to be the nonempty, contiguous subarray of A whose value have the largest sum</li>
+<li>Fill in the blank (a), (b) in the following c++ function so that it returns value are placed in A[1], A[2], …, A[n-1]</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxSubarray</span><span class="params">(<span class="type">int</span> A[], <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i&lt;n; ++i) &#123;</span><br><span class="line">        A[i] += A[i<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> ans = A[<span class="number">0</span>];</span><br><span class="line">    <span class="type">int</span> k = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i&lt;n; ++i) &#123;</span><br><span class="line">        ans = <span class="built_in">max</span>(ans,  (a)  );</span><br><span class="line">        k = <span class="built_in">min</span>(k,      (b)  );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>考慮一個「Maximum subarray」為 A[x…y]</p>
+<ul>
+<li>A[x…y] &#x3D; A[1…y] - A[1…x]</li>
+<li>若欲使 A[x…y] 最大化<ul>
+<li>A[1…y] 必為最大</li>
+<li>A[1…x] 必為最小</li>
+</ul>
+</li>
+</ul>
+<p>(a)：<code>A[i]-k</code></p>
+<p>(b)：<code>A[i]</code></p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/17/Algorithm-StringMatching/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1514,7 +3505,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1523,7 +3514,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

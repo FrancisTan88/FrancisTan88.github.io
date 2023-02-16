@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Dynamic programming將已計算的結果記錄在表格中的技巧，目的是為了要避免重複計算相同子問題，以「Button up」的方式實踐。  為何要使用這種方法，以費氏數列程式開始討論。  $$F_n &#x3D; \left{\begin{matrix}0 &amp; , if ; n &#x3D; 0\1 &amp; , if ; n &#x3D; 1\F_{n-1} + F_{">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Algorithm - DynamicProgramming">
+<meta property="og:url" content="http://example.com/2023/02/17/Algorithm-DynamicProgramming/index.html">
+<meta property="og:site_name" content="FrancisTan">
+<meta property="og:description" content="Dynamic programming將已計算的結果記錄在表格中的技巧，目的是為了要避免重複計算相同子問題，以「Button up」的方式實踐。  為何要使用這種方法，以費氏數列程式開始討論。  $$F_n &#x3D; \left{\begin{matrix}0 &amp; , if ; n &#x3D; 0\1 &amp; , if ; n &#x3D; 1\F_{n-1} + F_{">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-02-16T20:30:45.000Z">
+<meta property="article:modified_time" content="2023-02-16T20:35:18.939Z">
+<meta property="article:author" content="Francis">
+<meta property="article:tag" content="DynamicProgramming">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/02/17/Algorithm-DynamicProgramming/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Algorithm - DynamicProgramming | FrancisTan</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FrancisTan</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Just For Fun</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/17/Algorithm-DynamicProgramming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Francis">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FrancisTan">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Algorithm - DynamicProgramming
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-02-17 04:30:45 / Modified: 04:35:18" itemprop="dateCreated datePublished" datetime="2023-02-17T04:30:45+08:00">2023-02-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <!-- title: Algorithm - Dynamic programming -->
+<!-- author: Willy Wang (willywangkaa) -->
+<!-- date: 2018-09-23 10:46:21
+tags: -->
+
+<h1 id="Dynamic-programming"><a href="#Dynamic-programming" class="headerlink" title="Dynamic programming"></a>Dynamic programming</h1><p>將已<strong>計算的結果</strong>記錄在<strong>表格中</strong>的技巧，目的是為了要避免<strong>重複計算相同子問題</strong>，以<strong>「Button up」</strong>的方式實踐。</p>
+<ul>
+<li>為何要使用這種方法，以<strong>費氏數列程式</strong>開始討論。</li>
+</ul>
+<p>$$<br>F_n &#x3D; \left{\begin{matrix}<br>0 &amp; , if ; n &#x3D; 0\<br>1 &amp; , if ; n &#x3D; 1\<br>F_{n-1} + F_{n-2} &amp; , if ; n \geq 2<br>\end{matrix}\right.<br>$$<br>欲求出 $F_5$ ，以遞迴程式執行，會造成「Overlapping subproblem」，如下圖 $F_2$ 重複計算了 3 次，$F_3$ 重複計算 2 次。</p>
+<!-- ![overlappingsubproblem](\willywangkaa\images\overlappingsubproblem.png) -->
+
+
+
+<!-- 使用動態表格執行之，可以省去很多不必要的重複計算，如下圖。
+
+
+
+![fibonassidp](\willywangkaa\images\fibonassidp.png) -->
+
+
+<!-- 
+- 構思動態規劃題目的流程
+  - Optimal substructure：一個**母問題的最佳解**如何由**其子問題的最佳**解構成。
+
+
+
+![observedp](\willywangkaa\images\observedp.png) -->
+
+
+
+<h2 id="Shortest-path-problem"><a href="#Shortest-path-problem" class="headerlink" title="Shortest path problem"></a>Shortest path problem</h2><ul>
+<li><strong>Optimal substructure</strong></li>
+</ul>
+<!-- ![shortestpathproblem_subproblem](\willywangkaa\images\shortestpathproblem_subproblem.png) -->
+
+
+
+<!-- > 問 longest path problem 有無 optimal substructure。
+>
+>  無，所以不可以使用動態規劃解此問題。 -->
+<blockquote>
+</blockquote>
+<!-- ![longestpathproblem](\willywangkaa\images\longestpathproblem.png) -->
+<blockquote>
+</blockquote>
+<!-- > **但是**如果此圖加上「Acyclic」、「Direct」等條件限制之後，可以用動態規劃解「longest path problem」。 -->
+
+
+
+<blockquote>
+<p>通常要在各種條件之下都可以使用<strong>動態規劃解此問題</strong>，才可以<strong>宣稱此問題可以使用動態規劃解</strong>。</p>
+</blockquote>
+<!-- - Ex (99 交大) -->
+<ul>
+<li>下列何者<strong>正確</strong>？<ul>
+<li>（a）Dynamic programming always provides polynominal time algorithm.</li>
+<li>（b）Huffman coding for compresion is a typical dynamic programming algorithm.</li>
+<li>（c）Dynamic programming use the table to design the algorithm.</li>
+<li>（d）Optimal is a important element in the dynamic programming.</li>
+<li>（e）<strong>Single source all shortest path problem</strong> has optimal substructure.</li>
+</ul>
+</li>
+<li>Ans<ul>
+<li>（a）：false。反例為 Subset-sum problem (暴力法：$O(2^n)、動態規劃法：$$O(n2^{\frac n2})$)</li>
+<li>（b）：false。為典型的 Greedy algorithm。</li>
+<li><strong>（c）</strong></li>
+<li><strong>（d）</strong></li>
+<li><strong>（e）</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="Knapsack-problem"><a href="#Knapsack-problem" class="headerlink" title="Knapsack problem"></a>Knapsack problem</h2><h3 id="Fractional-knapsack-problem"><a href="#Fractional-knapsack-problem" class="headerlink" title="Fractional knapsack problem"></a>Fractional knapsack problem</h3><blockquote>
+<ol>
+<li>此方法僅限於物品重量為正整數時</li>
+<li>0&#x2F;1 KP 為 NP - Completed 問題</li>
+</ol>
+</blockquote>
+<ul>
+<li><p>Input：</p>
+<ul>
+<li>n 個物件<ul>
+<li>第 i 個重量為 $w_i$ ，價值為 $v_i$。</li>
+</ul>
+</li>
+<li>背包最大負重<ul>
+<li>$W$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Output：</p>
+<ul>
+<li>最大的獲利值</li>
+</ul>
+</li>
+<li><p>限制條件：</p>
+<ul>
+<li>取得物品的總重量 $\leq$ W</li>
+<li>可取物品的<strong>部分</strong></li>
+</ul>
+</li>
+<li><p>想法</p>
+<ul>
+<li><strong>Greedy</strong>：從目前 $\frac{v_i}{w_i}$ 最高的物品開始拿取，直到物品取完，或是取得物品負重已達 W。</li>
+</ul>
+</li>
+<li><p>Time Complexity</p>
+<ul>
+<li>$\Theta(n\log n)$</li>
+</ul>
+</li>
+<li><p>Ex ( W &#x3D; 5 )</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>$v_i$</th>
+<th>$w_i$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>10</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>12</td>
+<td>3</td>
+</tr>
+</tbody></table>
+<p>$$<br>\frac{v_2}{w_2} &#x3D; 6 \geq \frac{v_1}{w_1} &#x3D; 5 \geq \frac{v_3}{w_3} &#x3D; 4<br>$$</p>
+<ol>
+<li>取物品 2，取該物品之 1 單位重量，背包剩餘空間 4 單位重量，獲利 6 單位價值。</li>
+<li>取物品 1，取物品之 2 單位重量，背包剩餘空間 2 單位重量，獲利 16 單位價值。</li>
+<li>取物品 3，取物品之 2 單位重量，背包剩餘空間 0 單位重量，<strong>獲利 24 單位價值</strong>。</li>
+</ol>
+<!-- ![kpdp](\willywangkaa\images\kpdp.png) -->
+
+
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0</td>
+<td>6</td>
+<td>10</td>
+<td>16</td>
+<td>16</td>
+<td>16</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0</td>
+<td>6</td>
+<td>10</td>
+<td>16</td>
+<td>18</td>
+<td><strong>22</strong></td>
+</tr>
+</tbody></table>
+<!-- - Ex ( 98 交大 ) P.3-66 ex10 -->
+<ul>
+<li>Maximize $\sum_{i &#x3D; 1}^n v_ix_i ;  subject; to \sum_{i &#x3D; 1}^n w_ix_i \leq W, 0 \leq x_i \leq 1$ </li>
+<li>Greedy choise property ( $\frac{v_1}{w_1} \geq \frac{v_2}{w_2} \geq\ldots$ )</li>
+<li>最佳解的 $x_1$ 需取多少。</li>
+</ul>
+<p>$$<br>x_n &#x3D; \left{\begin{matrix}<br>1 &amp; , if ; w_1 \leq W \<br>\frac{W}{w_1} &amp; , if ; w1 &gt; W \<br>\end{matrix}\right.<br>$$</p>
+<h3 id="0-1-Knapsack-problem"><a href="#0-1-Knapsack-problem" class="headerlink" title="0-1 Knapsack problem"></a>0-1 Knapsack problem</h3><ul>
+<li><p>Input：</p>
+<ul>
+<li>n 個物件<ul>
+<li>第 i 個重量為 $w_i$ ，價值為 $v_i$。</li>
+</ul>
+</li>
+<li>背包最大負重<ul>
+<li>$W$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Output：</p>
+<ul>
+<li>最大的獲利值</li>
+</ul>
+</li>
+<li><p>限制條件：</p>
+<ul>
+<li>取得物品的總重量 $\leq$ W</li>
+<li>只能取物品的<strong>整體</strong></li>
+</ul>
+</li>
+<li><p>想法</p>
+<ul>
+<li><p>無法使用 Greedy method 解決</p>
+</li>
+<li><p><strong>使用動態規劃解決，物品的重量必為正整數</strong></p>
+<ul>
+<li>遞迴結構：(令 $C[i][k]$ 在負重 k 之下考慮物品 1 … i 之最大獲利</li>
+</ul>
+<p>$$<br>C[i][k] &#x3D; \left{\begin{matrix}<br>0 &amp; , if ;i &#x3D; 0;OR; k &#x3D; 0 \<br>max(C[i-1][k-w_i]+v_i, C[i-1][k] )&amp; , if ; w_i \leq k \<br>C[i-1][k] &amp; , if ; w_i &gt; k \<br>\end{matrix}\right.<br>$$</p>
+</li>
+</ul>
+</li>
+<li><p>Algorithm ( Bottom up )</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">for k &lt;- 0 to w</span><br><span class="line">	c[0, k] &lt;- 0</span><br><span class="line">for i &lt;- 1 to n</span><br><span class="line">&#123;</span><br><span class="line">    c[i, 0] &lt;- 0</span><br><span class="line">    for k &lt;- 1 to w</span><br><span class="line">    &#123;</span><br><span class="line">        if k &lt; w_i</span><br><span class="line">        	c[i, k] &lt;- c[i-1, k]</span><br><span class="line">        else</span><br><span class="line">        	c[i, k] &lt;- max(c[i-1, k], c[i-1, k-w_i]+v_i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>Time complexity<ul>
+<li>$\Theta( nW )$  <strong>Pseudo-polynominal</strong></li>
+</ul>
+</li>
+<li>Space complexity<ul>
+<li>$\Theta( nW )$</li>
+</ul>
+</li>
+</ul>
+<h3 id="Branch-and-bound-解-0-1-Knapsack-problem"><a href="#Branch-and-bound-解-0-1-Knapsack-problem" class="headerlink" title="Branch and bound 解 0-1 Knapsack problem"></a>Branch and bound 解 0-1 Knapsack problem</h3><blockquote>
+<ul>
+<li>對於一個 NP-Completed 問題來說，可以使用「Branch and bound」來解決</li>
+<li>「Branch and bound」演算法中，<strong>「Bounding function」</strong>的設計會是影響整體效能最大的關鍵 ( 收斂快慢 )。</li>
+<li>Time complexity：O( 葉節點個數 )<ul>
+<li>葉節點個數取決問題本身。<ul>
+<li>組合性問題：$2^n$ </li>
+<li>排列性問題：$n!$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>將球最佳解的過程視為在一個「State space tree」中尋找最好的節點。</p>
+</li>
+<li><p>實務上，通常是設計一 個<strong>「Bounding function」</strong>以估計目前狀態可到最佳解的可能性。</p>
+<ul>
+<li>建構「State space tree」時，每次都先<strong>展開「Bounding function」的節點。( Branch )</strong></li>
+<li>在每次展開的過程中，都可以得到一個<strong>目前最佳解 (葉節點)，接著，之後不展開「Bounding function 值</strong> $\leq$ <strong>目前最佳解」</strong>的內部節點。**( Bound )**</li>
+</ul>
+</li>
+<li><p>以 Branch and bound 解 0-1 Knapsack problem</p>
+<ul>
+<li>每個節點須紀錄<ul>
+<li><strong>目前的獲利</strong></li>
+<li><strong>目前的負重</strong></li>
+<li><strong>「Bounding function」算出的值</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>為了計算「Bounding funciton」括號中要估計「Fractional knapsack」的未來最大值，需要將物品依照 $\frac{v_i}{w_i}$ 排序。</li>
+</ol>
+<p>$w  &#x3D; 4$ </p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>$v_i$</th>
+<th>$w_i$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>10</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>12</td>
+<td>3</td>
+</tr>
+</tbody></table>
+<p>$$<br>\frac{v_2}{w_2} &#x3D; 6 \geq \frac{v_1}{w_1} &#x3D; 5 \geq \frac{v_3}{w_3} &#x3D; 4<br>$$</p>
+<ol start="2">
+<li><strong>設計「Bounding function」。(括號部分就是用來估計以目前節點拓展，獲利的上限)</strong></li>
+</ol>
+<p>$$<br>Bounding ;funciotn(目前的節點)\<br>&#x3D; 在「目前的節點」上可得的獲利 + \<br>(將背包剩餘的重量以「Fractional ;knapsack ;problem」拿取剩下的物品的獲利)<br>$$</p>
+<!-- ![KPstatesearchtree](\willywangkaa\images\KPstatesearchtree.png) -->
+
+
+
+<ol start="3">
+<li>拓展節點<ol>
+<li>展開 <strong>Root</strong></li>
+<li>因為該節點「Bounding function」最大，所以展開 <strong>A</strong></li>
+<li>展開節點 <strong>C</strong></li>
+<li><strong>E</strong> 節點因為超重所以為「Infeasiable solution」</li>
+<li><strong>F</strong> 為一可能解，使 $Max &#x3D; 16$</li>
+<li>因為節點 <strong>D</strong> 在樹中較深處，先展開之</li>
+<li><strong>G</strong> 與 <strong>H</strong> 均為一解，設 $Max &#x3D; 18$ </li>
+<li>因為節點 <strong>B</strong> 的「Bounding function」$\leq$ <strong>Max</strong>，不展開該節點</li>
+</ol>
+</li>
+<li>Ans：18 ( 取<strong>物品一</strong>與<strong>物品三</strong> )</li>
+</ol>
+<h2 id="Longest-Common-Subsequence"><a href="#Longest-Common-Subsequence" class="headerlink" title="Longest Common Subsequence"></a>Longest Common Subsequence</h2><ul>
+<li>Sequence<ul>
+<li>X &#x3D; ＜a, b, c, a＞</li>
+</ul>
+</li>
+<li>Subsequence<ul>
+<li>＜a, c＞ 為 X 的「Subsequence」</li>
+</ul>
+</li>
+<li>Prefix ( 前綴 )<ul>
+<li>$X_3 &#x3D; ＜a, b, c＞$</li>
+</ul>
+</li>
+<li>Common subsequence<ul>
+<li>Y &#x3D; ＜a, c, b, c＞</li>
+<li>則＜a, c＞為 X 與 Y 的「Common subsequence」</li>
+</ul>
+</li>
+<li>Longest common subsequence<ul>
+<li>＜a, b, c＞ 為 X 與 Y 的「LCS」</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>「LCS」不一定唯一</p>
+</blockquote>
+<ul>
+<li>遞迴結構<ul>
+<li>令 $c[i , j]$ 為 $LCS(X_i, Y_j)$ 的長，則：</li>
+</ul>
+</li>
+</ul>
+<p>$$<br>c[i, j] &#x3D; \left{\begin{matrix}<br>0 &amp; , if ;i &#x3D; 0;OR; j &#x3D; 0 &amp; \<br>c[i-1, j-1] + 1 &amp; , if ; X[i] &#x3D; Y[j] &amp; \<br>max(c[i-1, j], c[i, j-1])&amp; , if ; X[i] \ne Y[j] ; &amp; （該兩個字絕對不會同時出現在LCS）<br>\end{matrix}\right.<br>$$</p>
+<ul>
+<li>演算法 ( Bottom-up )</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">for j &lt;- 0 to n</span><br><span class="line">	c[0, j] &lt;- 0</span><br><span class="line">for i &lt;- 0 to m</span><br><span class="line">	c[i, 0] &lt;- 0</span><br><span class="line">for i &lt;- 1 to m</span><br><span class="line">	for j &lt;- 1 to n</span><br><span class="line">	&#123;</span><br><span class="line">        if(X[i] = Y[i])</span><br><span class="line">        	c[i, j] = c[i-1, j-1] + 1</span><br><span class="line">        else</span><br><span class="line">        	c[i, j] = max(c[i-1, j], c[i, j-1])</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>Time complexity</p>
+<ul>
+<li>$\Theta(mn)$</li>
+</ul>
+</li>
+<li><p>Space complexity</p>
+<ul>
+<li>$\Theta(mn)$</li>
+</ul>
+</li>
+<li><p>Ex</p>
+<ul>
+<li>X &#x3D; ＜a, b, a, c＞</li>
+<li>Y &#x3D; ＜a, b, c, a＞</li>
+<li>求「LCS」</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">-</th>
+<th align="center">-</th>
+<th align="center">-</th>
+<th align="center">“a”</th>
+<th align="center">“b”</th>
+<th align="center">“a”</th>
+<th align="center">“c”</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>-</strong></td>
+<td align="center"><strong>-</strong></td>
+<td align="center"><strong>0</strong></td>
+<td align="center"><strong>1</strong></td>
+<td align="center"><strong>2</strong></td>
+<td align="center"><strong>3</strong></td>
+<td align="center"><strong>4</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>-</strong></td>
+<td align="center"><strong>0</strong></td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center"><strong>“a”</strong></td>
+<td align="center"><strong>1</strong></td>
+<td align="center">0</td>
+<td align="center">1（↖）</td>
+<td align="center">1（←）</td>
+<td align="center">1（↖）</td>
+<td align="center">1（←）</td>
+</tr>
+<tr>
+<td align="center"><strong>“b”</strong></td>
+<td align="center"><strong>2</strong></td>
+<td align="center">0</td>
+<td align="center">1（↑）</td>
+<td align="center">2（↖）</td>
+<td align="center">2（←）</td>
+<td align="center">2（←）</td>
+</tr>
+<tr>
+<td align="center"><strong>“c”</strong></td>
+<td align="center"><strong>3</strong></td>
+<td align="center">0</td>
+<td align="center">1（↑）</td>
+<td align="center">2（↑）</td>
+<td align="center">2（←）</td>
+<td align="center">3（↖）</td>
+</tr>
+<tr>
+<td align="center"><strong>“a”</strong></td>
+<td align="center"><strong>4</strong></td>
+<td align="center">0</td>
+<td align="center">1（↖）</td>
+<td align="center">2（↑）</td>
+<td align="center">3（↖）</td>
+<td align="center">3（←）</td>
+</tr>
+</tbody></table>
+<h3 id="Longest-Increasing-Subsequence"><a href="#Longest-Increasing-Subsequence" class="headerlink" title="Longest Increasing Subsequence"></a>Longest Increasing Subsequence</h3><ul>
+<li><p>Ex</p>
+<ul>
+<li>X &#x3D; ＜5, 1, 3, 2, 4＞</li>
+<li>LIS(X) &#x3D; ＜1, 2, 4＞</li>
+</ul>
+</li>
+<li><p>演算法</p>
+<ol>
+<li>Y &lt;- sort(X)</li>
+<li>LCS(X, Y)</li>
+</ol>
+</li>
+<li><p>Time complexity</p>
+<ul>
+<li>$\Theta(n^2)$<ul>
+<li>排序：$\Theta(n\lg n)$</li>
+<li>LCS：$\Theta(n^2)$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Longest-Common-Substring"><a href="#Longest-Common-Substring" class="headerlink" title="Longest Common Substring"></a>Longest Common Substring</h3><ul>
+<li>Ex<ul>
+<li>X &#x3D; ＜a, b, a, c＞</li>
+<li>Y &#x3D; ＜a, b, c, a＞</li>
+<li><strong>Output：＜a, b＞</strong></li>
+</ul>
+</li>
+</ul>
+<p>$$<br>c[i, j] &#x3D; \left{\begin{matrix}<br>0 &amp; , if ;i &#x3D; 0;OR; j &#x3D; 0 &amp; \<br>c[i-1, j-1] + 1 &amp; , if ; X[i] &#x3D; Y[j] &amp; \<br>0&amp; , if ; X[i] \ne Y[j] ; &amp; （該兩個字絕對不會同時出現在LCS）<br>\end{matrix}\right.<br>$$</p>
+<ul>
+<li>Algorithm</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// X[1...n]</span><br><span class="line">// Y[1...m]</span><br><span class="line">lcstring = &#123;&#125;</span><br><span class="line">length = 0</span><br><span class="line">// initialize</span><br><span class="line">for i &lt;- 0 to n</span><br><span class="line">    c[0, i] &lt;- 0</span><br><span class="line">for i &lt;- 0 to m</span><br><span class="line">    c[i, 0] &lt;- 0</span><br><span class="line"></span><br><span class="line">for i &lt;- 1 to m</span><br><span class="line">    for j &lt;- 1 to n &#123;</span><br><span class="line">        if(X[i] != Y[i])</span><br><span class="line">            c[i, j] = 0</span><br><span class="line">        else &#123;</span><br><span class="line">            c[i, j] = c[i-1, j-1] + 1</span><br><span class="line">            if(length &lt; c[i, j]) &#123;</span><br><span class="line">                length = c[i, j]</span><br><span class="line">                lcstring = X[(i-length+1)...i]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="Matrix-Chain-Multiplication"><a href="#Matrix-Chain-Multiplication" class="headerlink" title="Matrix Chain Multiplication"></a>Matrix Chain Multiplication</h2><ul>
+<li>Input：<ul>
+<li><strong>n</strong> 個矩陣的<strong>大小 P[0 … n]</strong> ( 其中$A_i$ 的大小為 $P_{i-1}\times P_i$ )</li>
+</ul>
+</li>
+<li>Output：<ul>
+<li>算出 $A_1 \times A_2 \times \ldots \times A_n$ 所需最少的<strong>純量乘法數</strong></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>n 個矩陣的「Matrix chain」有 $C_{n-1} &#x3D; \frac{1}{(n-1)+1}\binom{2(n-1)}{(n-1)}$ 相異種乘法可能，所以列出所有乘法順序需要<strong>指數時間</strong>。 </p>
+</blockquote>
+<ul>
+<li>Ex. 給定三個矩陣的大小如下<ul>
+<li>$A_1：10 \times 100$</li>
+<li>$A_2：100 \times 5$</li>
+<li>$A_3：5 \times 50$</li>
+<li>求算出 $A_1 \times A_2 \times A_3$ 所需最少的純量乘法數。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>若每一個矩陣均為相同大小的「方陣」，改變乘法的順序無法影響所需的純量乘法數，只能使用<strong>「Strassen’s algorithm」以加速。</strong></p>
+</blockquote>
+<ul>
+<li>遞迴結構<ul>
+<li>令 m[i, j] 為算出 $A_i \times \ldots \times A_j$ 所需最少乘法數</li>
+</ul>
+</li>
+</ul>
+<p>$$<br>m[i, j] &#x3D; \left{\begin{matrix}<br>0 &amp; , if ;i \geq j\<br>MIN_{i\leq k \leq j-1}(m[i, k] + m[k+1, j] + P_i\times P_k \times P_j) &amp; , if ; i &lt; j<br>\end{matrix}\right.<br>$$</p>
+<ul>
+<li>演算法</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">for i &lt;- 1 to n (「Matrix chain」長度為一)</span><br><span class="line">	m[i, i] &lt;- 0</span><br><span class="line">for l &lt;- 2 to n (「Matrix chain」長度為二以上)</span><br><span class="line">	for i &lt;- 1 to n-l+1 (起點)</span><br><span class="line">		&#123;</span><br><span class="line">            j &lt;- i+l-1 (終點)</span><br><span class="line">            m[i, j] &lt;- infinity</span><br><span class="line">            for k &lt;- i to j-1</span><br><span class="line">            &#123;</span><br><span class="line">            	tmp &lt;- m[i, k] + m[k+1, j] + P_i-1 * P_k * P_j</span><br><span class="line">                if tmp &lt; m[i, j]</span><br><span class="line">                	m[i, j] &lt;- tmp  (純量乘法數)</span><br><span class="line">                	s[i, j] &lt;- k    (切點)</span><br><span class="line">            &#125;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>Time complexity</p>
+<ul>
+<li>$\Theta(n^3)$：$\sum_{l&#x3D;2}^n \sum_{i &#x3D; 1}^{n-l+1}\sum_{k &#x3D; i}^{i+l-2} 1$</li>
+</ul>
+</li>
+<li><p>Space complexity</p>
+<ul>
+<li>$\Theta(n^2)$</li>
+</ul>
+</li>
+<li><p>Ex</p>
+<ul>
+<li>$A_1：3 \times 3$</li>
+<li>$A_2：3 \times 7$ </li>
+<li>$A_3：7 \times 2$</li>
+<li>$A_4：2 \times 9$</li>
+<li>$A_5：9 \times 4$</li>
+<li>算出 $A_1 \times A_2 \times \ldots \times A_5$ 最少的乘法數。</li>
+</ul>
+</li>
+</ul>
+<!-- ![matrixchaindp](\willywangkaa\images\matrixchaindp.png)
+
+
+
+
+
+![martixchainproblem_2](\willywangkaa\images\martixchainproblem_2.png) -->
+
+
+
+
+
+<table>
+<thead>
+<tr>
+<th>m (乘法數)</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>0</td>
+<td>63（←）</td>
+<td>60（←）</td>
+<td>114（↓）</td>
+<td><strong>156</strong>（↓）</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td>0</td>
+<td>42（←）</td>
+<td>96（↓）</td>
+<td>138（↓）</td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td></td>
+<td>0</td>
+<td>126（←）</td>
+<td>128（←）</td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+<td>72（←）</td>
+</tr>
+<tr>
+<td>5</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>s (切點)</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td></td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td></td>
+<td></td>
+<td>4</td>
+</tr>
+</tbody></table>
+<p>最少乘法數：156</p>
+<p>最佳乘法順序：$(A_1\times (A_2 \times A_3)) \times (A_4 \times A_5)$</p>
+<h1 id="補充例題"><a href="#補充例題" class="headerlink" title="補充例題"></a>補充例題</h1><!-- Example（107交通大學資料結構與演算法） -->
+
+<ul>
+<li>We define the maximum subarray of an array A to be the nonempty, contiguous subarray of A whose value have the largest sum</li>
+<li>Fill in the blank (a), (b) in the following c++ function so that it returns value are placed in A[1], A[2], …, A[n-1]</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxSubarray</span><span class="params">(<span class="type">int</span> A[], <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i&lt;n; ++i) &#123;</span><br><span class="line">        A[i] += A[i<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> ans = A[<span class="number">0</span>];</span><br><span class="line">    <span class="type">int</span> k = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i&lt;n; ++i) &#123;</span><br><span class="line">        ans = <span class="built_in">max</span>(ans,  (a)  );</span><br><span class="line">        k = <span class="built_in">min</span>(k,      (b)  );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>考慮一個「Maximum subarray」為 A[x…y]</p>
+<ul>
+<li>A[x…y] &#x3D; A[1…y] - A[1…x]</li>
+<li>若欲使 A[x…y] 最大化<ul>
+<li>A[1…y] 必為最大</li>
+<li>A[1…x] 必為最小</li>
+</ul>
+</li>
+</ul>
+<p>(a)：<code>A[i]-k</code></p>
+<p>(b)：<code>A[i]</code></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/DynamicProgramming/" rel="tag"># DynamicProgramming</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/02/17/Algorithm-StringMatching/" rel="prev" title="Algorithm - StringMatching">
+      <i class="fa fa-chevron-left"></i> Algorithm - StringMatching
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/02/17/Algorithm-Z/" rel="next" title="Algorithm - Z 演算法">
+      Algorithm - Z 演算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Dynamic-programming"><span class="nav-number">1.</span> <span class="nav-text">Dynamic programming</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Shortest-path-problem"><span class="nav-number">1.1.</span> <span class="nav-text">Shortest path problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Knapsack-problem"><span class="nav-number">1.2.</span> <span class="nav-text">Knapsack problem</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fractional-knapsack-problem"><span class="nav-number">1.2.1.</span> <span class="nav-text">Fractional knapsack problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0-1-Knapsack-problem"><span class="nav-number">1.2.2.</span> <span class="nav-text">0-1 Knapsack problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Branch-and-bound-%E8%A7%A3-0-1-Knapsack-problem"><span class="nav-number">1.2.3.</span> <span class="nav-text">Branch and bound 解 0-1 Knapsack problem</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Longest-Common-Subsequence"><span class="nav-number">1.3.</span> <span class="nav-text">Longest Common Subsequence</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Longest-Increasing-Subsequence"><span class="nav-number">1.3.1.</span> <span class="nav-text">Longest Increasing Subsequence</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Longest-Common-Substring"><span class="nav-number">1.3.2.</span> <span class="nav-text">Longest Common Substring</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Matrix-Chain-Multiplication"><span class="nav-number">1.4.</span> <span class="nav-text">Matrix Chain Multiplication</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A3%9C%E5%85%85%E4%BE%8B%E9%A1%8C"><span class="nav-number">2.</span> <span class="nav-text">補充例題</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Francis</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Francis</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
