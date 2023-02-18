@@ -146,6 +146,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/18/trie/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Francis">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FrancisTan">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/02/18/trie/" class="post-title-link" itemprop="url">Data Structures - Trie</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-02-18 23:12:45 / Modified: 23:15:08" itemprop="dateCreated datePublished" datetime="2023-02-18T23:12:45+08:00">2023-02-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Structures/" itemprop="url" rel="index"><span itemprop="name">Data Structures</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Data-Structures-Trie"><a href="#Data-Structures-Trie" class="headerlink" title="Data Structures - Trie"></a>Data Structures - Trie</h1><h3 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h3><p>Trie 是一種樹狀結構也稱為字典樹，用以在大量字串中快速找尋是否存在該字串。此外，Trie也有人叫前綴樹(Prefix Tree)，因為它是由字串間相同的前綴文字組成。<br>一個典型的Trie如下：[car], [cat], [dot]</p>
+<p><img src="https://i.imgur.com/UCHr7N5.png" alt="image alt"></p>
+<h3 id="觀念"><a href="#觀念" class="headerlink" title="觀念"></a>觀念</h3><ol>
+<li>Root只作為一個起始點，不存任何東西</li>
+<li>任一Node可以有多個children，數量不限</li>
+<li>擁有相同前綴字的word會順著同一個方向往下長(e.g. “fuck”, “fucker”的overlapping nodes為”f”, “u”, “c”, “k”)</li>
+<li>Trie是由TrieNode組成，而TrieNode主要儲存兩樣東西：<ul>
+<li>is_word : 即current char是否為某個字的結尾，以boolean表示且初始化為False</li>
+<li>child：即current char的所有子節點，以dictionary表示(keys, values分別為「用來索引到某個子節點的char」以及「可以被索引到的子節點」)<br>&amp;rarr; 所以事實上Trie更應該圖像化成：<br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Trie_example.svg/500px-Trie_example.svg.png" alt="image alt"></li>
+</ul>
+</li>
+</ol>
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><p>常見的operation主要包含：</p>
+<ol>
+<li>Insert(word): 將”word”插入Trie內 &amp;rarr; 為word的iteration，從root開始，利用O(1)查找char是否存在於子節點，若不存在則新建一個TrieNode，並將char新增到current node的children裡(i.e. 將char當作key、TrieNode當作value assign到dictionary內)，反之則順著char移動到該node，重複上述動作直到迴圈結束，此時ptr指向的node必為word的最後一個char，所以記得將該node改為True，表示其為word的結尾。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">insert</span>(<span class="params">self, word: <span class="built_in">str</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        ptr = self.root</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> word:</span><br><span class="line">            <span class="keyword">if</span> i <span class="keyword">not</span> <span class="keyword">in</span> ptr.child:</span><br><span class="line">                ptr.child[i] = TrieNode()</span><br><span class="line">            ptr = ptr.child[i]</span><br><span class="line">        ptr.is_word = <span class="literal">True</span></span><br></pre></td></tr></table></figure></li>
+<li>Search(word)：查看word是否存在於Trie &amp;rarr; 為word的iteration，從root開始，利用O(1)查找char是否存在於子節點，若不存在就直接return False，反之則移動到該node並繼續檢查，若迴圈結束表示Trie確實存在word中的這些char，但注意：並不表示這些char在Trie為一個word，e.g. Insert(“pencil”), Search(“pen”)為False，因為雖然”p”, “e”, “n”存在於Trie，但”pen”在Trie中不是一個單字，所以迴圈結束後還要檢查ptr現所指的node是否為True。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">search</span>(<span class="params">self, word: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        ptr = self.root</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> word:</span><br><span class="line">            <span class="keyword">if</span> i <span class="keyword">not</span> <span class="keyword">in</span> ptr.child:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            ptr = ptr.child[i]</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span> <span class="keyword">if</span> ptr.is_word <span class="keyword">else</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure></li>
+<li>StartFrom(prefix): 查看Trie中是否存在前綴為”prefix”的word &amp;rarr; 為word的iteration，從root開始，利用O(1)查找char是否存在於子節點，若不存在就直接return False，反之則移動到該node並繼續檢查，若迴圈結束了，代表prefix確實存在，所以return True<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">startsWith</span>(<span class="params">self, prefix: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        ptr = self.root</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> prefix:</span><br><span class="line">            <span class="keyword">if</span> i <span class="keyword">not</span> <span class="keyword">in</span> ptr.child:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            ptr = ptr.child[i]</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/17/Algorithm-RangeQueryProblem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -738,16 +823,16 @@ tags: -->
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
