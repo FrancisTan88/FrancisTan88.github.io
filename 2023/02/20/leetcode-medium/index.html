@@ -20,19 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Leetcode Again">
+  <meta name="description" content="Medium">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode - Top Interview">
-<meta property="og:url" content="http://example.com/2023/02/17/TheDeep/index.html">
+<meta property="og:title" content="leetcode - medium">
+<meta property="og:url" content="http://example.com/2023/02/20/leetcode-medium/index.html">
 <meta property="og:site_name" content="FrancisTan">
-<meta property="og:description" content="Leetcode Again">
+<meta property="og:description" content="Medium">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-02-16T19:09:21.000Z">
-<meta property="article:modified_time" content="2023-02-16T21:59:21.697Z">
+<meta property="article:published_time" content="2023-02-20T11:47:47.000Z">
+<meta property="article:modified_time" content="2023-02-20T11:50:38.683Z">
 <meta property="article:author" content="Francis">
+<meta property="article:tag" content="Medium">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2023/02/17/TheDeep/">
+<link rel="canonical" href="http://example.com/2023/02/20/leetcode-medium/">
 
 
 <script id="page-configurations">
@@ -45,7 +46,7 @@
   };
 </script>
 
-  <title>Leetcode - Top Interview | FrancisTan</title>
+  <title>leetcode - medium | FrancisTan</title>
   
 
 
@@ -151,7 +152,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/17/TheDeep/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/20/leetcode-medium/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -164,7 +165,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Leetcode - Top Interview
+          leetcode - medium
         </h1>
 
         <div class="post-meta">
@@ -175,7 +176,16 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-02-17 03:09:21 / Modified: 05:59:21" itemprop="dateCreated datePublished" datetime="2023-02-17T03:09:21+08:00">2023-02-17</time>
+              <time title="Created: 2023-02-20 19:47:47 / Modified: 19:50:38" itemprop="dateCreated datePublished" datetime="2023-02-20T19:47:47+08:00">2023-02-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
+                </span>
             </span>
 
           
@@ -189,7 +199,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Leetcode-Again"><a href="#Leetcode-Again" class="headerlink" title="Leetcode Again"></a>Leetcode Again</h1><span id="more"></span>
+        <h1 id="Medium"><a href="#Medium" class="headerlink" title="Medium"></a>Medium</h1><span id="more"></span>
+
+
 <h1 id="2-Add-Two-Numbers"><a href="#2-Add-Two-Numbers" class="headerlink" title="2. Add Two Numbers"></a>2. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/add-two-numbers/description/">Add Two Numbers</a></h1><h2 id="Method1：just-add-them-best-solution"><a href="#Method1：just-add-them-best-solution" class="headerlink" title="Method1：just add them(best solution)"></a>Method1：just add them(best solution)</h2><p>time：O(max(n, m)), given n, m represent the length of two lists</p>
 <p>space：O(max(n, m)), given n, m represent the length of two lists</p>
 <p>觀念：</p>
@@ -361,12 +373,12 @@
 <p>空間：O(1)</p>
 <p>觀念：</p>
 <ol>
-<li>利用兩個變數curr_sum、maximum分別去紀錄當前的加總以及歷史最大加總，且一開始將curr_sum初始化為0、maximum初始化為一個很小的數(畢竟returned answer至少須為陣列中的某個數)：<ol>
-<li>if curr_sum &gt; maximum :  maximum &#x3D; curr_sum</li>
+<li>利用兩個變數curr_sum、maximum分別去紀錄當前的加總以及最大加總，且一開始將curr_sum和maximum初始化為nums[0](畢竟returned answer至少須為陣列中的某個數)：<ol>
+<li>maximum &#x3D; max(maximum, curr_sum)</li>
 <li>if curr_sum &lt; 0 : curr_sum &#x3D; 0</li>
 </ol>
 </li>
-<li>此算法的核心概念為1-b：當curr_sum變為負時，我們需要在下一個iteration前將其歸零(即在下一個iteration重新開始作加總)，這是因為curr_sum為負時，表示”current position以前”的那坨數對於”current position以後”的數(不管之後的數為何)都是”拖油瓶”，它們只會讓以後的加總”更小”，而到目前為止的最大加總都已經被maximum紀錄起來了，所以我們可以放心的放棄之前看過的累積值(curr_sum)並將其歸零重新開始計算</li>
+<li>此算法的核心概念為1-b：當curr_sum為負時，我們要將其歸零，這是因為當curr_sum為負時，表示”current position以前”的那坨數對於”current position以後”的數(不管之後的數為何)都是”拖油瓶”，它們只會讓以後的加總”更小”，而既然到”目前為止”的最大加總都已經被maximum紀錄起來了，我們就可以放心的放棄之前看過的累積值(curr_sum)並將其歸零重新開始計算</li>
 <li>Ex: [3, -5, 2, 2] :</li>
 </ol>
 <table>
@@ -379,17 +391,12 @@
 </thead>
 <tbody><tr>
 <td>None</td>
-<td>0</td>
-<td>-1000000</td>
-</tr>
-<tr>
-<td>0</td>
 <td>3</td>
 <td>3</td>
 </tr>
 <tr>
 <td>1</td>
-<td>-2</td>
+<td>-2 → 0</td>
 <td>3</td>
 </tr>
 <tr>
@@ -434,6 +441,16 @@
 <li>利用第一列和第一欄當作label：若cell(i, j)為0，則label matrix[ 0 ][ j ]和matrix[ i ][ 0 ]為0，label完後再次traverse matrix的時候只要任一element所對應的matrix[ 0 ][ j ] 或 matrix[ i ][ 0 ]為0，就將該element assign為0</li>
 <li>注意：由於第一列和第一欄要拿來當作signals，所以”第一列和第一欄是否要填0”必須分開看：在label前先行判斷第一列和第一欄是否有0(用bool表示)，判斷完之後即可traverse matrix，而也因為前述，所以matrix的traversal要保留第一列和第一欄(i.e. 從[1, 1]開始)</li>
 <li>等到該填0的cell都填完，表示我們不再需要signals，最後就可以處理第一列和第一欄，將列和欄該填滿0的填上去</li>
+</ol>
+<h1 id="78-Subsets"><a href="#78-Subsets" class="headerlink" title="78. Subsets"></a>78. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/subsets/description/">Subsets</a></h1><h3 id="Method1：-dfs-backtracking-best-solution"><a href="#Method1：-dfs-backtracking-best-solution" class="headerlink" title="Method1： dfs(backtracking)(best solution)"></a>Method1： dfs(backtracking)(best solution)</h3><p>時間：O(n * 2^n)</p>
+<p>空間：O(n)</p>
+<p>觀念： </p>
+<p>e.g. nums &#x3D; [1,2,3]</p>
+<ol>
+<li>題目所求為”找到所有可能的subsets” → 想到要用backtracking，而此題相較於一般backtracking較單純，在於其沒有特定的constraints和target(e.g. 像是”combination sum”、”palindrome partitioning”那樣)，而是一直把可能的組合append到ans內 </li>
+<li>for loop：和一般backtracking一樣，擔任「每次return後將位置往前推進一格」的角色</li>
+<li>recursion：將”curr_ans”寫在參數內而非寫在其他行，目的是為了希望return後直接回復到”前一個狀態”，如此每次return後就不用對curr_ans另外進行處理</li>
+<li>此題curr_ans的變化為：1 → 12 → 123 → 13 → 2 → 23 → 3</li>
 </ol>
 <h1 id="79-Word-Search"><a href="#79-Word-Search" class="headerlink" title="79. Word Search"></a>79. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/word-search/description/">Word Search</a></h1><h3 id="Method1：dfs-best-solution"><a href="#Method1：dfs-best-solution" class="headerlink" title="Method1：dfs(best solution)"></a>Method1：dfs(best solution)</h3><p>時間：O(n<em>m</em>4^len(word))</p>
 <p>空間：O(n*m)</p>
@@ -498,12 +515,24 @@
 </ol>
 </li>
 </ol>
-<h1 id="142-Linked-List-Cycle-II"><a href="#142-Linked-List-Cycle-II" class="headerlink" title="142. Linked List Cycle II"></a><strong><a target="_blank" rel="noopener" href="https://leetcode.com/problems/linked-list-cycle-ii/description/">142. Linked List Cycle II</a></strong></h1><h1 id="958-Check-Completeness-of-a-Binary-Tree"><a href="#958-Check-Completeness-of-a-Binary-Tree" class="headerlink" title="958. Check Completeness of a Binary Tree"></a><strong><a target="_blank" rel="noopener" href="https://leetcode.com/problems/check-completeness-of-a-binary-tree/description/">958. Check Completeness of a Binary Tree</a></strong></h1><h3 id="complete-binary-tree"><a href="#complete-binary-tree" class="headerlink" title="complete binary tree"></a>complete binary tree</h3><ol>
+<h1 id="142-Linked-List-Cycle-II"><a href="#142-Linked-List-Cycle-II" class="headerlink" title="142. Linked List Cycle II"></a><strong><a target="_blank" rel="noopener" href="https://leetcode.com/problems/linked-list-cycle-ii/description/">142. Linked List Cycle II</a></strong></h1><h1 id="230-Kth-Smallest-Element-in-a-BST"><a href="#230-Kth-Smallest-Element-in-a-BST" class="headerlink" title="230. Kth Smallest Element in a BST"></a>230. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/">Kth Smallest Element in a BST</a></h1><p>先備知識：binary search tree</p>
+<ol>
+<li>binary tree</li>
+<li>value由小到大滿足左→中→右的順序</li>
+</ol>
+<h3 id="Method1：Recursive-Inorder-Traversal"><a href="#Method1：Recursive-Inorder-Traversal" class="headerlink" title="Method1：Recursive Inorder Traversal"></a>Method1：<strong><strong>Recursive Inorder Traversal</strong></strong></h3><p>時間：O(n)</p>
+<p>空間：O(n)</p>
+<p>觀念：</p>
+<ol>
+<li>題目所求為第k小的值，而對一個binary search tree作inorder traversal可以得到一個ascending order array，return arr[k-1]即可滿足所求</li>
+</ol>
+<h1 id="958-Check-Completeness-of-a-Binary-Tree"><a href="#958-Check-Completeness-of-a-Binary-Tree" class="headerlink" title="958. Check Completeness of a Binary Tree"></a><strong><a target="_blank" rel="noopener" href="https://leetcode.com/problems/check-completeness-of-a-binary-tree/description/">958. Check Completeness of a Binary Tree</a></strong></h1><h3 id="complete-binary-tree"><a href="#complete-binary-tree" class="headerlink" title="complete binary tree"></a>complete binary tree</h3><ol>
 <li>last level：由左連續排到右，不能斷掉 </li>
 <li>other than last level：full binary tree</li>
 </ol>
 <h3 id="Method1：dfs-label"><a href="#Method1：dfs-label" class="headerlink" title="Method1：dfs(label)"></a>Method1：dfs(label)</h3><p>時間：O(n)</p>
 <p>空間：O(n)</p>
+<p>觀念：</p>
 <ol>
 <li>利用binary tree的特性：對於任一個node(n)，其left child必為2<em>n，right child必為2</em>n+1，透過此特性可得到任一個node的position，如此traverse整棵樹並搭配$max(maxPos, ;currPos)$每當遇到更大的label就更新max_pos並把結果傳回去，即可得到最大的node label</li>
 <li>接續1.，在traverse的過程中一邊計算最大label，一邊去count整棵樹的node數量</li>
@@ -511,6 +540,7 @@
 </ol>
 <h3 id="Method2：bfs"><a href="#Method2：bfs" class="headerlink" title="Method2：bfs"></a>Method2：bfs</h3><p>時間：O(n)</p>
 <p>空間：O(n)</p>
+<p>觀念：</p>
 <ol>
 <li>初始化一個idx，將所有nodes依照level order存進list裡，即對於任一node，依序存入它的left child、right child，直到遇到None就跳出迴圈</li>
 <li>延續1.，若該棵樹為complete binary tree，則None的後面不應該有任何node，若有則不是complete binary tree，利用此特性，在1.跳出迴圈後我們會得到一個idx(None的位置)，接著只要檢查idx之後的位置是否存在node即可判斷是不是complete binary tree</li>
@@ -523,6 +553,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Medium/" rel="tag"># Medium</a>
+          </div>
 
         
 
@@ -530,13 +563,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/02/17/TheCrack/" rel="prev" title="Leetcode - Random">
-      <i class="fa fa-chevron-left"></i> Leetcode - Random
+    <a href="/2023/02/18/trie/" rel="prev" title="Data Structures - Trie">
+      <i class="fa fa-chevron-left"></i> Data Structures - Trie
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/02/17/Algorithm-StringMatching/" rel="next" title="Algorithm - String Matching">
-      Algorithm - String Matching <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -595,7 +625,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Leetcode-Again"><span class="nav-number">1.</span> <span class="nav-text">Leetcode Again</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Add-Two-Numbers"><span class="nav-number">2.</span> <span class="nav-text">2. Add Two Numbers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9Ajust-add-them-best-solution"><span class="nav-number">2.1.</span> <span class="nav-text">Method1：just add them(best solution)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Longest-Substring-Without-Repeating-Characters"><span class="nav-number">3.</span> <span class="nav-text">3. Longest Substring Without Repeating Characters</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9Atwo-pointers-sliding-window-best-solution"><span class="nav-number">3.1.</span> <span class="nav-text">Method1：two pointers - sliding window(best solution)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Longest-Palindromic-Substring"><span class="nav-number">4.</span> <span class="nav-text">5. Longest Palindromic Substring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9AExpand-from-every-center"><span class="nav-number">4.1.</span> <span class="nav-text">Method1：Expand from every center</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Method2%EF%BC%9Adynamic-programming"><span class="nav-number">4.2.</span> <span class="nav-text">Method2：dynamic programming</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-Container-With-Most-Water"><span class="nav-number">5.</span> <span class="nav-text">11. Container With Most Water</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9ATwo-pointers"><span class="nav-number">5.1.</span> <span class="nav-text">Method1：Two pointers</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-3Sum"><span class="nav-number">6.</span> <span class="nav-text">15. 3Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9ATwo-pointers-and-set"><span class="nav-number">6.1.</span> <span class="nav-text">Method1：Two pointers and set</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#19-Remove-Nth-Node-From-End-of-List"><span class="nav-number">7.</span> <span class="nav-text">19. Remove Nth Node From End of List</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Acount"><span class="nav-number">7.0.1.</span> <span class="nav-text">Method1：count</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#33-Search-in-Rotated-Sorted-Array"><span class="nav-number">8.</span> <span class="nav-text">33. Search in Rotated Sorted Array</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Avariation-of-binary-search"><span class="nav-number">8.0.1.</span> <span class="nav-text">Method1：variation of binary search</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#39-Combination-Sum"><span class="nav-number">9.</span> <span class="nav-text">39. Combination Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-backtracking"><span class="nav-number">9.0.1.</span> <span class="nav-text">Method1：dfs(backtracking)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#48-Rotate-Image"><span class="nav-number">10.</span> <span class="nav-text">48. Rotate Image</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9ARotate-Groups-of-Four-Cells"><span class="nav-number">10.0.1.</span> <span class="nav-text">Method1：Rotate Groups of Four Cells</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9Atranspose-and-swap-the-matrix-best-solution"><span class="nav-number">10.0.2.</span> <span class="nav-text">Method2：transpose and swap the matrix(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#53-Maximum-Subarray"><span class="nav-number">11.</span> <span class="nav-text">53. Maximum Subarray</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9AKadane%E2%80%99s-Algorithm"><span class="nav-number">11.0.1.</span> <span class="nav-text">Method1：Kadane’s Algorithm</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#57-Insert-Interval"><span class="nav-number">12.</span> <span class="nav-text">57. Insert Interval</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Abrute-force"><span class="nav-number">12.0.1.</span> <span class="nav-text">Method1：brute force</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#73-Set-Matrix-Zeroes"><span class="nav-number">13.</span> <span class="nav-text">73. Set Matrix Zeroes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Afirst-row-and-column-as-signals-best-solution"><span class="nav-number">13.0.1.</span> <span class="nav-text">Method1：first row and column as signals(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#79-Word-Search"><span class="nav-number">14.</span> <span class="nav-text">79. Word Search</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-best-solution"><span class="nav-number">14.0.1.</span> <span class="nav-text">Method1：dfs(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#128-Longest-Consecutive-Sequence"><span class="nav-number">15.</span> <span class="nav-text">128. Longest Consecutive Sequence</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Asort-it"><span class="nav-number">15.0.1.</span> <span class="nav-text">Method1：sort it</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9Ahashset-best-solution"><span class="nav-number">15.0.2.</span> <span class="nav-text">Method2：hashset(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#134-Gas-Station"><span class="nav-number">16.</span> <span class="nav-text">134. Gas Station</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Atwo-pointers-best-solution"><span class="nav-number">16.0.1.</span> <span class="nav-text">Method1：two pointers(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#142-Linked-List-Cycle-II"><span class="nav-number">17.</span> <span class="nav-text">142. Linked List Cycle II</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#958-Check-Completeness-of-a-Binary-Tree"><span class="nav-number">18.</span> <span class="nav-text">958. Check Completeness of a Binary Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#complete-binary-tree"><span class="nav-number">18.0.1.</span> <span class="nav-text">complete binary tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-label"><span class="nav-number">18.0.2.</span> <span class="nav-text">Method1：dfs(label)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9Abfs"><span class="nav-number">18.0.3.</span> <span class="nav-text">Method2：bfs</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Medium"><span class="nav-number">1.</span> <span class="nav-text">Medium</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Add-Two-Numbers"><span class="nav-number">2.</span> <span class="nav-text">2. Add Two Numbers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9Ajust-add-them-best-solution"><span class="nav-number">2.1.</span> <span class="nav-text">Method1：just add them(best solution)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Longest-Substring-Without-Repeating-Characters"><span class="nav-number">3.</span> <span class="nav-text">3. Longest Substring Without Repeating Characters</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9Atwo-pointers-sliding-window-best-solution"><span class="nav-number">3.1.</span> <span class="nav-text">Method1：two pointers - sliding window(best solution)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Longest-Palindromic-Substring"><span class="nav-number">4.</span> <span class="nav-text">5. Longest Palindromic Substring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9AExpand-from-every-center"><span class="nav-number">4.1.</span> <span class="nav-text">Method1：Expand from every center</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Method2%EF%BC%9Adynamic-programming"><span class="nav-number">4.2.</span> <span class="nav-text">Method2：dynamic programming</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-Container-With-Most-Water"><span class="nav-number">5.</span> <span class="nav-text">11. Container With Most Water</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9ATwo-pointers"><span class="nav-number">5.1.</span> <span class="nav-text">Method1：Two pointers</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-3Sum"><span class="nav-number">6.</span> <span class="nav-text">15. 3Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9ATwo-pointers-and-set"><span class="nav-number">6.1.</span> <span class="nav-text">Method1：Two pointers and set</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#19-Remove-Nth-Node-From-End-of-List"><span class="nav-number">7.</span> <span class="nav-text">19. Remove Nth Node From End of List</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Acount"><span class="nav-number">7.0.1.</span> <span class="nav-text">Method1：count</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#33-Search-in-Rotated-Sorted-Array"><span class="nav-number">8.</span> <span class="nav-text">33. Search in Rotated Sorted Array</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Avariation-of-binary-search"><span class="nav-number">8.0.1.</span> <span class="nav-text">Method1：variation of binary search</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#39-Combination-Sum"><span class="nav-number">9.</span> <span class="nav-text">39. Combination Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-backtracking"><span class="nav-number">9.0.1.</span> <span class="nav-text">Method1：dfs(backtracking)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#48-Rotate-Image"><span class="nav-number">10.</span> <span class="nav-text">48. Rotate Image</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9ARotate-Groups-of-Four-Cells"><span class="nav-number">10.0.1.</span> <span class="nav-text">Method1：Rotate Groups of Four Cells</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9Atranspose-and-swap-the-matrix-best-solution"><span class="nav-number">10.0.2.</span> <span class="nav-text">Method2：transpose and swap the matrix(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#53-Maximum-Subarray"><span class="nav-number">11.</span> <span class="nav-text">53. Maximum Subarray</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9AKadane%E2%80%99s-Algorithm"><span class="nav-number">11.0.1.</span> <span class="nav-text">Method1：Kadane’s Algorithm</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#57-Insert-Interval"><span class="nav-number">12.</span> <span class="nav-text">57. Insert Interval</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Abrute-force"><span class="nav-number">12.0.1.</span> <span class="nav-text">Method1：brute force</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#73-Set-Matrix-Zeroes"><span class="nav-number">13.</span> <span class="nav-text">73. Set Matrix Zeroes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Afirst-row-and-column-as-signals-best-solution"><span class="nav-number">13.0.1.</span> <span class="nav-text">Method1：first row and column as signals(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#78-Subsets"><span class="nav-number">14.</span> <span class="nav-text">78. Subsets</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9A-dfs-backtracking-best-solution"><span class="nav-number">14.0.1.</span> <span class="nav-text">Method1： dfs(backtracking)(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#79-Word-Search"><span class="nav-number">15.</span> <span class="nav-text">79. Word Search</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-best-solution"><span class="nav-number">15.0.1.</span> <span class="nav-text">Method1：dfs(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#128-Longest-Consecutive-Sequence"><span class="nav-number">16.</span> <span class="nav-text">128. Longest Consecutive Sequence</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Asort-it"><span class="nav-number">16.0.1.</span> <span class="nav-text">Method1：sort it</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9Ahashset-best-solution"><span class="nav-number">16.0.2.</span> <span class="nav-text">Method2：hashset(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#134-Gas-Station"><span class="nav-number">17.</span> <span class="nav-text">134. Gas Station</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Atwo-pointers-best-solution"><span class="nav-number">17.0.1.</span> <span class="nav-text">Method1：two pointers(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#142-Linked-List-Cycle-II"><span class="nav-number">18.</span> <span class="nav-text">142. Linked List Cycle II</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#230-Kth-Smallest-Element-in-a-BST"><span class="nav-number">19.</span> <span class="nav-text">230. Kth Smallest Element in a BST</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9ARecursive-Inorder-Traversal"><span class="nav-number">19.0.1.</span> <span class="nav-text">Method1：Recursive Inorder Traversal</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#958-Check-Completeness-of-a-Binary-Tree"><span class="nav-number">20.</span> <span class="nav-text">958. Check Completeness of a Binary Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#complete-binary-tree"><span class="nav-number">20.0.1.</span> <span class="nav-text">complete binary tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-label"><span class="nav-number">20.0.2.</span> <span class="nav-text">Method1：dfs(label)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9Abfs"><span class="nav-number">20.0.3.</span> <span class="nav-text">Method2：bfs</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -616,11 +646,11 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
