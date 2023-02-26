@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Algorithm - Depth First Search">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Algorithm - Depth First Search">
+<meta property="og:url" content="http://example.com/2023/02/26/Algorithm-DepthFirstSearch/index.html">
+<meta property="og:site_name" content="FrancisTan">
+<meta property="og:description" content="Algorithm - Depth First Search">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://media.geeksforgeeks.org/wp-content/uploads/20200507074112/ezgif.com-gif-maker61.gif">
+<meta property="article:published_time" content="2023-02-26T11:01:56.000Z">
+<meta property="article:modified_time" content="2023-02-26T11:03:35.295Z">
+<meta property="article:author" content="Francis">
+<meta property="article:tag" content="Graph">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.geeksforgeeks.org/wp-content/uploads/20200507074112/ezgif.com-gif-maker61.gif">
+
+<link rel="canonical" href="http://example.com/2023/02/26/Algorithm-DepthFirstSearch/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Algorithm - Depth First Search | FrancisTan</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FrancisTan</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Just For Fun</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/26/Algorithm-DepthFirstSearch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Francis">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FrancisTan">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Algorithm - Depth First Search
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-02-26 19:01:56 / Modified: 19:03:35" itemprop="dateCreated datePublished" datetime="2023-02-26T19:01:56+08:00">2023-02-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Algorithm-Depth-First-Search"><a href="#Algorithm-Depth-First-Search" class="headerlink" title="Algorithm - Depth First Search"></a>Algorithm - Depth First Search</h1><span id="more"></span>
+
+
+<h3 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h3><p>深度優先搜尋演算法（Depth-First-Search，DFS）是一種用於遍歷、搜尋樹或圖的演算法。DFS會以「先看到先搜尋」的方式，儘可能深地搜尋樹(or圖)的分支。當某個目標成功被找到，或是當前節點v所有的邊都己被探尋過，演算法將回溯到上一個節點，並持續重複「搜尋&amp;rarr;找到目標or沒路可走&amp;rarr;回溯」的遞迴形式，直到最後要馬成功找到目標，要馬所有的節點都被我們遍歷完為止(i.e. 用來暫存遞迴的system stack為空)。</p>
+<h3 id="解題觀念"><a href="#解題觀念" class="headerlink" title="解題觀念"></a>解題觀念</h3><ol>
+<li>確認圖的形式：在開始前我們必須先釐清我們要traverse的東西是什麼，以下列舉幾個常見的形式。<ul>
+<li>Tree：題目會給root，資料結構通常為TreeNode，traverse的方式通常為利用遞迴函式往left-most的方向下探  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Definition for a binary tree node.</span><br><span class="line">class TreeNode:</span><br><span class="line">    def __init__(self, val=0, left=None, right=None):</span><br><span class="line">        self.val = val</span><br><span class="line">        self.left = left</span><br><span class="line">        self.right = right</span><br></pre></td></tr></table></figure></li>
+<li>Graph：常見為以下兩種<ul>
+<li>Matrix(two-dimension array)：資料結構為一個二維陣列，traverse的方式通常使用double for loops作為框架，而遞迴函式作為實際上的search。</li>
+<li>Adjancency list：資料結構為一個dictionary，keys代表每一個node(or node value)，values代表其對應的key的所有adjancent nodes，即Dict[str: List]。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>建立遞迴函式：為最關鍵的一步，主要可分為三個部分<ul>
+<li>終止條件：<ul>
+<li>「達成某個目標」：此時要和下方第三點呼應，開始思考要「return什麼」，e.g.若題目要求找到某個字串或多個數組，那找到後要用哪種形式儲存起來？視題目而定。</li>
+<li>「已經沒路可走了」：這就要看圖的形式為何，e.g.若為leetcode常見的matrix，那條件可能就是「row and column」不能超過二維陣列的長度(即current cell必須為一個有效的cell)。</li>
+<li>Note: 這邊的「沒路可走」不僅包含判斷當前有無有效的cell可以走，也包含判斷某個路是否已經visited，幾乎所有圖的traversal為了避免任一個節點被重複遍歷到，都會用某種形式去將紀錄走過的路，常見方法有<ol>
+<li>label法：將訪問過的cell用某個特殊的char標記(e.g.”#”)，此時視題目情況，看要不要在回溯時還原labeled cells原本的值。</li>
+<li>查表法：將訪問過的cell透過某種資料結構(e.g.set, list)暫存下來，這邊一樣視題目情況，看要不要在回溯時進入表內刪除visited cell的值。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>遞迴遍歷的方向：<ul>
+<li>若圖為matrix：通常為「上、下、左、右」，順序不限。</li>
+<li>若圖為adjancency list：沒有特定方向，看該node的adjancent nodes有誰(即該node在dictionary內所對應的list)。</li>
+</ul>
+</li>
+<li>實際回傳的東西：<br> 實際寫作時可以試著去思考，對於某個節點而言，若已經無路可走(或說所有的鄰居都被我們訪問過)，則此時有需要做哪些post processing嗎？(i.e.有沒有什麼資料是應該被我們手動回復到之前的狀態)，而做完處理後，回傳那些「應該被保存起來並一路回傳回去的」資訊。</li>
+</ul>
+</li>
+</ol>
+<h3 id="Pseudo-code"><a href="#Pseudo-code" class="headerlink" title="Pseudo code"></a>Pseudo code</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def dfs(node, visited):</span><br><span class="line">    # terminal condition</span><br><span class="line">    if (Position(node) is not valid) or (node is visited):</span><br><span class="line">        return something</span><br><span class="line">    </span><br><span class="line">    # traverse all the adjancent nodes</span><br><span class="line">    visited[Position(node)] = True</span><br><span class="line">    for neighbor of node:</span><br><span class="line">        dfs(neighbor, visited)</span><br><span class="line">    </span><br><span class="line">    do some post processing if needed</span><br><span class="line">    return something</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+
+<h3 id="實際操作"><a href="#實際操作" class="headerlink" title="實際操作"></a>實際操作</h3><p>以下為一個最基本的implementation(以Adjancency list為例)</p>
+<ul>
+<li>將遍歷到的node print出來，直到所有的nodes都被訪問過</li>
+<li>以從0開始為例：result &#x3D; 0&amp;rarr;1&amp;rarr;2&amp;rarr;3</li>
+</ul>
+<p><img src="https://media.geeksforgeeks.org/wp-content/uploads/20200507074112/ezgif.com-gif-maker61.gif" alt="image alt"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">from collections import defaultdict</span><br><span class="line">from typing import List, Dict, Set</span><br><span class="line"></span><br><span class="line">class Graph:</span><br><span class="line">    def __init__(self) -&gt; None:</span><br><span class="line">        self.graph = &#123;&#125;</span><br><span class="line">        </span><br><span class="line">    def build(self, v1: int, v2: int) -&gt; None:</span><br><span class="line">        if str(v1) not in self.graph:</span><br><span class="line">            self.graph[str(v1)] = [v2]</span><br><span class="line">        else:</span><br><span class="line">            self.graph[str(v1)].append(v2)</span><br><span class="line"></span><br><span class="line">    def dfs(self, node: int, visited: Set) -&gt; None: </span><br><span class="line">        if node in visited:</span><br><span class="line">            return</span><br><span class="line">        print(node)</span><br><span class="line">        visited.add(node)</span><br><span class="line">        if str(node) in self.graph:</span><br><span class="line">            for neighbor in self.graph[str(node)]:</span><br><span class="line">                self.dfs(neighbor, visited)</span><br><span class="line"></span><br><span class="line">graph = Graph()</span><br><span class="line"># nodes = [(0, 1), (0, 2), (0, 3), (1, 3), (2, 4), (3, 5), (3, 6), (4, 7), (4, 5), (5, 2)]</span><br><span class="line">nodes = [(0, 1), (0, 2), (1, 2), (2, 0), (2, 3), (3, 3)]</span><br><span class="line">for i in range(len(nodes)):</span><br><span class="line">    graph.build(nodes[i][0], nodes[i][1])</span><br><span class="line">visited = set()</span><br><span class="line">graph.dfs(0, visited)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Graph/" rel="tag"># Graph</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/02/24/leetcode-medium/" rel="prev" title="Leetcode - Medium">
+      <i class="fa fa-chevron-left"></i> Leetcode - Medium
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Algorithm-Depth-First-Search"><span class="nav-number">1.</span> <span class="nav-text">Algorithm - Depth First Search</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.0.1.</span> <span class="nav-text">基本介紹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A1%8C%E8%A7%80%E5%BF%B5"><span class="nav-number">1.0.2.</span> <span class="nav-text">解題觀念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pseudo-code"><span class="nav-number">1.0.3.</span> <span class="nav-text">Pseudo code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%A6%E9%9A%9B%E6%93%8D%E4%BD%9C"><span class="nav-number">1.0.4.</span> <span class="nav-text">實際操作</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Francis"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Francis</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Francis</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
