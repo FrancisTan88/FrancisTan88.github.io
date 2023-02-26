@@ -27,13 +27,14 @@
 <meta property="og:site_name" content="FrancisTan">
 <meta property="og:description" content="Algorithm - Depth First Search">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://he-s3.s3.amazonaws.com/media/uploads/9fa1119.jpg">
 <meta property="og:image" content="https://media.geeksforgeeks.org/wp-content/uploads/20200507074112/ezgif.com-gif-maker61.gif">
 <meta property="article:published_time" content="2023-02-26T11:01:56.000Z">
-<meta property="article:modified_time" content="2023-02-26T11:07:42.886Z">
+<meta property="article:modified_time" content="2023-02-26T11:11:55.013Z">
 <meta property="article:author" content="Francis">
 <meta property="article:tag" content="Graph">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://media.geeksforgeeks.org/wp-content/uploads/20200507074112/ezgif.com-gif-maker61.gif">
+<meta name="twitter:image" content="https://he-s3.s3.amazonaws.com/media/uploads/9fa1119.jpg">
 
 <link rel="canonical" href="http://example.com/2023/02/26/Algorithm-DepthFirstSearch/">
 
@@ -178,7 +179,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-02-26 19:01:56 / Modified: 19:07:42" itemprop="dateCreated datePublished" datetime="2023-02-26T19:01:56+08:00">2023-02-26</time>
+              <time title="Created: 2023-02-26 19:01:56 / Modified: 19:11:55" itemprop="dateCreated datePublished" datetime="2023-02-26T19:01:56+08:00">2023-02-26</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -205,6 +206,7 @@
 
 
 <h3 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h3><p>深度優先搜尋演算法（Depth-First-Search，DFS）是一種用於遍歷、搜尋樹或圖的演算法。DFS會以「先看到先搜尋」的方式，儘可能深地搜尋樹(or圖)的分支。當某個目標成功被找到，或是當前節點v所有的邊都己被探尋過，演算法將回溯到上一個節點，並持續重複「搜尋&amp;rarr;找到目標or沒路可走&amp;rarr;回溯」的遞迴形式，直到最後要馬成功找到目標，要馬所有的節點都被我們遍歷完為止(i.e. 用來暫存遞迴的system stack為空)。</p>
+<p><img src="https://he-s3.s3.amazonaws.com/media/uploads/9fa1119.jpg" alt="image alt"></p>
 <h3 id="解題觀念"><a href="#解題觀念" class="headerlink" title="解題觀念"></a>解題觀念</h3><ol>
 <li>確認圖的形式：在開始前我們必須先釐清我們要traverse的東西是什麼，以下列舉幾個常見的形式。<ul>
 <li>Tree：題目會給root，資料結構通常為TreeNode，traverse的方式通常為利用遞迴函式往left-most的方向下探  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Definition for a binary tree node.</span><br><span class="line">class TreeNode:</span><br><span class="line">    def __init__(self, val=0, left=None, right=None):</span><br><span class="line">        self.val = val</span><br><span class="line">        self.left = left</span><br><span class="line">        self.right = right</span><br></pre></td></tr></table></figure></li>
