@@ -29,8 +29,10 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://he-s3.s3.amazonaws.com/media/uploads/9fa1119.jpg">
 <meta property="og:image" content="https://media.geeksforgeeks.org/wp-content/uploads/20200507074112/ezgif.com-gif-maker61.gif">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2021/02/19/xogrid.jpg">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2020/11/04/word2.jpg">
 <meta property="article:published_time" content="2023-02-26T11:01:56.000Z">
-<meta property="article:modified_time" content="2023-02-26T11:26:54.463Z">
+<meta property="article:modified_time" content="2023-02-28T10:52:43.269Z">
 <meta property="article:author" content="Francis">
 <meta property="article:tag" content="Graph">
 <meta name="twitter:card" content="summary">
@@ -177,10 +179,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2023-02-26 19:01:56 / Modified: 19:26:54" itemprop="dateCreated datePublished" datetime="2023-02-26T19:01:56+08:00">2023-02-26</time>
+              <time title="Created: 2023-02-26 19:01:56" itemprop="dateCreated datePublished" datetime="2023-02-26T19:01:56+08:00">2023-02-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-02-28 18:52:43" itemprop="dateModified" datetime="2023-02-28T18:52:43+08:00">2023-02-28</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -247,6 +255,85 @@
 </ul>
 <p><img src="https://media.geeksforgeeks.org/wp-content/uploads/20200507074112/ezgif.com-gif-maker61.gif" alt="image alt"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span>, <span class="type">Dict</span>, <span class="type">Set</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Graph</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.graph = &#123;&#125;</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">build</span>(<span class="params">self, v1: <span class="built_in">int</span>, v2: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">str</span>(v1) <span class="keyword">not</span> <span class="keyword">in</span> self.graph:</span><br><span class="line">            self.graph[<span class="built_in">str</span>(v1)] = [v2]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.graph[<span class="built_in">str</span>(v1)].append(v2)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">self, node: <span class="built_in">int</span>, visited: <span class="type">Set</span></span>) -&gt; <span class="literal">None</span>: </span><br><span class="line">        <span class="keyword">if</span> node <span class="keyword">in</span> visited:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="built_in">print</span>(node)</span><br><span class="line">        visited.add(node)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">str</span>(node) <span class="keyword">in</span> self.graph:</span><br><span class="line">            <span class="keyword">for</span> neighbor <span class="keyword">in</span> self.graph[<span class="built_in">str</span>(node)]:</span><br><span class="line">                self.dfs(neighbor, visited)</span><br><span class="line"></span><br><span class="line">graph = Graph()</span><br><span class="line"><span class="comment"># nodes = [(0, 1), (0, 2), (0, 3), (1, 3), (2, 4), (3, 5), (3, 6), (4, 7), (4, 5), (5, 2)]</span></span><br><span class="line">nodes = [(<span class="number">0</span>, <span class="number">1</span>), (<span class="number">0</span>, <span class="number">2</span>), (<span class="number">1</span>, <span class="number">2</span>), (<span class="number">2</span>, <span class="number">0</span>), (<span class="number">2</span>, <span class="number">3</span>), (<span class="number">3</span>, <span class="number">3</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nodes)):</span><br><span class="line">    graph.build(nodes[i][<span class="number">0</span>], nodes[i][<span class="number">1</span>])</span><br><span class="line">visited = <span class="built_in">set</span>()</span><br><span class="line">graph.dfs(<span class="number">0</span>, visited)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Some-Problems-From-Leetcode"><a href="#Some-Problems-From-Leetcode" class="headerlink" title="Some Problems From Leetcode"></a>Some Problems From Leetcode</h2><h3 id="Surrounded-Regions"><a href="#Surrounded-Regions" class="headerlink" title="Surrounded Regions"></a><strong><a target="_blank" rel="noopener" href="https://leetcode.com/problems/surrounded-regions/">Surrounded Regions</a></strong></h3><p>Description:<br>Given an m x n matrix board containing ‘X’ and ‘O’, capture all regions that are 4-directionally surrounded by ‘X’.<br>A region is captured by flipping all ‘O’s into ‘X’s in that surrounded region.</p>
+<p>Constraints:</p>
+<ul>
+<li>m &#x3D;&#x3D; board.length</li>
+<li>n &#x3D;&#x3D; board[i].length</li>
+<li>1 &lt;&#x3D; m, n &lt;&#x3D; 200</li>
+<li>board[i][j] is ‘X’ or ‘O’</li>
+</ul>
+<p>Example: </p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/19/xogrid.jpg" alt="image alt"></p>
+<h3 id="Method1：dfs-best-solution"><a href="#Method1：dfs-best-solution" class="headerlink" title="Method1：dfs(best solution)"></a>Method1：dfs(best solution)</h3><p>時間：<br>O(m<em>n), given that m, n are the number of rows and columns, respectively.(Note:the func dfs() has to traverse all cells in the matrix in the worst case, which costs O(m</em>n), but in return, it only costs O(1)’s for other starting point. So, it costs O(m*n) in total)。</p>
+<p>空間：<br>O(m<em>n), given that func dfs() has to traverse all cells in the matrix in the worst case, and  the recursive stack would store m</em>n elements in that case。</p>
+<p>觀念：</p>
+<ol>
+<li>根據題目，”flip”的條件為”<em>4-directionally surrounded by ‘X‘</em> ”，言下之意就是「位在四個邊」的’O’都不能flip，而且與之相鄰的一系列’O’也連帶的不能flip(因為若某個’O’是某個不能被翻的’O’的鄰居，則它一定不是”<em>4-directionally surrounded by ‘X‘ “</em>)。</li>
+<li>搞清楚(1)的條件之後解法就很明確了，檢查matrix的四條邊，若遇到’O’就以它為出發點，遍歷所有與之相鄰的一系列cells：<ol>
+<li>若cell為’O’：代表不能flip，將其用某個特殊符號label起來(e.g. “#”)。<br> Note: 由於我們是以四條邊的’O’作為dfs的起始點，所以凡是我們遇到(沒有被return)的cell，他一定是某個「不能被翻」的鄰居，所以這邊直接label即可，不用另加條件判斷。</li>
+<li>若cell為invalid position(超出matrix長度) 或 本身為’X’ 或 visited(簡單來說: cell ≠ ‘O’)：回溯到原本的位置，看其他方向有沒有路可走。</li>
+</ol>
+</li>
+<li>完成(2)的操作後，我們會得到一個labeled matrix，可能包含三種char：<ol>
+<li>“O”：應該要被flip → 把它改成”X”</li>
+<li>“X”：不用管它</li>
+<li>“#”：原本是”O”但不用被flip → 還原成”O”</li>
+</ol>
+</li>
+</ol>
+<br/>
+
+<h3 id="Word-Search"><a href="#Word-Search" class="headerlink" title="Word Search"></a><a target="_blank" rel="noopener" href="https://leetcode.com/problems/word-search/description/">Word Search</a></h3><p>Description:<br>Given an m x n grid of characters board and a string word, return true if word exists in the grid.<br>The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.</p>
+<p>Constraints:</p>
+<ul>
+<li>m &#x3D;&#x3D; board.length</li>
+<li>n &#x3D; board[i].length</li>
+<li>1 &lt;&#x3D; m, n &lt;&#x3D; 6</li>
+<li>1 &lt;&#x3D; word.length &lt;&#x3D; 15</li>
+<li>board and word consists of only lowercase and uppercase English letters.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: board = [[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;E&quot;],[&quot;S&quot;,&quot;F&quot;,&quot;C&quot;,&quot;S&quot;],[&quot;A&quot;,&quot;D&quot;,&quot;E&quot;,&quot;E&quot;]], word = &quot;ABCCED&quot;</span><br><span class="line">Output: true</span><br></pre></td></tr></table></figure>
+<p><img src="https://assets.leetcode.com/uploads/2020/11/04/word2.jpg" alt="image alt"></p>
+<h3 id="Method1：dfs-best-solution-1"><a href="#Method1：dfs-best-solution-1" class="headerlink" title="Method1：dfs(best solution)"></a>Method1：dfs(best solution)</h3><p>時間：O(n<em>m</em>4^len(word))</p>
+<p>空間：O(n*m)</p>
+<p>觀念：</p>
+<ol>
+<li>DFS：對於任一個”有效的”且”尚未被visit過”的cell(i, j)，判斷其是否等於word的current char，若不相等則return，否則就朝”上下左右”四個方向分別去search下一個char，直到所有的char被找到，For each cell(i, j)：<ol>
+<li>若row or column超出方格的範圍：return False </li>
+<li>若cell(i, j) ≠ curr_char 或 cell(i, j) is visited ： return False </li>
+<li>若(a), (b)為False，表示此cell(i, j)為effective且與char匹配，此時若char已經是word的最後一個，表示成功找到word，則將True一路傳回主函式，反之則繼續朝上述四個方向分頭繼續搜尋</li>
+<li>為了避免搜尋的過程中cell被重複visit，直接利用題目所給的方格紀錄看過的cell，i.e. 可暫時assign visited cell隨便一個char(e.g. “@”)</li>
+</ol>
+</li>
+<li>Main function：對於方格中的每一個cell，若其與word[0]匹配，則進入search階段(func DFS)，直到double for loops結束都沒有成功找到word，代表word不存在，return False</li>
+</ol>
+<br/>
+
+<h3 id="Number-of-Islands"><a href="#Number-of-Islands" class="headerlink" title="Number of Islands"></a><a target="_blank" rel="noopener" href="https://leetcode.com/problems/number-of-islands/description/">Number of Islands</a></h3><p>Description:<br>Given an m x n 2D binary grid grid which represents a map of ‘1’s (land) and ‘0’s (water), return the number of islands.<br>An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.</p>
+<p>Constraints:</p>
+<ul>
+<li>m &#x3D;&#x3D; grid.length</li>
+<li>n &#x3D;&#x3D; grid[i].length</li>
+<li>1 &lt;&#x3D; m, n &lt;&#x3D; 300</li>
+<li>grid[i][j] is ‘0’ or ‘1’.</li>
+</ul>
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: grid = [</span><br><span class="line">  [&quot;1&quot;,&quot;1&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0&quot;],</span><br><span class="line">  [&quot;1&quot;,&quot;1&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0&quot;],</span><br><span class="line">  [&quot;0&quot;,&quot;0&quot;,&quot;1&quot;,&quot;0&quot;,&quot;0&quot;],</span><br><span class="line">  [&quot;0&quot;,&quot;0&quot;,&quot;0&quot;,&quot;1&quot;,&quot;1&quot;]</span><br><span class="line">]</span><br><span class="line">Output: 3</span><br></pre></td></tr></table></figure>
+
+<h3 id="Method1：dfs-best-solution-2"><a href="#Method1：dfs-best-solution-2" class="headerlink" title="Method1：dfs(best solution)"></a>Method1：dfs(best solution)</h3><p>時間：<br>O(m<em>n), given that m, n are the number of rows and columns, respectively.(Note:the func dfs() has to traverse all cells in the matrix in the worst case, which costs O(m</em>n), but in return, it only costs O(1)’s for other starting point. So, it costs O(m*n) in total)。</p>
+<p>空間：<br>O(m<em>n), given that func dfs() has to traverse all cells in the matrix in the worst case, and  the recursive stack would store m</em>n elements in that case。</p>
+<p>觀念：</p>
+<ol>
+<li>此題的”surrounded”和leetcode-130(surrounded region)很像，差別在於此題題敘「You may assume all four edges of the grid are all surrounded by water.」，意思是matrix的周圍都被我們看不到的”0”(water)包圍，這句話很關鍵，其意味著matrix所有的”1”(if exist)最終都一定會被”0”所包圍。</li>
+<li>遍歷整個matrix：<br> 若cell為”1” : dfs開始<ol>
+<li>若cell為”1”：根據題目，”一座島”是由所有相鄰的”1”所組合起來，所以從起始點開始遇到的所有”1”我們都將它label起來(e.g. “#”)，表示已經訪問過，如此利用dfs即可將所有屬於「同一座島」的區塊標記起來，該次dfs結束後，代表我們「標完了一座島」，於是我們利用一個變數(e.g. count)加一。</li>
+<li>若cell為invalid position 或 ”0” 或 visit過(即 cell ≠ “1”)：回溯到原本位置，嘗試其他方向。</li>
+</ol>
+</li>
+<li>完成(2)的操作後，此時我們的count理論上已經成功將島的數量計算完，return即為所求。</li>
+</ol>
 
     </div>
 
@@ -327,7 +414,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Algorithm-Depth-First-Search"><span class="nav-number">1.</span> <span class="nav-text">Algorithm - Depth First Search</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.0.1.</span> <span class="nav-text">基本介紹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A1%8C%E8%A7%80%E5%BF%B5"><span class="nav-number">1.0.2.</span> <span class="nav-text">解題觀念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pseudo-code"><span class="nav-number">1.0.3.</span> <span class="nav-text">Pseudo code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%A6%E9%9A%9B%E6%93%8D%E4%BD%9C"><span class="nav-number">1.0.4.</span> <span class="nav-text">實際操作</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Algorithm-Depth-First-Search"><span class="nav-number">1.</span> <span class="nav-text">Algorithm - Depth First Search</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.0.1.</span> <span class="nav-text">基本介紹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A1%8C%E8%A7%80%E5%BF%B5"><span class="nav-number">1.0.2.</span> <span class="nav-text">解題觀念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pseudo-code"><span class="nav-number">1.0.3.</span> <span class="nav-text">Pseudo code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%A6%E9%9A%9B%E6%93%8D%E4%BD%9C"><span class="nav-number">1.0.4.</span> <span class="nav-text">實際操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Some-Problems-From-Leetcode"><span class="nav-number">1.1.</span> <span class="nav-text">Some Problems From Leetcode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Surrounded-Regions"><span class="nav-number">1.1.1.</span> <span class="nav-text">Surrounded Regions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-best-solution"><span class="nav-number">1.1.2.</span> <span class="nav-text">Method1：dfs(best solution)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Word-Search"><span class="nav-number">1.1.3.</span> <span class="nav-text">Word Search</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-best-solution-1"><span class="nav-number">1.1.4.</span> <span class="nav-text">Method1：dfs(best solution)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Number-of-Islands"><span class="nav-number">1.1.5.</span> <span class="nav-text">Number of Islands</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-best-solution-2"><span class="nav-number">1.1.6.</span> <span class="nav-text">Method1：dfs(best solution)</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
