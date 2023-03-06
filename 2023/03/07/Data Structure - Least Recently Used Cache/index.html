@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Data Structure - Least Recently Used Cache">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Data Structures - Least Recently Used Cache">
+<meta property="og:url" content="http://example.com/2023/03/07/Data%20Structure%20-%20Least%20Recently%20Used%20Cache/index.html">
+<meta property="og:site_name" content="FrancisTan">
+<meta property="og:description" content="Data Structure - Least Recently Used Cache">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://imgur.com/WkpPJlT.png">
+<meta property="og:image" content="https://imgur.com/FIu73sV.png">
+<meta property="og:image" content="https://imgur.com/1bhOAzF.png">
+<meta property="article:published_time" content="2023-03-06T18:11:59.000Z">
+<meta property="article:modified_time" content="2023-03-06T18:12:38.557Z">
+<meta property="article:author" content="Francis">
+<meta property="article:tag" content="Linked List">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://imgur.com/WkpPJlT.png">
+
+<link rel="canonical" href="http://example.com/2023/03/07/Data%20Structure%20-%20Least%20Recently%20Used%20Cache/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Data Structures - Least Recently Used Cache | FrancisTan</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FrancisTan</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Just For Fun</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/07/Data%20Structure%20-%20Least%20Recently%20Used%20Cache/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Francis">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FrancisTan">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Data Structures - Least Recently Used Cache
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-03-07 02:11:59 / Modified: 02:12:38" itemprop="dateCreated datePublished" datetime="2023-03-07T02:11:59+08:00">2023-03-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Structures/" itemprop="url" rel="index"><span itemprop="name">Data Structures</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Data-Structure-Least-Recently-Used-Cache"><a href="#Data-Structure-Least-Recently-Used-Cache" class="headerlink" title="Data Structure - Least Recently Used Cache"></a>Data Structure - Least Recently Used Cache</h1><span id="more"></span>
+
+<h3 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h3><p>LRUC(Least Recently Used Cache)是一種實現快取的資料結構，概念上是將越少用到的資料放在越尾端(tail)，越常用到的則放在越前面的位置(head)，且通常會有最大資料容量的限制(capacity)，一旦超過此容量就會從「最少使用到的資料」開始刪除，如此來提升資料取用的效率，而實作上通常會使用「doubly linked list」和「hashmap」。一個典型的LRUC如下：</p>
+<p><img src="https://imgur.com/WkpPJlT.png" alt="image alt"></p>
+<h3 id="先備知識"><a href="#先備知識" class="headerlink" title="先備知識"></a>先備知識</h3><p>Doubly Linked List</p>
+<ol>
+<li>觀念：</li>
+</ol>
+<ul>
+<li>相較於singly linked list操作insert(), remove()等operation需要O(n)，doubly linked list可以降到O(1)，而在實作上通常會搭配hashmap(keys: node address)一起使用。</li>
+<li>然而需要使用比singly linked list更大的空間來儲存hashmap以及「previous links」。</li>
+<li>所以使用時機為，當我們較不在乎空間複雜度，且希望降低與search有關(e.g. insertion(), remove()等等)的時間複雜度時。</li>
+</ul>
+<ol start="2">
+<li>實作：</li>
+</ol>
+<ul>
+<li>在實作上為了操作方便，一般會初始化並maintain head, tail兩個pointer。</li>
+<li>由ListNode組成，每個node主要包含：<ul>
+<li>key: 用來索引到(透過hashmap)該node。</li>
+<li>value: node實際儲存的值。</li>
+<li>previous: 與前一個node的link。</li>
+<li>next: 與後一個node的link。</li>
+</ul>
+</li>
+<li>常見的operation主要包含：<ul>
+<li>remove(key: int): 刪除key值為”key”的node，做法上和singly linked list一樣都是「將removed node的前一個接到removed node的下一個」，差別在於要再對反方向做一樣的事情，處理完list之後記得去hashmap pop掉該key值。</li>
+<li>insert_after(insert_key: int, key: int, value: int): 將「key值為”key”、值為”value”的node插在key值為”insert_key”的node後面」，操作上為先將inserted node的”後半部”接好，再接inserted node的前半部，因為若先前半部就會失去後半部的pointer(i.e. 無法成功insert)，最後要注意，由於是用hashmap在儲存整個list nodes的位址且我們期望達到O(1)indexing，這邊不容許key值有duplicates，所以在insert完node後若有duplicate，我們需要將其從list刪除，最後再更新hashmap。  <br/>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">This is the implementation of doubly linked list.</span></span><br><span class="line"><span class="string">Note: In this case, the duplicates(key) are not allowed.</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ListNode</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, key=<span class="number">0</span>, val=<span class="number">0</span>, prev=<span class="literal">None</span>, <span class="built_in">next</span>=<span class="literal">None</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.key = key</span><br><span class="line">        self.val = val</span><br><span class="line">        self.prev = prev</span><br><span class="line">        self.<span class="built_in">next</span> = <span class="built_in">next</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DoublyLinkedList</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.hashmap = &#123;&#125;</span><br><span class="line">        self.head = ListNode()</span><br><span class="line">        self.tail = ListNode()</span><br><span class="line">        self.head.<span class="built_in">next</span> = self.tail</span><br><span class="line">        self.tail.prev = self.head</span><br><span class="line">        self.hashmap[-<span class="number">1</span>] = self.head</span><br><span class="line">        <span class="comment"># self.hashmap[-2] = self.tail</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">remove</span>(<span class="params">self, key: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">if</span> key <span class="keyword">in</span> self.hashmap:</span><br><span class="line">            ptr = self.hashmap[key]</span><br><span class="line">            ptr.prev.<span class="built_in">next</span> = ptr.<span class="built_in">next</span></span><br><span class="line">            ptr.<span class="built_in">next</span>.prev = ptr.prev</span><br><span class="line">            self.hashmap.pop(key)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> TypeError(<span class="string">&quot;the key is not in the list&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">insert_after</span>(<span class="params">self, insert_key: <span class="built_in">int</span>, key: <span class="built_in">int</span>, value: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        curr = ListNode(key, value)</span><br><span class="line">        <span class="keyword">if</span> insert_key <span class="keyword">in</span> self.hashmap:</span><br><span class="line">            node = self.hashmap[insert_key]</span><br><span class="line">            node.<span class="built_in">next</span>.prev = curr</span><br><span class="line">            curr.<span class="built_in">next</span> = node.<span class="built_in">next</span></span><br><span class="line">            node.<span class="built_in">next</span> = curr</span><br><span class="line">            curr.prev = node </span><br><span class="line">        <span class="comment"># if given key is already in hm, remove the original one</span></span><br><span class="line">        <span class="keyword">if</span> key <span class="keyword">in</span> self.hashmap:</span><br><span class="line">            self.remove(key)</span><br><span class="line">        <span class="comment"># update the hm</span></span><br><span class="line">        self.hashmap[key] = curr</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">print_ll</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        tmp_node = self.head.<span class="built_in">next</span></span><br><span class="line">        <span class="keyword">while</span> tmp_node != self.tail:</span><br><span class="line">            <span class="keyword">if</span> tmp_node.<span class="built_in">next</span> == self.tail:</span><br><span class="line">                <span class="built_in">print</span>((tmp_node.key, tmp_node.val), end=<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span>((tmp_node.key, tmp_node.val), end=<span class="string">&quot;-&gt;&quot;</span>)</span><br><span class="line">            tmp_node = tmp_node.<span class="built_in">next</span></span><br><span class="line"></span><br><span class="line">dll = DoublyLinkedList()</span><br><span class="line">lst = [(-<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>), (<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>), (<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>), (<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>), (<span class="number">4</span>,<span class="number">5</span>,<span class="number">5</span>), (<span class="number">3</span>,<span class="number">6</span>,<span class="number">6</span>), (<span class="number">3</span>,<span class="number">2</span>,<span class="number">8</span>), (<span class="number">5</span>,<span class="number">5</span>,<span class="number">0</span>), (-<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>), (<span class="number">5</span>,<span class="number">5</span>,<span class="number">2</span>), (<span class="number">5</span>,<span class="number">5</span>,<span class="number">3</span>), (<span class="number">5</span>,<span class="number">5</span>,<span class="number">4</span>), (<span class="number">1</span>,-<span class="number">8</span>,-<span class="number">4</span>)]</span><br><span class="line"><span class="keyword">for</span> insert_k, k, v <span class="keyword">in</span> lst:</span><br><span class="line">    dll.insert_after(insert_k, k, v)</span><br><span class="line">dll.print_ll()</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h3><p>其實LRUC實質上就是doubly linked list，只是附加了priority和capacity的特性，常見的operation主要包括：</p>
+<ul>
+<li><p>get(key): 返回索引值為”key”的value(若存在)，且執行此操作時同時意味該value為「最近被用到的值」，所以要將其重新插到最前面(i.e. head.next)的位置。</p>
+<p>  <img src="https://imgur.com/FIu73sV.png" alt="image alt"></p>
+</li>
+<li><p>put(key, value): 將索引為”key”、值為”value”的node插入list，同樣地，執行此操作時同時意味該value為「最近被用到的值」，所以一定是插在最前面(i.e. head.next)的位置。</p>
+<ul>
+<li>若key值本不存在：直接插入即可。</li>
+<li>若key值存在(Note: 我們不允許有duplicates)：將原本的node刪除再插入。</li>
+<li>更新hashmap。</li>
+<li>檢查最大容量：在上述情況中，若是key值本不存在，相當於我們新增了一個node(而非覆蓋某個原有的node)，此時若nodes數量超出最大限制(i.e. len(hashmap) &gt; capacity)，我們要將「最不常用到的值」刪除(i.e. tail.prev)。</li>
+</ul>
+<p>  <img src="https://imgur.com/1bhOAzF.png" alt="image alt"></p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Node</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, key=<span class="number">0</span>, val=<span class="number">0</span>, prev=<span class="literal">None</span>, nxt=<span class="literal">None</span></span>):</span><br><span class="line">        self.key = key</span><br><span class="line">        self.val = val</span><br><span class="line">        self.prev = prev</span><br><span class="line">        self.<span class="built_in">next</span> = nxt</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LRUCache</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, capacity: <span class="built_in">int</span></span>):</span><br><span class="line">        self.hashmap = &#123;&#125;</span><br><span class="line">        self.capacity = capacity</span><br><span class="line">        self.head = Node()</span><br><span class="line">        self.tail = Node()</span><br><span class="line">        self.head.<span class="built_in">next</span> = self.tail</span><br><span class="line">        self.tail.prev = self.head</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self, key: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">if</span> key <span class="keyword">not</span> <span class="keyword">in</span> self.hashmap:</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line">        node = self.hashmap[key]</span><br><span class="line">        <span class="keyword">if</span> node == self.head.<span class="built_in">next</span>:</span><br><span class="line">            <span class="keyword">return</span> node.val</span><br><span class="line"></span><br><span class="line">        <span class="comment"># remove</span></span><br><span class="line">        node.prev.<span class="built_in">next</span> = node.<span class="built_in">next</span></span><br><span class="line">        node.<span class="built_in">next</span>.prev = node.prev</span><br><span class="line"></span><br><span class="line">        <span class="comment"># insert after head</span></span><br><span class="line">        self.head.<span class="built_in">next</span>.prev = node</span><br><span class="line">        node.<span class="built_in">next</span> = self.head.<span class="built_in">next</span></span><br><span class="line">        self.head.<span class="built_in">next</span> = node</span><br><span class="line">        node.prev = self.head</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> node.val</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">put</span>(<span class="params">self, key: <span class="built_in">int</span>, value: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        new_node = Node(key, value)</span><br><span class="line">        <span class="keyword">if</span> key <span class="keyword">in</span> self.hashmap:</span><br><span class="line">            node = self.hashmap[key]</span><br><span class="line">            <span class="comment"># remove</span></span><br><span class="line">            node.prev.<span class="built_in">next</span> = node.<span class="built_in">next</span></span><br><span class="line">            node.<span class="built_in">next</span>.prev = node.prev</span><br><span class="line"></span><br><span class="line">        <span class="comment"># insert after head</span></span><br><span class="line">        self.head.<span class="built_in">next</span>.prev = new_node</span><br><span class="line">        new_node.<span class="built_in">next</span> = self.head.<span class="built_in">next</span></span><br><span class="line">        self.head.<span class="built_in">next</span> = new_node</span><br><span class="line">        new_node.prev = self.head</span><br><span class="line"></span><br><span class="line">        <span class="comment"># update hm</span></span><br><span class="line">        self.hashmap[key] = new_node</span><br><span class="line"></span><br><span class="line">        <span class="comment"># check capacity</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(self.hashmap) &gt; self.capacity:</span><br><span class="line">            <span class="comment"># remove before tail</span></span><br><span class="line">            k = self.tail.prev.key</span><br><span class="line">            self.tail.prev.prev.<span class="built_in">next</span> = self.tail</span><br><span class="line">            self.tail.prev = self.tail.prev.prev</span><br><span class="line">            self.hashmap.pop(k)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Your LRUCache object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"># obj = LRUCache(capacity)</span></span><br><span class="line"><span class="comment"># param_1 = obj.get(key)</span></span><br><span class="line"><span class="comment"># obj.put(key,value)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a target="_blank" rel="noopener" href="https://josephjsf2.github.io/data/structure/and/algorithm/2020/05/09/LRU.html">資料結構與演算法：LRU 快取機制</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linked-List/" rel="tag"># Linked List</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/02/26/Algorithm-DepthFirstSearch/" rel="prev" title="Algorithm - Depth First Search">
+      <i class="fa fa-chevron-left"></i> Algorithm - Depth First Search
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Data-Structure-Least-Recently-Used-Cache"><span class="nav-number">1.</span> <span class="nav-text">Data Structure - Least Recently Used Cache</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.0.1.</span> <span class="nav-text">基本介紹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%88%E5%82%99%E7%9F%A5%E8%AD%98"><span class="nav-number">1.0.2.</span> <span class="nav-text">先備知識</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%A6%E4%BD%9C"><span class="nav-number">1.0.3.</span> <span class="nav-text">實作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">1.0.4.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Francis"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Francis</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Francis</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
