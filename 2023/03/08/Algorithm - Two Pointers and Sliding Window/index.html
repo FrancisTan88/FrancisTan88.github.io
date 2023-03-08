@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://leetcode.com/media/original_images/121_profit_graph.png">
 <meta property="og:image" content="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg">
 <meta property="article:published_time" content="2023-03-08T14:18:59.000Z">
-<meta property="article:modified_time" content="2023-03-08T14:19:08.979Z">
+<meta property="article:modified_time" content="2023-03-08T14:24:30.206Z">
 <meta property="article:author" content="Francis">
 <meta property="article:tag" content="Two Pointers and Sliding Window">
 <meta name="twitter:card" content="summary">
@@ -179,7 +179,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-03-08 22:18:59 / Modified: 22:19:08" itemprop="dateCreated datePublished" datetime="2023-03-08T22:18:59+08:00">2023-03-08</time>
+              <time title="Created: 2023-03-08 22:18:59 / Modified: 22:24:30" itemprop="dateCreated datePublished" datetime="2023-03-08T22:18:59+08:00">2023-03-08</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -206,6 +206,8 @@
 
 
 <h3 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h3><p>Two Pointer 與 Sliding Window 都是蠻常聽到的一種解題常用的技巧，也可以說是演算法的解題 pattern，目的在於減少迴圈的使用，亦即降低時間複雜度。而 Two Pointer 又可以分為左右指標與快慢指標兩種，Sliding Window 則可以算是廣義的左右指標中的一種。</p>
+<br/>
+
 <h3 id="解題觀念"><a href="#解題觀念" class="headerlink" title="解題觀念"></a>解題觀念</h3><ol>
 <li>使用時機：<br>當題敘符合以下幾類特徵時，要想到有使用two pointers的可能。<ul>
 <li>資料結構<ul>
@@ -225,7 +227,9 @@
 <li>確認限制：<br>即「current interval 應該包含哪些東西」或是「不能包括哪些東西」。</li>
 <li>確認移動的標的及方向：<br>即「current interval」若符合限制時應該移動哪一根pointer、往哪移動，若不符合限制時又該移動哪一根pointer、往哪移動。</li>
 </ol>
-<h3 id="Some-Problems-from-Leetcode"><a href="#Some-Problems-from-Leetcode" class="headerlink" title="Some Problems from Leetcode"></a>Some Problems from Leetcode</h3><h4 id="Substring-Problems："><a href="#Substring-Problems：" class="headerlink" title="Substring Problems："></a>Substring Problems：</h4><h4 id="Problem1-Longest-Palindromic-Substring"><a href="#Problem1-Longest-Palindromic-Substring" class="headerlink" title="Problem1. Longest Palindromic Substring"></a>Problem1. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/longest-palindromic-substring/">Longest Palindromic Substring</a></h4><ul>
+<br/>
+
+<h3 id="Leetcode"><a href="#Leetcode" class="headerlink" title="Leetcode"></a>Leetcode</h3><h4 id="Substring-Problems："><a href="#Substring-Problems：" class="headerlink" title="Substring Problems："></a>Substring Problems：</h4><h4 id="Problem1-Longest-Palindromic-Substring"><a href="#Problem1-Longest-Palindromic-Substring" class="headerlink" title="Problem1. Longest Palindromic Substring"></a>Problem1. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/longest-palindromic-substring/">Longest Palindromic Substring</a></h4><ul>
 <li>確認限制：區間內應該要是回文</li>
 <li>擴展方式：由中心(note: 可以是奇數或偶數回文)往兩側擴散</li>
 </ul>
@@ -301,7 +305,7 @@
 </ol>
 <br/>
 
-<h4 id="Subsarray-Problems："><a href="#Subsarray-Problems：" class="headerlink" title="Subsarray Problems："></a>Subsarray Problems：</h4><h4 id="Problem1-Maximum-Subarray"><a href="#Problem1-Maximum-Subarray" class="headerlink" title="Problem1. Maximum Subarray"></a>Problem1. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/maximum-subarray/">Maximum Subarray</a></h4><p>此題使用two pointers(i.e. curr_sum, max_sum，分別代表當前區間的加總、目前為止所出現的最大加總)，比較沒有那麼明顯的sliding window區間。</p>
+<h4 id="Subarray-Problems："><a href="#Subarray-Problems：" class="headerlink" title="Subarray Problems："></a>Subarray Problems：</h4><h4 id="Problem1-Maximum-Subarray"><a href="#Problem1-Maximum-Subarray" class="headerlink" title="Problem1. Maximum Subarray"></a>Problem1. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/maximum-subarray/">Maximum Subarray</a></h4><p>此題使用two pointers(i.e. curr_sum, max_sum，分別代表當前區間的加總、目前為止所出現的最大加總)，比較沒有那麼明顯的sliding window區間。</p>
 <ul>
 <li>確認限制：當前區間內的加總不能為負，一旦為負就要將其歸零，代表從下一個開始重新計算加總。</li>
 <li>擴展方式：一路往右擴展。</li>
@@ -473,7 +477,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Algorithm-Two-Pointers-and-Sliding-Window"><span class="nav-number">1.</span> <span class="nav-text">Algorithm - Two Pointers and Sliding Window</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.0.1.</span> <span class="nav-text">基本介紹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A1%8C%E8%A7%80%E5%BF%B5"><span class="nav-number">1.0.2.</span> <span class="nav-text">解題觀念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Some-Problems-from-Leetcode"><span class="nav-number">1.0.3.</span> <span class="nav-text">Some Problems from Leetcode</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Substring-Problems%EF%BC%9A"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">Substring Problems：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem1-Longest-Palindromic-Substring"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">Problem1. Longest Palindromic Substring</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem2-Longest-Substring-Without-Repeating-Characters"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">Problem2. Longest Substring Without Repeating Characters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem3-Longest-Substring-with-At-Least-K-Repeating-Characters"><span class="nav-number">1.0.3.4.</span> <span class="nav-text">Problem3 Longest Substring with At Least K Repeating Characters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Subsarray-Problems%EF%BC%9A"><span class="nav-number">1.0.3.5.</span> <span class="nav-text">Subsarray Problems：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem1-Maximum-Subarray"><span class="nav-number">1.0.3.6.</span> <span class="nav-text">Problem1. Maximum Subarray</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem2-Best-Time-to-Buy-and-Sell-Stock"><span class="nav-number">1.0.3.7.</span> <span class="nav-text">Problem2. Best Time to Buy and Sell Stock</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem3-Container-With-Most-Water"><span class="nav-number">1.0.3.8.</span> <span class="nav-text">Problem3. Container With Most Water</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">1.0.4.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Algorithm-Two-Pointers-and-Sliding-Window"><span class="nav-number">1.</span> <span class="nav-text">Algorithm - Two Pointers and Sliding Window</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.0.1.</span> <span class="nav-text">基本介紹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A1%8C%E8%A7%80%E5%BF%B5"><span class="nav-number">1.0.2.</span> <span class="nav-text">解題觀念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode"><span class="nav-number">1.0.3.</span> <span class="nav-text">Leetcode</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Substring-Problems%EF%BC%9A"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">Substring Problems：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem1-Longest-Palindromic-Substring"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">Problem1. Longest Palindromic Substring</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem2-Longest-Substring-Without-Repeating-Characters"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">Problem2. Longest Substring Without Repeating Characters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem3-Longest-Substring-with-At-Least-K-Repeating-Characters"><span class="nav-number">1.0.3.4.</span> <span class="nav-text">Problem3 Longest Substring with At Least K Repeating Characters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Subarray-Problems%EF%BC%9A"><span class="nav-number">1.0.3.5.</span> <span class="nav-text">Subarray Problems：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem1-Maximum-Subarray"><span class="nav-number">1.0.3.6.</span> <span class="nav-text">Problem1. Maximum Subarray</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem2-Best-Time-to-Buy-and-Sell-Stock"><span class="nav-number">1.0.3.7.</span> <span class="nav-text">Problem2. Best Time to Buy and Sell Stock</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem3-Container-With-Most-Water"><span class="nav-number">1.0.3.8.</span> <span class="nav-text">Problem3. Container With Most Water</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">1.0.4.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
