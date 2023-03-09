@@ -29,8 +29,10 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://leetcode.com/media/original_images/121_profit_graph.png">
 <meta property="og:image" content="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg">
+<meta property="og:image" content="https://assets.leetcode.com/users/images/99b64bb7-85d3-454e-a800-0a76cd905ef5_1637980713.7155366.png">
+<meta property="og:image" content="https://assets.leetcode.com/users/images/494f2123-8fcc-455a-8a67-0968223ba270_1642736908.3527038.png">
 <meta property="article:published_time" content="2023-03-08T14:18:59.000Z">
-<meta property="article:modified_time" content="2023-03-08T14:53:55.179Z">
+<meta property="article:modified_time" content="2023-03-09T08:10:17.333Z">
 <meta property="article:author" content="Francis">
 <meta property="article:tag" content="Two Pointers and Sliding Window">
 <meta name="twitter:card" content="summary">
@@ -177,10 +179,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2023-03-08 22:18:59 / Modified: 22:53:55" itemprop="dateCreated datePublished" datetime="2023-03-08T22:18:59+08:00">2023-03-08</time>
+              <time title="Created: 2023-03-08 22:18:59" itemprop="dateCreated datePublished" datetime="2023-03-08T22:18:59+08:00">2023-03-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-03-09 16:10:17" itemprop="dateModified" datetime="2023-03-09T16:10:17+08:00">2023-03-09</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -365,7 +373,7 @@
 </li>
 <li>擴展方式：一路往右擴展，若出現比「當前最小值」更小的值，更新buy_price。</li>
 </ul>
-<p><img src="https://leetcode.com/media/original_images/121_profit_graph.png" alt="image alt"></p>
+<p>示意圖：<br><img src="https://leetcode.com/media/original_images/121_profit_graph.png" alt="image alt"></p>
 <p>Method1 : two pointers<br>time: $ O(n) $<br>space: $ O(1) $<br>觀念：</p>
 <ul>
 <li>profit最重要的就是買、賣價 → 所以想到用two pointers去紀錄</li>
@@ -387,7 +395,7 @@
 <li>確認限制：沒有特別限制。</li>
 <li>擴展方式：從兩邊往中間夾，每次移動「較矮的那根」，直到left, right碰到。</li>
 </ul>
-<p><img src="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg" alt="image alt"></p>
+<p>示意圖：<br><img src="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg" alt="image alt"></p>
 <p>Method1：Two pointers - sliding window(best solution)<br>time：$ O(n) $<br>space：$ O(1) $<br>concept：由於是算面積，要想到用”夾住”的概念(top down)，即一開始就直接考慮最寬的情況，然 後慢慢往內縮<br>main：</p>
 <ol>
 <li>每次都移動較矮的那根，試想，如果是移動較高的那根只會有兩種情況，(1): 新的那根高於較矮的那根，此情況則還是會以矮的那根為主 (2): 新的那根低於較矮的那根，此情況面積只會更小，所以以上兩種情況都沒有意義。</li>
@@ -395,6 +403,215 @@
 </ol>
 <p>terminal condition：當兩個pointer碰到</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">maxArea</span>(<span class="params">self, height: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        left = <span class="number">0</span></span><br><span class="line">        right = <span class="built_in">len</span>(height)-<span class="number">1</span></span><br><span class="line">        max_cont = (right - left) * <span class="built_in">min</span>(height[left], height[right])</span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            <span class="keyword">if</span> height[left] &lt;= height[right]:</span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                right -= <span class="number">1</span></span><br><span class="line">            new_cont = (right - left) * <span class="built_in">min</span>(height[left], height[right])</span><br><span class="line">            max_cont = <span class="built_in">max</span>(max_cont, new_cont)</span><br><span class="line">        <span class="keyword">return</span> max_cont</span><br></pre></td></tr></table></figure>
+<br/>
+
+<h4 id="Problems4-Product-of-Array-Except-Self"><a href="#Problems4-Product-of-Array-Except-Self" class="headerlink" title="Problems4. Product of Array Except Self"></a>Problems4. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/product-of-array-except-self/">Product of Array Except Self</a></h4><ul>
+<li>確認限制：two pointers - prefix, suffix<ul>
+<li>pointer left代表「從左到自己前一格」的prefix product。</li>
+<li>pointer right代表「從右到自己後一格」的suffix product。</li>
+</ul>
+</li>
+<li>擴展方式：一個由前往後、一個由後往前移動，當兩方「開始交匯」的時候，就是「答案開始生成」的時候。</li>
+</ul>
+<p>示意圖：<br><img src="https://assets.leetcode.com/users/images/99b64bb7-85d3-454e-a800-0a76cd905ef5_1637980713.7155366.png" alt="image alt"></p>
+<p>既然題目是計算「除了本身之外的乘積」，那就想辦法湊出「從前面乘過來」(prefix)以及「從後面乘過來」(suffix)。</p>
+<p>Method1：prefix &amp; suffix (two-pass)</p>
+<p>時間：O(2n) &#x3D; O(n)</p>
+<p>空間：O(1), note that the array used to store the answer is not counted as extra space in this problem.</p>
+<p>觀念：</p>
+<ol>
+<li>利用一個陣列prefix儲存prefix product的計算結果，陣列中每個位置pos為「pos之前」的乘積(不包含pos本身)，Note: nums[0]之前沒有東西，所以prefix[0]初始化為1。</li>
+<li>得到prefix陣列後，我們預期要將陳列中的每個值乘以suffix以得到答案，所以這次我們由後往前遍歷，並利用一個變數suffix(Note: nums[-1]之後沒有東西，所以suffix初始化為1)代表nums中每個位置其所對應的後綴乘積。</li>
+<li>如此由後往前將prefix[i] * suffix即可得到in place的答案。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    method: prefix &amp; suffix (two-pass)</span></span><br><span class="line"><span class="string">    time: O(2n) = O(n)</span></span><br><span class="line"><span class="string">    space: O(1), note that the array used to store the answer is not counted as extra space in this problem.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">productExceptSelf</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        prefix = [<span class="number">1</span>]</span><br><span class="line">        n = <span class="built_in">len</span>(nums)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">            prefix.append(prefix[i-<span class="number">1</span>] * nums[i-<span class="number">1</span>])</span><br><span class="line">        suffix = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n-<span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            prefix[i] *= suffix</span><br><span class="line">            suffix *= nums[i]</span><br><span class="line">        <span class="keyword">return</span> prefix</span><br></pre></td></tr></table></figure></li>
+</ol>
+<br/>
+
+<p>Method2：prefix &amp; suffix (one-pass, best solution)</p>
+<p>時間：O(n)</p>
+<p>空間：O(1), note that the array used to store the answer is not counted as extra space in this problem.</p>
+<p>觀念：</p>
+<ol>
+<li><p>Method1需要兩個for loops：(1)建立prefix (2)乘以suffix並得出答案，然而其實不用先將每個prefix都儲存下來，若我們將prefix、suffix視為兩個pointer，一個「由前往後遍歷」、一個「由後往前遍歷」，沿途持續更新這兩個變數並將nums每個位置所對應的prefix和suffix product儲存起來，試想，當兩個pointer「開始發生交錯」時，理論上即可算出所求。</p>
+<p> Ex: nums &#x3D; [2,3,4,5]</p>
+<table>
+<thead>
+<tr>
+<th>iteration</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>prefix</td>
+<td>1</td>
+<td>2</td>
+<td>6</td>
+<td>24</td>
+</tr>
+<tr>
+<td>suffix</td>
+<td>1</td>
+<td>5</td>
+<td>20</td>
+<td>60</td>
+</tr>
+</tbody></table>
+<p> For iteration: 0~4, ans:</p>
+<table>
+<thead>
+<tr>
+<th>iteration</th>
+<th>pos 0</th>
+<th>pos 1</th>
+<th>pos 2</th>
+<th>pos 3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0(初始化)</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>40</td>
+<td>30</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>60</td>
+<td>40</td>
+<td>30</td>
+<td>24</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    method: prefix &amp; suffix (one-pass, best solution)</span></span><br><span class="line"><span class="string">    time: O(n)</span></span><br><span class="line"><span class="string">    space: O(1), note that the array used to store the answer is not counted as extra space in this problem.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">productExceptSelf</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        ans = [<span class="number">1</span>] * <span class="built_in">len</span>(nums)</span><br><span class="line">        prefix, suffix = <span class="number">1</span>, <span class="number">1</span></span><br><span class="line">        forward, backward = <span class="number">0</span>, <span class="built_in">len</span>(nums)-<span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> forward &lt; <span class="built_in">len</span>(nums):</span><br><span class="line">            ans[forward] *= prefix</span><br><span class="line">            prefix *= nums[forward]</span><br><span class="line">            ans[backward] *= suffix</span><br><span class="line">            suffix *= nums[backward]</span><br><span class="line">            forward += <span class="number">1</span></span><br><span class="line">            backward -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+<br/>
+
+<h4 id="Problems5-Maximum-Product-Subarray"><a href="#Problems5-Maximum-Product-Subarray" class="headerlink" title="Problems5. Maximum Product Subarray"></a>Problems5. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/maximum-product-subarray/description/">Maximum Product Subarray</a></h4><ul>
+<li>確認限制：two pointers - maximum, minimum<ul>
+<li>maximum代表到目前為止的最大值。</li>
+<li>minimum代表到目前為止的最小值。</li>
+</ul>
+</li>
+<li>擴展方式：就是遍歷整個陣列。</li>
+</ul>
+<p>示意圖：<br><img src="https://assets.leetcode.com/users/images/494f2123-8fcc-455a-8a67-0968223ba270_1642736908.3527038.png" alt="image alt"></p>
+<p>Method1：Two pointers(maintain max and min)(best solution)</p>
+<p>時間：O(n)</p>
+<p>空間：O(1)</p>
+<p>觀念：</p>
+<ol>
+<li>利用兩個變數”curr_max”, ”curr_min”去maintain在陣列中到任一位置 i 的最大最小值，值得思考的是題目所求為「最大乘積」，那為何會需要maintain一個最小值？因為在陣列中我們有可能會遇到「負值」，此時若什麼都不做就乘下去會使得「大的變成小的、小的變成大的」，所以我們需要一個「最小值幫手」，讓我們在遇到負值時依然可以維護正確的極值。</li>
+<li>續(1)，當我們遇到負值時，就將”curr_max”, ”curr_min”互換，如此各自乘以該負值得到的乘積才會是正確的，另外，要知道對於陣列中的每個數，有時候不乘反而更貼近我們想要的結果(e.g. 考慮求nums &#x3D; [-8, 8]的max product → ans &#x3D; 8)，所以我們每次都要拿極值與”其本身”作比較(i.e. 我們有「乘」與「不乘」兩種選擇) → $Let ; i ;be ; [1, ;len(nums))$<ol>
+<li>$currMax &#x3D; max(nums[i],;nums[i]*currMax)$</li>
+<li>$currMin &#x3D; min(nums[i],;nums[i]* currMin)$</li>
+<li>$ans &#x3D; max(ans,; currMax)$</li>
+</ol>
+</li>
+<li>最後return ans即為所求。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    method: two pointers</span></span><br><span class="line"><span class="string">    time: O(n)</span></span><br><span class="line"><span class="string">    space: O(1) </span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">maxProduct</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        n = <span class="built_in">len</span>(nums)</span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">1</span>: <span class="keyword">return</span> nums[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">        curr_max, curr_min, ans = nums[<span class="number">0</span>], nums[<span class="number">0</span>], nums[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">            <span class="keyword">if</span> nums[i] &lt; <span class="number">0</span>:</span><br><span class="line">                curr_max, curr_min = curr_min, curr_max</span><br><span class="line">            curr_max = <span class="built_in">max</span>(nums[i], curr_max * nums[i])</span><br><span class="line">            curr_min = <span class="built_in">min</span>(nums[i], curr_min * nums[i])</span><br><span class="line">            ans = <span class="built_in">max</span>(ans, curr_max)</span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+<br/>
+
+<h4 id="Problems6-Gas-Station"><a href="#Problems6-Gas-Station" class="headerlink" title="Problems6. Gas Station"></a>Problems6. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/gas-station/">Gas Station</a></h4><ul>
+<li>確認限制：two pointers - total_surplus, curr_surplus<ul>
+<li>total_surplus代表遍歷完整個陣列的剩餘油量。</li>
+<li>curr_surplus代表到「當前里程區間的剩餘油量」，若在position i &lt; 0就要歸零，代表從i+1重新開始計算。</li>
+</ul>
+</li>
+<li>擴展方式：遍歷整個陣列，且當curr_surplus &lt; 0，更新start position。</li>
+</ul>
+<p>Method1：two pointers(best solution)</p>
+<p>時間：O(n)</p>
+<p>空間：O(1)</p>
+<p>觀念：</p>
+<ol>
+<li><p>將gas, cost兩個陣列想像成一個陣列( arr[i] &#x3D; gas[i] - cost[i] )，arr[i]表示從 i 開到 i + 1所剩下的油量，將arr的每個element加總，由於不論從哪個起始點開始，車子繞一圈相當於就是在將陣列中的「所有elements」做加總，只是順序不同罷了(起始點不同)，所以：</p>
+<ol>
+<li>若≥0: 表示一定存在有效的起始點  </li>
+<li>反之: 不存在有效起始點</li>
+</ol>
+</li>
+<li><p>此題最關鍵的概念：若從某起始點”s”只能開到另一點”e”(油不夠開到e+1)，則[s, e]這段區間都不會有有效的起始點，所以此時應該要跨過這個區間直接從”e+1”繼續。</p>
+<p> 反證法：假設[s, e]存在有效的起始點</p>
+<p> (1)let’s say start from “s+1”，For sum(s+1, s+2, …, e) &gt; 0 (?)，已知起始點(s)必為正，所以<br> sum(s, s+1, s+2, …, e) &lt; 0 implies sum(s+1, s+2, …, e) &lt; 0</p>
+<p> (2)let’s say start from “s+2”，For sum(s+2, s+3, …, e) &gt; 0 (?)，已知sum(s, s+1)必為正(否則車子開不到s+2)，因此sum(s, s+1, s+2, …, e) &lt; 0 implies sum(s+2, s+3, …, e) &lt; 0</p>
+<p> → 以此類推即可得證。</p>
+</li>
+<li><p>實際操作：</p>
+<ol>
+<li>用變數curr_surplus對”當前幾個”elements進行加總，在陣列中的任一位置，若curr_surplus&lt;0表示車只能開到該位置，此時根據觀念(2)，我們將curr_surplus歸零，並把起始點往前拉到該位置的下一個位置，繼續演算法。</li>
+<li>用變數total_surplus對陣列中的每個elements進行加總，迴圈結束後若total_surplus&lt;0表示不存在有效起始點，反之則一定存在有效起始點(此時return該起始點)。</li>
+<li>若看code會發現一個容易產生疑慮的地方：”start &#x3D; i + 1”這行，不禁讓人思考若i此時為last element則start不是就超出陣列長度了嗎？<br> Ans: 若i為last element且被+1，表示車子開到last position(i)勢必會沒油，而不管從哪個起始點開始繞一圈車子一定會經過last position，所以可得陣列一定不存在有效起始點(i.e. total_surplus勢必&lt;0，演算法會return -1)。</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    time: O(n)</span></span><br><span class="line"><span class="string">    space: O(1)</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">canCompleteCircuit</span>(<span class="params">self, gas: <span class="type">List</span>[<span class="built_in">int</span>], cost: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        total_surplus = <span class="number">0</span></span><br><span class="line">        curr_surplus = <span class="number">0</span></span><br><span class="line">        start = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(gas)):</span><br><span class="line">            total_surplus += gas[i] - cost[i]</span><br><span class="line">            curr_surplus += gas[i] - cost[i]</span><br><span class="line">            <span class="keyword">if</span> curr_surplus &lt; <span class="number">0</span>:</span><br><span class="line">                curr_surplus = <span class="number">0</span></span><br><span class="line">                start = i + <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span> <span class="keyword">if</span> total_surplus &lt; <span class="number">0</span> <span class="keyword">else</span> start</span><br></pre></td></tr></table></figure>
+
+<br/>
+
+<h4 id="Problems7-3Sum"><a href="#Problems7-3Sum" class="headerlink" title="Problems7. 3Sum"></a>Problems7. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/3sum/">3Sum</a></h4><ul>
+<li>確認限制：無特別限制。</li>
+<li>擴展方式：從兩側往中間夾，由於區間內為sorted，看是希望加總變大還是變小<ul>
+<li>要變大：pointer left往右移。</li>
+<li>要變小：pointer right往左移。</li>
+<li>等於目標：兩根同時往中間移。</li>
+</ul>
+</li>
+</ul>
+<p>Method1：Two pointers - sliding window(best solution)</p>
+<p>time：O(n^2)</p>
+<p>space：O(n)</p>
+<p>觀念：</p>
+<p>set</p>
+<ol>
+<li>由於題目要求三個數不能有duplicates，且不要求順序，所以使用set來存取答案 → set的unique property：<ol>
+<li>當set裡存的是一個個number → 只要值不同就可以被存入 </li>
+<li>當set裡存的是一個個tuple(set只能存hashable object) → 只要tuple裡的值順序不同就可以被存入，e.g. (1,2,3) &amp; (1,3,2)→可以、(1,2,3) &amp; (1,2,3)→不行</li>
+</ol>
+</li>
+<li>插入：set.add(<hashable object>)，e.g. tuple &#x3D; (1,2,3), set.add(tuple)</li>
+<li>刪除：set.remove(<hashable object>)，e.g. set.remove(tuple) </li>
+<li>註：”All of Python’s immutable built-in objects are hashable”，所以set可以存tuple(不可被修改)，但不能存lists, sets</li>
+</ol>
+<p>two pointers </p>
+<ol>
+<li>先排序number array，從左到右(len-2)iterate，將current pointer(i)視為base number，剩下的兩個數則是我們要找的target，也就是-1*base number </li>
+<li>利用left(i+1), right(last element)去夾住base number之後的elements：<ol>
+<li>while condition：由於題目要求三個數的index不能重複，所以條件會是while left &lt; right</li>
+<li>當(left + right) &lt; target : 表示要變大，所以left往右移動一格 </li>
+<li>當(left + right) &gt; target : 表示要變小，所以right左移動一格 </li>
+<li>當(left + right) &#x3D; target : 表示找到答案，將三個數按照順序放入set，此時因為我們每次都是將值按照順序插入set，所以set會自動幫我們過濾掉duplicates，而也因為題目不允許答案有duplicates，此時就將兩個pointers都往中間移。</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    time: O(n^3), pay attention to the &quot;if candidate not in ans:&quot;</span></span><br><span class="line"><span class="string">    space: O(n^2)</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">threeSum</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span><br><span class="line">        ans = <span class="built_in">set</span>()</span><br><span class="line">        nums = <span class="built_in">sorted</span>(nums)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)-<span class="number">2</span>):</span><br><span class="line">            <span class="keyword">if</span> nums[i] &gt; <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            target = -<span class="number">1</span> * nums[i]</span><br><span class="line">            left = i + <span class="number">1</span></span><br><span class="line">            right = <span class="built_in">len</span>(nums) - <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> left &lt; right:</span><br><span class="line">                <span class="keyword">if</span> nums[left] + nums[right] == target:</span><br><span class="line">                    ans.add((nums[i], nums[left], nums[right]))</span><br><span class="line">                    left += <span class="number">1</span></span><br><span class="line">                    right -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">elif</span> nums[left] + nums[right] &lt; target:</span><br><span class="line">                    left += <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    right -= <span class="number">1</span></span><br><span class="line">        ans = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">list</span>, ans))</span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+
+<h4 id="Linked-List-Problems："><a href="#Linked-List-Problems：" class="headerlink" title="Linked List Problems："></a>Linked List Problems：</h4><p>Coming soon…</p>
+<br>
 
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a target="_blank" rel="noopener" href="https://medium.com/%E6%8A%80%E8%A1%93%E7%AD%86%E8%A8%98/%E6%BC%94%E7%AE%97%E6%B3%95%E7%AD%86%E8%A8%98%E7%B3%BB%E5%88%97-two-pointer-%E8%88%87sliding-window-8742f45f3f55">演算法筆記系列 — Two Pointer 與Sliding Window</a><br><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/window-sliding-technique/">Window Sliding Technique</a></p>
 
@@ -477,7 +694,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Algorithm-Two-Pointers-and-Sliding-Window"><span class="nav-number">1.</span> <span class="nav-text">Algorithm - Two Pointers and Sliding Window</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.0.1.</span> <span class="nav-text">基本介紹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A1%8C%E8%A7%80%E5%BF%B5"><span class="nav-number">1.0.2.</span> <span class="nav-text">解題觀念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode"><span class="nav-number">1.0.3.</span> <span class="nav-text">Leetcode</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Substring-Problems%EF%BC%9A"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">Substring Problems：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem1-Longest-Palindromic-Substring"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">Problem1. Longest Palindromic Substring</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem2-Longest-Substring-Without-Repeating-Characters"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">Problem2. Longest Substring Without Repeating Characters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem3-Longest-Substring-with-At-Least-K-Repeating-Characters"><span class="nav-number">1.0.3.4.</span> <span class="nav-text">Problem3 Longest Substring with At Least K Repeating Characters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Subarray-Problems%EF%BC%9A"><span class="nav-number">1.0.3.5.</span> <span class="nav-text">Subarray Problems：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem1-Maximum-Subarray"><span class="nav-number">1.0.3.6.</span> <span class="nav-text">Problem1. Maximum Subarray</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem2-Best-Time-to-Buy-and-Sell-Stock"><span class="nav-number">1.0.3.7.</span> <span class="nav-text">Problem2. Best Time to Buy and Sell Stock</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem3-Container-With-Most-Water"><span class="nav-number">1.0.3.8.</span> <span class="nav-text">Problem3. Container With Most Water</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">1.0.4.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Algorithm-Two-Pointers-and-Sliding-Window"><span class="nav-number">1.</span> <span class="nav-text">Algorithm - Two Pointers and Sliding Window</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.0.1.</span> <span class="nav-text">基本介紹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A1%8C%E8%A7%80%E5%BF%B5"><span class="nav-number">1.0.2.</span> <span class="nav-text">解題觀念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode"><span class="nav-number">1.0.3.</span> <span class="nav-text">Leetcode</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Substring-Problems%EF%BC%9A"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">Substring Problems：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem1-Longest-Palindromic-Substring"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">Problem1. Longest Palindromic Substring</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem2-Longest-Substring-Without-Repeating-Characters"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">Problem2. Longest Substring Without Repeating Characters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem3-Longest-Substring-with-At-Least-K-Repeating-Characters"><span class="nav-number">1.0.3.4.</span> <span class="nav-text">Problem3 Longest Substring with At Least K Repeating Characters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Subarray-Problems%EF%BC%9A"><span class="nav-number">1.0.3.5.</span> <span class="nav-text">Subarray Problems：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem1-Maximum-Subarray"><span class="nav-number">1.0.3.6.</span> <span class="nav-text">Problem1. Maximum Subarray</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem2-Best-Time-to-Buy-and-Sell-Stock"><span class="nav-number">1.0.3.7.</span> <span class="nav-text">Problem2. Best Time to Buy and Sell Stock</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem3-Container-With-Most-Water"><span class="nav-number">1.0.3.8.</span> <span class="nav-text">Problem3. Container With Most Water</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problems4-Product-of-Array-Except-Self"><span class="nav-number">1.0.3.9.</span> <span class="nav-text">Problems4. Product of Array Except Self</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problems5-Maximum-Product-Subarray"><span class="nav-number">1.0.3.10.</span> <span class="nav-text">Problems5. Maximum Product Subarray</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problems6-Gas-Station"><span class="nav-number">1.0.3.11.</span> <span class="nav-text">Problems6. Gas Station</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problems7-3Sum"><span class="nav-number">1.0.3.12.</span> <span class="nav-text">Problems7. 3Sum</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linked-List-Problems%EF%BC%9A"><span class="nav-number">1.0.3.13.</span> <span class="nav-text">Linked List Problems：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">1.0.4.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
