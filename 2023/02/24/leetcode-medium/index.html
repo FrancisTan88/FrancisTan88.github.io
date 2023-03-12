@@ -28,7 +28,7 @@
 <meta property="og:description" content="Medium">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-02-24T10:35:28.000Z">
-<meta property="article:modified_time" content="2023-02-24T10:34:44.167Z">
+<meta property="article:modified_time" content="2023-03-12T10:34:10.319Z">
 <meta property="article:author" content="Francis">
 <meta property="article:tag" content="Medium">
 <meta name="twitter:card" content="summary">
@@ -174,10 +174,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2023-02-24 18:35:28 / Modified: 18:34:44" itemprop="dateCreated datePublished" datetime="2023-02-24T18:35:28+08:00">2023-02-24</time>
+              <time title="Created: 2023-02-24 18:35:28" itemprop="dateCreated datePublished" datetime="2023-02-24T18:35:28+08:00">2023-02-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-03-12 18:34:10" itemprop="dateModified" datetime="2023-03-12T18:34:10+08:00">2023-03-12</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -260,7 +266,7 @@
 <p> 由於我們想要以最短的substring為開始去填dp table，迴圈(start, end)的設置必須是由”短到長”，e.g. s &#x3D; “abba”，double for loops的起始點(start_pos, end_pos)依序為”ab”, “bb”, “ba”，而非”ab”, “ab”, “aa”，這是由於觀念(1)，我們現在考慮start_pos, end_pos分別在first “a”, last “a”，演算法會去table看”bb”是否為palindrome，而若我們不是由”短到長”去iterate的話，此時”bb”根本還沒被iterate到，因此無法找出所求，反之則可以求出正解</p>
 </li>
 </ol>
-<h1 id="11-Container-With-Most-Water"><a href="#11-Container-With-Most-Water" class="headerlink" title="11. Container With Most Water"></a>11. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/container-with-most-water/description/">Container With Most Water</a></h1><h2 id="Method1：Two-pointers"><a href="#Method1：Two-pointers" class="headerlink" title="Method1：Two pointers"></a>Method1：Two pointers</h2><p>time：O(n)</p>
+<h1 id="11-Container-With-Most-Water"><a href="#11-Container-With-Most-Water" class="headerlink" title="11. Container With Most Water"></a>11. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/container-with-most-water/description/">Container With Most Water</a></h1><h2 id="Method1：Two-pointers-sliding-window-best-solution"><a href="#Method1：Two-pointers-sliding-window-best-solution" class="headerlink" title="Method1：Two pointers - sliding window(best solution)"></a>Method1：Two pointers - sliding window(best solution)</h2><p>time：O(n)</p>
 <p>space：O(1)</p>
 <p>concept：由於是算面積，要想到用”夾住”的概念(top down)，即一開始就直接考慮最寬的情況，然 後慢慢往內縮</p>
 <p>main：</p>
@@ -270,9 +276,9 @@
 </ol>
 <p>terminal condition：</p>
 <p>當兩個pointer碰到</p>
-<h1 id="15-3Sum"><a href="#15-3Sum" class="headerlink" title="15. 3Sum"></a><strong><a target="_blank" rel="noopener" href="https://leetcode.com/problems/3sum/description/">15. 3Sum</a></strong></h1><p>ime：O(n^2)</p>
+<h1 id="15-3Sum"><a href="#15-3Sum" class="headerlink" title="15. 3Sum"></a><strong><a target="_blank" rel="noopener" href="https://leetcode.com/problems/3sum/description/">15. 3Sum</a></strong></h1><p>time：O(n^2)</p>
 <p>space：O(n)</p>
-<h2 id="Method1：Two-pointers-and-set"><a href="#Method1：Two-pointers-and-set" class="headerlink" title="Method1：Two pointers and set"></a>Method1：Two pointers and set</h2><p>觀念：</p>
+<h2 id="Method1：Two-pointers-and-set-best-solution"><a href="#Method1：Two-pointers-and-set-best-solution" class="headerlink" title="Method1：Two pointers and set(best solution)"></a>Method1：Two pointers and set(best solution)</h2><p>觀念：</p>
 <p>set</p>
 <ol>
 <li>由於題目要求三個數不能有duplicates，且不要求順序，所以使用set來存取答案 → set的unique property：<ol>
@@ -286,12 +292,12 @@
 </ol>
 <p>two pointers </p>
 <ol>
-<li>先排序number array，從左到右(len-2)iterate，將current pointer視為base number，剩下的兩個數則是我們要找的target，也就是-1*base number </li>
-<li>利用left(i+1), right(last element)去夾住base number以後的elements：<ol>
+<li>先排序number array，從左到右(len-2)iterate，將current pointer(i)視為base number，剩下的兩個數則是我們要找的target，也就是-1*base number </li>
+<li>利用left(i+1), right(last element)去夾住base number之後的elements：<ol>
 <li>while condition：由於題目要求三個數的index不能重複，所以條件會是while left &lt; right</li>
 <li>當(left + right) &lt; target : 表示要變大，所以left往右移動一格 </li>
 <li>當(left + right) &gt; target : 表示要變小，所以right左移動一格 </li>
-<li>當(left + right) &#x3D; target : 表示找到答案，將三個數按照順序放入set，此時因為我們每次都是將值按照順序插入set，所以set會自動幫我們過濾掉duplicates</li>
+<li>當(left + right) &#x3D; target : 表示找到答案，將三個數按照順序放入set，此時因為我們每次都是將值按照順序插入set，所以set會自動幫我們過濾掉duplicates，而也因為題目不允許答案有duplicates，此時就將兩個pointers都往中間移。</li>
 </ol>
 </li>
 </ol>
@@ -304,6 +310,12 @@
 <li>第二次traverse時也是一邊count nodes去走到由(1)所得的位置，走到該位置後利用”先備知識”所述的方法刪除node並return head即可</li>
 <li>special case：若(2)的情況沒有發生(no return)，則代表要刪除node為第一個node，而由於first node並無所謂的previous node，因此無法利用(2)的方法將其刪除，此時的post processing為直接return head.next即可</li>
 </ol>
+<h1 id="22-Generate-Parentheses"><a href="#22-Generate-Parentheses" class="headerlink" title="22. Generate Parentheses"></a><strong>22. Generate Parentheses</strong></h1><h3 id="Method1：backtracking"><a href="#Method1：backtracking" class="headerlink" title="Method1：backtracking"></a>Method1：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/generate-parentheses/solutions/2542620/python-java-w-explanation-faster-than-96-w-proof-easy-to-understand/">backtracking</a></h3><h3 id="Method2：DP"><a href="#Method2：DP" class="headerlink" title="Method2：DP"></a>Method2：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/generate-parentheses/solutions/10127/an-iterative-method/">DP</a></h3><p>f(0): “”</p>
+<p>f(1): “(“f(0)”)”</p>
+<p>f(2): “(“f(0)”)”f(1), “(“f(1)”)”</p>
+<p>f(3): “(“f(0)”)”f(2), “(“f(1)”)”f(1), “(“f(2)”)”</p>
+<p>So f(n) &#x3D; “(“f(0)”)”f(n-1) , “(“f(1)”)”f(n-2) “(“f(2)”)”f(n-3) … “(“f(i)”)”f(n-1-i) ,  “(f(n-1)”)”</p>
+<p>Note: i為1~n-2</p>
 <h1 id="33-Search-in-Rotated-Sorted-Array"><a href="#33-Search-in-Rotated-Sorted-Array" class="headerlink" title="33. Search in Rotated Sorted Array"></a>33. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/search-in-rotated-sorted-array">Search in Rotated Sorted Array</a></h1><h3 id="Method1：variation-of-binary-search"><a href="#Method1：variation-of-binary-search" class="headerlink" title="Method1：variation of binary search"></a>Method1：variation of binary search</h3><p>時間：O(logn)</p>
 <p>空間：O(1)</p>
 <p>觀念：</p>
@@ -359,11 +371,8 @@
 <p>觀念：</p>
 <p>利用矩陣的特性，透過transpose(swap列和欄) 和 swap rows, columns(上下或是左右顛倒)這兩個操作來完成rotation</p>
 <ol>
-<li><p>python中的swap()可以直接用assign的方式寫在同一行，e.g. swap(matrix[i][j], matrix[j][i]):</p>
-<p> matrix[i][j], matrix[ j ][i]&#x3D; matrix[j][i], matrix[i][ j ]</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/rotate-image/solutions/1449737/rotation-90-code-180-270-360-explanation-inplace-o-1-space/">旋轉180度, 270度</a>: </p>
-<ol>
+<li>若資料結構為一個方陣，python中的swap()可以直接用assign的方式寫在同一行，e.g. swap(matrix[i][j], matrix[j][i]): matrix[i][j], matrix[ j ][i]&#x3D; matrix[j][i], matrix[i][ j ]</li>
+<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/rotate-image/solutions/1449737/rotation-90-code-180-270-360-explanation-inplace-o-1-space/">旋轉180度, 270度</a>: <ol>
 <li>180度：上下左右顛倒，即swap rows then swap columns 或是 swap columns then swap rows</li>
 <li>270度：transpose(swap列和欄) then swap rows</li>
 </ol>
@@ -436,7 +445,7 @@
 <li>將剩下的elements往左rotate 90度(i.e. transpose and reverse by rows) </li>
 <li>重複以上兩個步驟直到matrix為empty</li>
 </ol>
-<h1 id="57-Insert-Interval"><a href="#57-Insert-Interval" class="headerlink" title="57. Insert Interval"></a><strong><a target="_blank" rel="noopener" href="https://leetcode.com/problems/insert-interval/description/">57. Insert Interval</a></strong></h1><h3 id="Method1：brute-force"><a href="#Method1：brute-force" class="headerlink" title="Method1：brute force"></a>Method1：brute force</h3><p>時間：O(n), given n is the number of intervals</p>
+<h1 id="57-Insert-Interval"><a href="#57-Insert-Interval" class="headerlink" title="57. Insert Interval"></a><strong><a target="_blank" rel="noopener" href="https://leetcode.com/problems/insert-interval/description/">57. Insert Interval</a></strong></h1><h3 id="Method1：brute-force"><a href="#Method1：brute-force" class="headerlink" title="Method1：brute force"></a>Method1：brute force</h3><p>時間：O(n^2), given n is the number of intervals and pop() costs O(n)</p>
 <p>空間：O(1)</p>
 <p>觀念：</p>
 <ol>
@@ -444,7 +453,7 @@
 </li>
 <li><p>為了不改變原本的陣列結構，所以將newInterval直接插在陣列最後面，由後往前檢查： </p>
 <ol>
-<li>是否發生overlap：若True，則將current interval更新為merged interval，再將前一個interval pop掉（Note: pop完一般會產生是否改變index正確性的疑慮，然而仔細思考一下就知道不會有問題，因為這邊的做法是merge完的interval要繼續跟它的前一個interval做檢查，所以正常將index -&#x3D; 1後current position還是會回到自己身上） </li>
+<li>是否發生overlap：若True，則將current interval更新為merged interval，再將前一個interval pop掉（Note: pop完一般會產生是否改變index正確性的疑慮，然而仔細思考一下就知道此題不會有這個問題，因為這邊的做法是merge完的interval要繼續跟它的前一個interval做檢查，所以正常將index -&#x3D; 1後current position還是會回到自己身上） </li>
 <li>start(i)的是否為ascending order：若(a)不成立，而current start point &lt; prev start point，則swap兩個interval</li>
 </ol>
 <p> Note: 需要優先判斷(a)，因為如果有overlap則不管順序怎樣都要merge
@@ -457,9 +466,23 @@
 <p>在陣列作pop操作後常常會遇到index跑掉的問題，做個整理：</p>
 <ol>
 <li>pop完的變動為 → ”poped position之後”的index全部-1</li>
-<li>以lst &#x3D; [0, 1, 2, 3]為例，after lst.pop(1)，lst &#x3D; [0, 2, 3]，所以2, 3分別會被更新為1, 2  </li>
+<li>以lst &#x3D; [0, 1, 2, 3]為例，after lst.pop(1)，lst &#x3D; [0, 2, 3]，2, 3的pos分別會被更新為1, 2  </li>
 <li>所以視情況而定，看pop之後希望curr position落在哪就可清楚地維持正確性</li>
 </ol>
+<h3 id="Method2-use-extra-space-to-store-the-answer-best-solution"><a href="#Method2-use-extra-space-to-store-the-answer-best-solution" class="headerlink" title="Method2: use extra space to store the answer(best solution)"></a>Method2: use extra space to store the answer(best solution)</h3><p>時間：O(n), given n is the number of intervals</p>
+<p>空間：O(n)</p>
+<p>觀念：</p>
+<ol>
+<li><p>將intervals和newInterval的關係分成三種cases :</p>
+<ol>
+<li>沒有overlap且interval在newInterval前面：直接把interval append到answered list。</li>
+<li>有overlap：將newInterval更新為merged interval，這邊的迴圈結束後表示所有有overlap的interval都被處理完了，所以append merged interval到answered list。</li>
+<li>沒有overlap且interval在newInterval後面：直接把interval append到answered list。</li>
+</ol>
+<p> → 利用一個idx”接力似地”並且按照a、b、c的順序去traverse intervals，即可得到一個non-overlapping and ascending-ordered intervals。</p>
+</li>
+</ol>
+<p>Note : 此題有說明不能使用extra space，所以事實上這是一個illegal solution，但若無此限制確實為一個best solution。</p>
 <h1 id="73-Set-Matrix-Zeroes"><a href="#73-Set-Matrix-Zeroes" class="headerlink" title="73. Set Matrix Zeroes"></a>73. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/set-matrix-zeroes/description/">Set Matrix Zeroes</a></h1><h3 id="Method1：first-row-and-column-as-signals-best-solution"><a href="#Method1：first-row-and-column-as-signals-best-solution" class="headerlink" title="Method1：first row and column as signals(best solution)"></a>Method1：first row and column as signals(best solution)</h3><p>時間：O(M*N), given M, N are the number of rows and columns, respectively</p>
 <p>空間：O(1)</p>
 <p>觀念：</p>
@@ -516,6 +539,21 @@
 <li><p>小細節：遞迴的過程中，會有一個index variable跟著preorder array往前跑(因為每生成一個新的subtree都意味著要找一個新的root)，但因為遞迴的特性return後會讓這個index variable一層一層回復到原本的值，而稍微思考一下就知道不能讓這種事情發生(index variable在preorder array中必須一直往前跑)，所以設計遞迴的return時也要一併將這個variable一起傳回去。</p>
 </li>
 </ol>
+<h1 id="116-Populating-Next-Right-Pointers-in-Each-Node"><a href="#116-Populating-Next-Right-Pointers-in-Each-Node" class="headerlink" title="116. Populating Next Right Pointers in Each Node"></a>116. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/populating-next-right-pointers-in-each-node/description/">Populating Next Right Pointers in Each Node</a></h1><h3 id="Method1：dfs-best-solution-1"><a href="#Method1：dfs-best-solution-1" class="headerlink" title="Method1：dfs(best solution)"></a>Method1：dfs(best solution)</h3><p>時間：O(n), given that we traverse all the nodes in the tree</p>
+<p>空間：O(1), given that the system stack is not counted as extra space according to the problem.</p>
+<p>觀念：</p>
+<p>看完題目後，對於「串連同一個subtree的children nodes」應該還蠻直覺可以想到的，就root.left.next &#x3D; root.right就好，比較可能有問題的地方為「串連兩個subtree的children nodes」，所以有了以下想法。</p>
+<ol>
+<li><p>在使用DFS traverse tree時最大的特點就是演算法會沿著leftmost的方向往下探到底，然而若要應用於此題最大的問題就是「DFS沒有橫向移動的能力」，也就是上述提到的問題。</p>
+</li>
+<li><p>然而此題的”next pointer”正好賦予了我們「橫向移動的能力」，仔細思考一下就會發現next pointer做的事就是「在兩個子樹的roots之間架一座橋樑」，所以每一個recursion要做的事就是：</p>
+<ol>
+<li>若root存在children，將children串連起來。</li>
+<li>基於(a)(i.e. 有children)，再檢查root是否有next pointer，若有(i.e. root不是last node by level order)就將root.right與root.next.left接起來。</li>
+</ol>
+<p> 其他就如正常的DFS一般，最後都接完後回傳root即可。</p>
+</li>
+</ol>
 <h1 id="128-Longest-Consecutive-Sequence"><a href="#128-Longest-Consecutive-Sequence" class="headerlink" title="128. Longest Consecutive Sequence"></a>128. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/longest-consecutive-sequence/description/">Longest Consecutive Sequence</a></h1><p>先備知識：</p>
 <ol>
 <li>subarray v.s sequence：subarray必須是contiguous，而sequence不用，e.g. For [1,2,3,4]: [1,2,3] is a subarray，[1,2,4] is a subsequence</li>
@@ -542,36 +580,137 @@
 <li>starting point：對於陣列中的任一number，若number - 1不存在於set，則代表其為某個sequence的”starting point”，此時開始去set找它的consecutive number直到找不到，以此去計算該sequence的長度</li>
 <li>not starting point：若(2)為False，表示curr_num不是”starting point”，而是存在於某個sequence之間的numbers之一，此時不需要計算長度所以不用做任何事</li>
 </ol>
+<h1 id="130-Surrounded-Regions"><a href="#130-Surrounded-Regions" class="headerlink" title="130. Surrounded Regions"></a><strong><a target="_blank" rel="noopener" href="https://leetcode.com/problems/surrounded-regions/">130. Surrounded Regions</a></strong></h1><h3 id="Method1：dfs-best-solution-2"><a href="#Method1：dfs-best-solution-2" class="headerlink" title="Method1：dfs(best solution)"></a>Method1：dfs(best solution)</h3><p>時間：</p>
+<p>O(m<em>n), given that m, n are the number of rows and columns, respectively.(Note:the func dfs() has to traverse all cells in the matrix in the worst case, which costs O(m</em>n), but in return, it only costs O(1)’s for other starting point. So, it costs O(m*n) in total)。</p>
+<p>空間：</p>
+<p>O(m<em>n), given that func dfs() has to traverse all cells in the matrix in the worst case, and  the recursive stack would store m</em>n elements in that case。</p>
+<p>觀念：</p>
+<ol>
+<li>根據題目，”flip”的條件為”<em>4-directionally surrounded by ‘X‘</em> ”，言下之意就是「位在四個邊」的’O’都不能flip，而且與之相鄰的一系列’O’也連帶的不能flip(因為若某個’O’是某個不能被翻的’O’的鄰居，則它一定不是”<em>4-directionally surrounded by ‘X‘ “</em>)。</li>
+<li>搞清楚(1)的條件之後解法就很明確了，檢查matrix的四條邊，若遇到’O’就以它為出發點，遍歷所有與之相鄰的一系列cells：<ol>
+<li><p>若cell為’O’：代表不能flip，將其用某個特殊符號label起來(e.g. “#”)。</p>
+<p> Note: 由於我們是以四條邊的’O’作為dfs的起始點，所以凡是我們遇到(沒有被return)的cell，他一定是某個「不能被翻」的鄰居，所以這邊直接label即可，不用另加條件判斷。</p>
+</li>
+<li><p>若cell為invalid position(超出matrix長度) 或 本身為’X’ 或 visited(簡單來說: cell ≠ ‘O’)：回溯到原本的位置，看其他方向有沒有路可走。</p>
+</li>
+</ol>
+</li>
+<li>完成(2)的操作後，我們會得到一個labeled matrix，可能包含三種char：<ol>
+<li>“O”：應該要被flip → 把它改成”X”</li>
+<li>“X”：不用管它</li>
+<li>“#”：原本是”O”但不用被flip → 還原成”O”</li>
+</ol>
+</li>
+</ol>
+<h1 id="131-Palindrome-Partitioning"><a href="#131-Palindrome-Partitioning" class="headerlink" title="131. Palindrome Partitioning"></a><strong><a target="_blank" rel="noopener" href="https://leetcode.com/problems/palindrome-partitioning/description/">131. Palindrome Partitioning</a></strong></h1><p>reference: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/palindrome-partitioning/solutions/182307/java-backtracking-template-general-approach/">https://leetcode.com/problems/palindrome-partitioning/solutions/182307/java-backtracking-template-general-approach/</a></p>
+<h3 id="Method1：DFS-DP-best-solution"><a href="#Method1：DFS-DP-best-solution" class="headerlink" title="Method1：DFS + DP(best solution)"></a>Method1：DFS + DP(best solution)</h3><p>時間：O(n^2 + 2^n)</p>
+<ul>
+<li>construct the dp table → O(n^2)</li>
+<li>the backtracking algorithm → for each substring in string, either it would be the “one of the partition in the current answer(i.e. add this substring to the “curr” and  call a new recursive function)”, or it would be the “prefix of other substring(i.e. backtracking happens, and the for loop iterate forward, and call the recursive function)”. In other word, each substring will call the function itself for two times in the worst case. So, the function dfs() costs O(2^n).</li>
+</ul>
+<p>空間：O(n^2), which is the cost of dp table.</p>
+<p>觀念：</p>
+<ol>
+<li><p>演算法的想法主要為：</p>
+<p> 判斷current substring是否為palindromic</p>
+<ol>
+<li>True: 將當前substring加入答案中，對remaining substring遞迴進行判斷(將start position移動到「end position的下一格」)。</li>
+<li>False: 擴展end position，繼續判斷直到for loop結束或是找到回文(回到part(a))。</li>
+</ol>
+</li>
+<li><p>延續以上想法，此題主要可以分成兩件事：(a)palindrome check (b)partition substring using backtracking</p>
+<ol>
+<li>試想，如果把palindrome check寫在backtracking內，那勢必會重複計算到substring很多次，很浪費時間複雜度，為了避免一直重複計算，此時就是DP進場的時候，所以我們預先建立一張二維表(boolean)將所有的palindrome substring紀錄起來(row: substring starting index, column: substring ending index. e.g. For “aba”: DP[0][2] &#x3D; True)</li>
+<li>利用template說明：<ol>
+<li>how to choose &amp; explore: 找到所有可能的palindrome substring組合，而若「當前substring並非palindromic」，或是「backtracking回來之後」，此時”end position”將往前擴展(利用for loop實現)。</li>
+<li>constraints: current substring必須為palindromic → 用事先建好的DP O(1)判斷。</li>
+<li>target: 當starting index超出string的長度，代表”current ans”目前已經成功儲存了答案之一 → 將其保存起來return回去。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 <h1 id="134-Gas-Station"><a href="#134-Gas-Station" class="headerlink" title="134. Gas Station"></a>134. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/gas-station/">Gas Station</a></h1><h3 id="Method1：two-pointers-best-solution"><a href="#Method1：two-pointers-best-solution" class="headerlink" title="Method1：two pointers(best solution)"></a>Method1：two pointers(best solution)</h3><p>時間：O(n)</p>
 <p>空間：O(1)</p>
 <p>觀念：</p>
 <ol>
-<li><p>將gas, cost兩個陣列想像成一個陣列( arr[i] &#x3D; gas[i] - cost[i] )，arr[i]表示從 i 開到 i + 1所剩下的油量，將arr的每個element加總，由於不論從哪個起始點開始，車子繞一圈相當於就是在將陣列中的所有elements做加總，只是順序不同罷了(起始點不同)，所以：</p>
+<li><p>將gas, cost兩個陣列想像成一個陣列( arr[i] &#x3D; gas[i] - cost[i] )，arr[i]表示從 i 開到 i + 1所剩下的油量，將arr的每個element加總，由於不論從哪個起始點開始，車子繞一圈相當於就是在將陣列中的「所有elements」做加總，只是順序不同罷了(起始點不同)，所以：</p>
 <ol>
 <li>若≥0: 表示一定存在有效的起始點  </li>
 <li>反之: 不存在有效起始點</li>
 </ol>
 </li>
-<li><p>此題最關鍵的概念：若從某起始點”s”只能開到另一點”e”，則[s, e]這段區間都不會有有效的起始點，所以此時應該要跨過這個區間直接從”e+1”繼續。</p>
+<li><p>此題最關鍵的概念：若從某起始點”s”只能開到另一點”e”(油不夠開到e+1)，則[s, e]這段區間都不會有有效的起始點，所以此時應該要跨過這個區間直接從”e+1”繼續。</p>
 <p> 反證法：假設[s, e]存在有效的起始點</p>
-<p> (1)let’s say “s+1”，For sum(s+1, s+2, …, e) &gt; 0，已知起始點(s)必為正，所以sum(s, s+1, s+2, …, e) &lt; 0 implies sum(s+1, s+3, …, e) &lt; 0</p>
-<p> (2)let’s say “s+2”，For sum(s+2, s+3, …, e) &gt; 0，已知sum(s, s+1)必為正(否則車子早在s+1就沒油了)，因此sum(s, s+1, s+2, …, e) &lt; 0 implies sum(s+2, s+3, …, e) &lt; 0</p>
+<p> (1)let’s say start from “s+1”，For sum(s+1, s+2, …, e) &gt; 0 (?)，已知起始點(s)必為正，所以<br> sum(s, s+1, s+2, …, e) &lt; 0 implies sum(s+1, s+2, …, e) &lt; 0</p>
+<p> (2)let’s say start from “s+2”，For sum(s+2, s+3, …, e) &gt; 0 (?)，已知sum(s, s+1)必為正(否則車子開不到s+2)，因此sum(s, s+1, s+2, …, e) &lt; 0 implies sum(s+2, s+3, …, e) &lt; 0</p>
 <p> → 以此類推即可得證。</p>
 </li>
 <li><p>實際操作：</p>
 <ol>
-<li>用變數curr_surplus對”當前幾個”elements進行加總，在陣列中的任一位置，若curr_surplus&lt;0表示車只能開到該位置，此時根據觀念(2)，我們將curr_surplus歸零，並把起始點往前拉到該位置的下一個位置，繼續演算法</li>
-<li>用變數total_surplus對陣列中的每個elements進行加總，迴圈結束後若total_surplus&lt;0表示不存在有效起始點，反之則存在(此時return該起始點)</li>
-<li>若看code會發現一個容易產生疑慮的地方：”start &#x3D; i + 1”這行，不禁讓人思考若i此時為last element則start不是就超出陣列長度了嗎？ ans: 若i為last element且被+1，表示車子開到last position勢必會沒油，而不管從哪個起始點開始繞一圈車子一定會經過last position，所以可得陣列一定不存在有效起始點(i.e. total_surplus勢必&lt;0，return -1)</li>
+<li>用變數curr_surplus對”當前幾個”elements進行加總，在陣列中的任一位置，若curr_surplus&lt;0表示車只能開到該位置，此時根據觀念(2)，我們將curr_surplus歸零，並把起始點往前拉到該位置的下一個位置，繼續演算法。</li>
+<li>用變數total_surplus對陣列中的每個elements進行加總，迴圈結束後若total_surplus&lt;0表示不存在有效起始點，反之則一定存在有效起始點(此時return該起始點)。</li>
+<li>若看code會發現一個容易產生疑慮的地方：”start &#x3D; i + 1”這行，不禁讓人思考若i此時為last element則start不是就超出陣列長度了嗎？<br> Ans: 若i為last element且被+1，表示車子開到last position(i)勢必會沒油，而不管從哪個起始點開始繞一圈車子一定會經過last position，所以可得陣列一定不存在有效起始點(i.e. total_surplus勢必&lt;0，演算法會return -1)。</li>
 </ol>
 </li>
 </ol>
-<h1 id="142-Linked-List-Cycle-II"><a href="#142-Linked-List-Cycle-II" class="headerlink" title="142. Linked List Cycle II"></a><strong><a target="_blank" rel="noopener" href="https://leetcode.com/problems/linked-list-cycle-ii/description/">142. Linked List Cycle II</a></strong></h1><h1 id="155-Min-Stack"><a href="#155-Min-Stack" class="headerlink" title="155. Min Stack"></a>155. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/min-stack/">Min Stack</a></h1><h3 id="Method1：Use-tuple-to-keep-track-of-the-minimum"><a href="#Method1：Use-tuple-to-keep-track-of-the-minimum" class="headerlink" title="Method1：Use tuple to keep track of the minimum"></a>Method1：Use tuple to keep track of the minimum</h3><p>時間：O(1) for each function called</p>
+<h1 id="142-Linked-List-Cycle-II"><a href="#142-Linked-List-Cycle-II" class="headerlink" title="142. Linked List Cycle II"></a><strong><a target="_blank" rel="noopener" href="https://leetcode.com/problems/linked-list-cycle-ii/description/">142. Linked List Cycle II</a></strong></h1><h1 id="146-LRU-Cache"><a href="#146-LRU-Cache" class="headerlink" title="146. LRU Cache"></a>146. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/lru-cache/description/">LRU Cache</a></h1><h3 id="Method1：hashmap-and-doubly-linked-list-best-solution"><a href="#Method1：hashmap-and-doubly-linked-list-best-solution" class="headerlink" title="Method1：hashmap and doubly linked list(best solution)"></a>Method1：hashmap and doubly linked list(best solution)</h3><p>時間：O(1) for each function in class</p>
+<p>空間：O(n), which is the number of “capacity”</p>
+<p>觀念：</p>
+<h1 id="152-Maximum-Product-Subarray"><a href="#152-Maximum-Product-Subarray" class="headerlink" title="152. Maximum Product Subarray"></a>152. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/maximum-product-subarray/description/">Maximum Product Subarray</a></h1><h3 id="Method1：Two-pointers-maintain-max-and-min-best-solution"><a href="#Method1：Two-pointers-maintain-max-and-min-best-solution" class="headerlink" title="Method1：Two pointers(maintain max and min)(best solution)"></a>Method1：Two pointers(maintain max and min)(best solution)</h3><p>時間：O(n)</p>
+<p>空間：O(1)</p>
+<p>觀念：</p>
+<ol>
+<li>利用兩個變數”curr_max”, ”curr_min”去maintain在陣列中到任一位置 i 的最大最小值，值得思考的是題目所求為「最大乘積」，那為何會需要maintain一個最小值？因為在陣列中我們有可能會遇到「負值」，此時若什麼都不做就乘下去會使得「大的變成小的、小的變成大的」，所以我們需要一個「最小值幫手」，讓我們在遇到負值時依然可以維護正確的極值。</li>
+<li>續(1)，當我們遇到負值時，就將”curr_max”, ”curr_min”互換，如此各自乘以該負值得到的乘積才會是正確的，另外，要知道對於陣列中的任一數，有時候「不乘而只取其本身」反而更貼近我們想要的結果(e.g. 考慮求nums &#x3D; [-8, 8]的max product → ans &#x3D; 8)，所以我們每次都要拿極值與”其本身”作比較(i.e. 我們有「乘」與「不乘」兩種選擇) → $Let ; i ;be ; [1, ;len(nums))$<ol>
+<li>$currMax &#x3D; max(nums[i],;nums[i]*currMax)$</li>
+<li>$currMin &#x3D; min(nums[i],;nums[i]* currMin)$</li>
+<li>$ans &#x3D; max(ans,; currMax)$</li>
+</ol>
+</li>
+<li>最後return ans即為所求。</li>
+</ol>
+<h1 id="155-Min-Stack"><a href="#155-Min-Stack" class="headerlink" title="155. Min Stack"></a>155. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/min-stack/">Min Stack</a></h1><h3 id="Method1：Use-tuple-to-keep-track-of-the-minimum"><a href="#Method1：Use-tuple-to-keep-track-of-the-minimum" class="headerlink" title="Method1：Use tuple to keep track of the minimum"></a>Method1：Use tuple to keep track of the minimum</h3><p>時間：O(1) for each function called</p>
 <p>空間：O(n), the cost of stack</p>
 <p>觀念：</p>
 <ol>
 <li>關鍵在於implement “push”時：利用tuple(<em>val, minimum</em>)來儲存要插入的值，以及目前為止的最小值，即在每次插入值之前，比較「欲插入的值」與「stack最上方的minimum」(如果stack不為空)，將較小的值塞到tuple內一併與<em>val</em> append到stack內，如此一來每個tuple就成功紀錄到目前為止的最小值，而整個stack的最小值就永遠等於self.stack[-1][1]。</li>
 </ol>
+<h1 id="189-Rotate-Array"><a href="#189-Rotate-Array" class="headerlink" title="189. Rotate Array"></a>189. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/rotate-array/description/">Rotate Array</a></h1><p>此題要做的事講白一點就是「把last element丟到最前面」，重複k次，而關鍵在於如何in place做到這件事。</p>
+<h3 id="Method1：shift-the-n-k-elements"><a href="#Method1：shift-the-n-k-elements" class="headerlink" title="Method1：shift the n-k elements"></a>Method1：shift the n-k elements</h3><p>時間：max(O(n-k), O(k)) &#x3D; O(n)</p>
+<p>空間：O(k) &#x3D; O(n)</p>
+<p>觀念：將last k elements用extra space存起來 → 將first n-k elements往後平移k格 → 將last k elements貼到最前面。</p>
+<h3 id="Method2：reverse-the-array-best-solution"><a href="#Method2：reverse-the-array-best-solution" class="headerlink" title="Method2：reverse the array(best solution)"></a>Method2：reverse the array(best solution)</h3><p>時間：O(2n) &#x3D; O(n)</p>
+<p>空間：O(1)</p>
+<p>觀念：</p>
+<p>swap和shift的差別在於：swap完的順序會呈顛倒狀態，而shift不會，但在實作上我們較難在不改變陣列長度(i.e. in place) 或是 利用額外空間紀錄一些值的情況下做到shift，然而swap倒是可以很容易利用two pointers完成。</p>
+<ol>
+<li>reverse整個陣列，其實就是SWAP last k elements和first n-k elements，為的就是讓「last k elements和first n-k elements的位置互換」，結束後因為順序呈顛倒狀態，要將他們再倒回來。</li>
+<li>reverse first k elements。</li>
+<li>reverse the rest n-k elements。</li>
+</ol>
+<p>code :</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    method: shift the n-k elements</span></span><br><span class="line"><span class="string">    time: max(O(n-k), O(k)) = O(n)</span></span><br><span class="line"><span class="string">    sapce: O(k) = O(n)</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">rotate</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], k: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Do not return anything, modify nums in-place instead.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        n = <span class="built_in">len</span>(nums)</span><br><span class="line">        k %= n</span><br><span class="line">        rotate = nums[n-k:]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n-<span class="number">1</span>,k-<span class="number">1</span>,-<span class="number">1</span>):</span><br><span class="line">            nums[i] = nums[i-k]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">            nums[i] = rotate[i]</span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    method: reverse the array</span></span><br><span class="line"><span class="string">    time: O(n)</span></span><br><span class="line"><span class="string">    sapce: O(1)</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">rotate</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], k: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Do not return anything, modify nums in-place instead.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">reverse</span>(<span class="params">nums, start, end</span>):</span><br><span class="line">            <span class="keyword">while</span> start &lt; end:</span><br><span class="line">                nums[start], nums[end]= nums[end], nums[start]</span><br><span class="line">                start += <span class="number">1</span></span><br><span class="line">                end -= <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> nums</span><br><span class="line">        n = <span class="built_in">len</span>(nums)</span><br><span class="line">        k %= n</span><br><span class="line">        nums = reverse(nums, <span class="number">0</span>, n-<span class="number">1</span>)</span><br><span class="line">        nums = reverse(nums, <span class="number">0</span>, k-<span class="number">1</span>)</span><br><span class="line">        nums = reverse(nums, k, n-<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="200-Number-of-Islands"><a href="#200-Number-of-Islands" class="headerlink" title="200. Number of Islands"></a>200. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/number-of-islands/description/">Number of Islands</a></h1><h3 id="Method1：dfs-best-solution-3"><a href="#Method1：dfs-best-solution-3" class="headerlink" title="Method1：dfs(best solution)"></a>Method1：dfs(best solution)</h3><p>時間：</p>
+<p>O(m<em>n), given that m, n are the number of rows and columns, respectively.(Note:the func dfs() has to traverse all cells in the matrix in the worst case, which costs O(m</em>n), but in return, it only costs O(1)’s for other starting point. So, it costs O(m*n) in total)。</p>
+<p>空間：</p>
+<p>O(m<em>n), given that func dfs() has to traverse all cells in the matrix in the worst case, and  the recursive stack would store m</em>n elements in that case。</p>
+<p>觀念：</p>
+<ol>
+<li><p>此題的”surrounded”和leetcode-130(surrounded region)很像，差別在於此題題敘「You may assume all four edges of the grid are all surrounded by water.」，意思是matrix的周圍都被我們看不到的”0”(water)包圍，這句話很關鍵，其意味著matrix所有的”1”(if exist)最終都一定會被”0”所包圍。</p>
+</li>
+<li><p>遍歷整個matrix：</p>
+<p> 若cell為”1” : dfs開始</p>
+<ol>
+<li>若cell為”1”：根據題目，”一座島”是由所有相鄰的”1”所組合起來，所以從起始點開始遇到的所有”1”我們都將它label起來(e.g. “#”)，表示已經訪問過，如此利用dfs即可將所有屬於「同一座島」的區塊標記起來，該次dfs結束後，代表我們「標完了一座島」，於是我們利用一個變數(e.g. count)加一。</li>
+<li>若cell為invalid position 或 ”0” 或 visit過(即 cell ≠ “1”)：回溯到原本位置，嘗試其他方向。</li>
+</ol>
+</li>
+<li><p>完成(2)的操作後，此時我們的count理論上已經成功將島的數量計算完，return即為所求。</p>
+</li>
+</ol>
+<h1 id="210-Course-Schedule-II"><a href="#210-Course-Schedule-II" class="headerlink" title="210. Course Schedule II"></a>210. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/course-schedule-ii/">Course Schedule II</a></h1><p>ref: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/course-schedule-ii/solutions/1642354/c-python-simple-solutions-w-explanation-topological-sort-using-bfs-dfs/">https://leetcode.com/problems/course-schedule-ii/solutions/1642354/c-python-simple-solutions-w-explanation-topological-sort-using-bfs-dfs/</a></p>
 <h1 id="230-Kth-Smallest-Element-in-a-BST"><a href="#230-Kth-Smallest-Element-in-a-BST" class="headerlink" title="230. Kth Smallest Element in a BST"></a>230. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/">Kth Smallest Element in a BST</a></h1><p>先備知識：binary search tree</p>
 <ol>
 <li>binary tree</li>
@@ -582,6 +721,110 @@
 <p>觀念：</p>
 <ol>
 <li>題目所求為第k小的值，而對一個binary search tree作inorder traversal可以得到一個ascending order array，return arr[k-1]即可滿足所求</li>
+</ol>
+<h1 id="238-Product-of-Array-Except-Self"><a href="#238-Product-of-Array-Except-Self" class="headerlink" title="238. Product of Array Except Self"></a>238. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/product-of-array-except-self/">Product of Array Except Self</a></h1><p>既然題目是計算「除了本身之外的乘積」，那就想辦法湊出「從前面乘過來」(prefix)以及「從後面乘過來」(suffix)。</p>
+<h3 id="Method1：prefix-amp-suffix-two-pass"><a href="#Method1：prefix-amp-suffix-two-pass" class="headerlink" title="Method1：prefix &amp; suffix (two-pass)"></a>Method1：prefix &amp; suffix (two-pass)</h3><p>時間：O(2n) &#x3D; O(n)</p>
+<p>空間：O(1), note that the array used to store the answer is not counted as extra space in this problem.</p>
+<p>觀念：</p>
+<ol>
+<li>利用一個陣列prefix儲存prefix product的計算結果，陣列中每個位置pos為「pos之前」的乘積(不包含pos本身)，Note: nums[0]之前沒有東西，所以prefix[0]初始化為1。</li>
+<li>得到prefix陣列後，我們預期要將陳列中的每個值乘以suffix以得到答案，所以這次我們由後往前遍歷，並利用一個變數suffix(Note: nums[-1]之後沒有東西，所以suffix初始化為1)代表nums中每個位置其所對應的後綴乘積。</li>
+<li>如此由後往前將prefix[i] * suffix即可得到in place的答案。</li>
+</ol>
+<h3 id="Method2：prefix-amp-suffix-one-pass-best-solution"><a href="#Method2：prefix-amp-suffix-one-pass-best-solution" class="headerlink" title="Method2：prefix &amp; suffix (one-pass, best solution)"></a>Method2：prefix &amp; suffix (one-pass, best solution)</h3><p>時間：O(n)</p>
+<p>空間：O(1), note that the array used to store the answer is not counted as extra space in this problem.</p>
+<p>觀念：</p>
+<ol>
+<li>Method1需要兩個for loops：(1)建立prefix (2)乘以suffix並得出答案，然而其實不用先將每個prefix都儲存下來，若我們將prefix、suffix視為兩個pointer，一個「由前往後遍歷」、一個「由後往前遍歷」，沿途持續更新這兩個變數並將nums每個位置所對應的prefix和suffix product儲存起來，試想，當兩個pointer「開始發生交錯」時，理論上即可算出所求。</li>
+</ol>
+<p>Ex: nums &#x3D; [2,3,4,5]</p>
+<table>
+<thead>
+<tr>
+<th>iteration</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>prefix</td>
+<td>1</td>
+<td>2</td>
+<td>6</td>
+<td>24</td>
+</tr>
+<tr>
+<td>suffix</td>
+<td>1</td>
+<td>5</td>
+<td>20</td>
+<td>60</td>
+</tr>
+</tbody></table>
+<p>For iteration: 0~4, ans:</p>
+<table>
+<thead>
+<tr>
+<th>iteration</th>
+<th>pos 0</th>
+<th>pos 1</th>
+<th>pos 2</th>
+<th>pos 3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0(初始化)</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>40</td>
+<td>30</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>60</td>
+<td>40</td>
+<td>30</td>
+<td>24</td>
+</tr>
+</tbody></table>
+<h1 id="334-Increasing-Triplet-Subsequence"><a href="#334-Increasing-Triplet-Subsequence" class="headerlink" title="334. Increasing Triplet Subsequence"></a>334. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/increasing-triplet-subsequence/">Increasing Triplet Subsequence</a></h1><h3 id="Method1：two-pointers-best-solution-1"><a href="#Method1：two-pointers-best-solution-1" class="headerlink" title="Method1：two pointers (best solution)"></a>Method1：two pointers (best solution)</h3><p>時間：O(n)</p>
+<p>空間：O(1)</p>
+<p>觀念：</p>
+<ol>
+<li>既然題目所求為三個數，那就Maintain兩個變數(say, “first” and “second”，為了讓變數順利吃到陣列中的數，都先初始化為一個「大於nums中所有elements」的數)分別代表「到目前為止最小和第二小的數」，而當出現比這兩個數都大的數時，代表increasing triplet形成 → return True，反之若遍歷完整個陣列都沒有找到就return False。</li>
+<li>此題關鍵之處在於：<ol>
+<li>當遇到 ≤ first的數時：更新first</li>
+<li>當遇到 &gt; first &amp;&amp; ≤ second的數時：更新second</li>
+</ol>
+</li>
+<li>探討(2)：<ol>
+<li>其實(b)還蠻直觀的，考慮nums &#x3D; [1, 3, 2, …]：當遍歷到2時，first &#x3D; 1, second &#x3D; 3，此時我們會將second更新為2，想法上為無論2以後遇到哪個數，只要它 &gt; 3 → 他也一定會 &gt; 2，那用[1,3]還不如用[1,2]繼續往後找，而比較不直觀的在於(a)。</li>
+<li>考慮nums &#x3D; [4, 5, 1, …]，通常遍歷到1時不禁會想，到底是要(1)保留[4, 5]然後期望在之後遇到6，還是(2)放棄[4, 5]然後由1重新開始，於是有了以下想法：看到1時就大膽地將4更新成1，變成[1, 5]，此時的5扮演分水嶺的角色，若之後遇到 &gt; 5的數，它可以告訴我們找到increasing triplet了(e.g. [4, 5, 6])，而若之後又遇到一個 &lt; 5 的數也是直接更新5(e.g. nums&#x3D;[4, 5, 1, 2]，當遍歷到2時，[1, 5] → [1, 2] )，因為用[4, 5]還不如用[1, 2]。</li>
+</ol>
+</li>
 </ol>
 <h1 id="378-Kth-Smallest-Element-in-a-Sorted-Matrix"><a href="#378-Kth-Smallest-Element-in-a-Sorted-Matrix" class="headerlink" title="378. Kth Smallest Element in a Sorted Matrix"></a>378. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/">Kth Smallest Element in a Sorted Matrix</a></h1><h3 id="min-heap-max-heap-："><a href="#min-heap-max-heap-：" class="headerlink" title="min heap(max heap)："></a>min heap(max heap)：</h3><ol>
 <li>為一個complete binary tree，又被稱為priority queue(優先佇列) </li>
@@ -605,6 +848,18 @@
 <ol>
 <li>將問題想成「在n個sorted lists內找出第k小的值」，通常在這種「有關取最小值或最大值的問題，且資料數量維持固定」時，要想到可以用heap，因為用heap給予我們取極值很大的便利性，i.e. 相較於在一個普通的list上使用min(), max()，heap可以做到O(1)取值、O(1)插入、O(logn)維護。</li>
 <li>每個heap node儲存(value, row, column)：一開始就先將每列的first element push進heap，而之所以要儲存每個value的位置，是因為我們必須知道每次在當前最小值被取出之後，它的下一個value的位置為何，並將與該值同列的下一個值push進heap內，以維持演算法的正確性，重複以上動作直到我們找到第k小的值(i.e. 第k次pop)即為所求。</li>
+</ol>
+<h1 id="395-Longest-Substring-with-At-Least-K-Repeating-Characters"><a href="#395-Longest-Substring-with-At-Least-K-Repeating-Characters" class="headerlink" title="395. Longest Substring with At Least K Repeating Characters"></a>395. <a target="_blank" rel="noopener" href="https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/description/">Longest Substring with At Least K Repeating Characters</a></h1><h3 id="Method1：sliding-window-best-solution"><a href="#Method1：sliding-window-best-solution" class="headerlink" title="Method1：sliding window(best solution)"></a>Method1：sliding window(best solution)</h3><p>時間：O(26*n) &#x3D; O(n), given that the number of alphabet is 26, and the n is the length of “s”</p>
+<p>空間：O(n), which is the cost of hashmap used to count frequency of charactersproblem.</p>
+<p>觀念：</p>
+<p>這題看完題敘可以蠻直觀地想到要用sliding window，但困難的點在於，考慮case<code>s = aabbb...</code> and <code>k = 3</code>，當我們traverse到”aabbb”這個區間時(i.e. left&#x3D;0, right&#x3D;4)問題來了，究竟我們是要(1)繼續擴展pointer right然後期望我們會遇到下一個”a”，還是(2)放棄”aa”，將pointer left往前拉到first b的位置？答案是無法確定，所以有了以下的解法：</p>
+<ol>
+<li>既然我們已知s一定只包含lowercase English letters，那大不了就是在一開始先看s總共包含幾種characters，假設今天s有8種char，我們就從「僅有一個unique char的所有sliding windows」，一直測試到「包含8個unique char的所有sliding windows」，這樣一定可以找到題目所求的longest substring。</li>
+<li>the outermost loop為「1 to ”the number of unique char in s”」，接著For每一個迭代，我們都初始化left &#x3D; 0、right &#x3D; 0 to len(s)，並利用一個hashmap(say, counter_curr)去統計current sliding window內每個char的數量：<ol>
+<li>當current sliding window內「unique char的數量」&gt; 該次iteration所限制的數量：<br> 此時我們要”shrink sliding window”(i.e. 將pointer left往前拉)直到window內unique char的數量符合限制，而具體作法不只是讓left +&#x3D; 1，還要去counter_curr將left所指的char次數減一，且當次數歸零時，我們要將其從counter_curr pop掉(這樣hashmap長度才會減少)。</li>
+<li>當current sliding window內「unique char的數量」≤ 該次iteration所限制的數量：<br> 代表此刻的sliding window是一個”valid”的window，我們就可以透過counter_curr去檢查這些char的數量是否都有≥K，如果有，我們就利用$max(maxLen,;r-l+1)$去保存最大長度，並且繼續擴展我們的window，直到某天window的unique char數量超出限制 或是 right超出s的長度。</li>
+</ol>
+</li>
 </ol>
 <h1 id="958-Check-Completeness-of-a-Binary-Tree"><a href="#958-Check-Completeness-of-a-Binary-Tree" class="headerlink" title="958. Check Completeness of a Binary Tree"></a><strong><a target="_blank" rel="noopener" href="https://leetcode.com/problems/check-completeness-of-a-binary-tree/description/">958. Check Completeness of a Binary Tree</a></strong></h1><h3 id="complete-binary-tree"><a href="#complete-binary-tree" class="headerlink" title="complete binary tree"></a>complete binary tree</h3><ol>
 <li>last level：由左連續排到右，不能斷掉 </li>
@@ -708,7 +963,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Medium"><span class="nav-number">1.</span> <span class="nav-text">Medium</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Add-Two-Numbers"><span class="nav-number">2.</span> <span class="nav-text">2. Add Two Numbers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9Ajust-add-them-best-solution"><span class="nav-number">2.1.</span> <span class="nav-text">Method1：just add them(best solution)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Longest-Substring-Without-Repeating-Characters"><span class="nav-number">3.</span> <span class="nav-text">3. Longest Substring Without Repeating Characters</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9Atwo-pointers-sliding-window-best-solution"><span class="nav-number">3.1.</span> <span class="nav-text">Method1：two pointers - sliding window(best solution)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Longest-Palindromic-Substring"><span class="nav-number">4.</span> <span class="nav-text">5. Longest Palindromic Substring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9AExpand-from-every-center"><span class="nav-number">4.1.</span> <span class="nav-text">Method1：Expand from every center</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Method2%EF%BC%9Adynamic-programming"><span class="nav-number">4.2.</span> <span class="nav-text">Method2：dynamic programming</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-Container-With-Most-Water"><span class="nav-number">5.</span> <span class="nav-text">11. Container With Most Water</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9ATwo-pointers"><span class="nav-number">5.1.</span> <span class="nav-text">Method1：Two pointers</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-3Sum"><span class="nav-number">6.</span> <span class="nav-text">15. 3Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9ATwo-pointers-and-set"><span class="nav-number">6.1.</span> <span class="nav-text">Method1：Two pointers and set</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#19-Remove-Nth-Node-From-End-of-List"><span class="nav-number">7.</span> <span class="nav-text">19. Remove Nth Node From End of List</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Acount"><span class="nav-number">7.0.1.</span> <span class="nav-text">Method1：count</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#33-Search-in-Rotated-Sorted-Array"><span class="nav-number">8.</span> <span class="nav-text">33. Search in Rotated Sorted Array</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Avariation-of-binary-search"><span class="nav-number">8.0.1.</span> <span class="nav-text">Method1：variation of binary search</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#39-Combination-Sum"><span class="nav-number">9.</span> <span class="nav-text">39. Combination Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-backtracking"><span class="nav-number">9.0.1.</span> <span class="nav-text">Method1：dfs(backtracking)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#48-Rotate-Image"><span class="nav-number">10.</span> <span class="nav-text">48. Rotate Image</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9ARotate-Groups-of-Four-Cells"><span class="nav-number">10.0.1.</span> <span class="nav-text">Method1：Rotate Groups of Four Cells</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9Atranspose-and-swap-the-matrix-best-solution"><span class="nav-number">10.0.2.</span> <span class="nav-text">Method2：transpose and swap the matrix(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#53-Maximum-Subarray"><span class="nav-number">11.</span> <span class="nav-text">53. Maximum Subarray</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9AKadane%E2%80%99s-Algorithm"><span class="nav-number">11.0.1.</span> <span class="nav-text">Method1：Kadane’s Algorithm</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#54-Spiral-Matrix"><span class="nav-number">12.</span> <span class="nav-text">54. Spiral Matrix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Ause-four-pointers-and-just-do-spiral-traverse-best-solution"><span class="nav-number">12.0.1.</span> <span class="nav-text">Method1：use four pointers and just do spiral traverse(best solution)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9Apop-and-rotate-worse-time-complexity-but-more-beautiful"><span class="nav-number">12.0.2.</span> <span class="nav-text">Method2：pop and rotate(worse time  complexity but more beautiful)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#57-Insert-Interval"><span class="nav-number">13.</span> <span class="nav-text">57. Insert Interval</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Abrute-force"><span class="nav-number">13.0.1.</span> <span class="nav-text">Method1：brute force</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#73-Set-Matrix-Zeroes"><span class="nav-number">14.</span> <span class="nav-text">73. Set Matrix Zeroes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Afirst-row-and-column-as-signals-best-solution"><span class="nav-number">14.0.1.</span> <span class="nav-text">Method1：first row and column as signals(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#78-Subsets"><span class="nav-number">15.</span> <span class="nav-text">78. Subsets</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9A-dfs-backtracking-best-solution"><span class="nav-number">15.0.1.</span> <span class="nav-text">Method1： dfs(backtracking)(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#79-Word-Search"><span class="nav-number">16.</span> <span class="nav-text">79. Word Search</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-best-solution"><span class="nav-number">16.0.1.</span> <span class="nav-text">Method1：dfs(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#105-Construct-Binary-Tree-from-Preorder-and-Inorder-Traversal"><span class="nav-number">17.</span> <span class="nav-text">105. Construct Binary Tree from Preorder and Inorder Traversal</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Arecursion-best-solution"><span class="nav-number">17.0.1.</span> <span class="nav-text">Method1：recursion(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#128-Longest-Consecutive-Sequence"><span class="nav-number">18.</span> <span class="nav-text">128. Longest Consecutive Sequence</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Asort-it"><span class="nav-number">18.0.1.</span> <span class="nav-text">Method1：sort it</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9Ahashset-best-solution"><span class="nav-number">18.0.2.</span> <span class="nav-text">Method2：hashset(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#134-Gas-Station"><span class="nav-number">19.</span> <span class="nav-text">134. Gas Station</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Atwo-pointers-best-solution"><span class="nav-number">19.0.1.</span> <span class="nav-text">Method1：two pointers(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#142-Linked-List-Cycle-II"><span class="nav-number">20.</span> <span class="nav-text">142. Linked List Cycle II</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#155-Min-Stack"><span class="nav-number">21.</span> <span class="nav-text">155. Min Stack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9AUse-tuple-to-keep-track-of-the-minimum"><span class="nav-number">21.0.1.</span> <span class="nav-text">Method1：Use tuple to keep track of the minimum</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#230-Kth-Smallest-Element-in-a-BST"><span class="nav-number">22.</span> <span class="nav-text">230. Kth Smallest Element in a BST</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9ARecursive-Inorder-Traversal"><span class="nav-number">22.0.1.</span> <span class="nav-text">Method1：Recursive Inorder Traversal</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#378-Kth-Smallest-Element-in-a-Sorted-Matrix"><span class="nav-number">23.</span> <span class="nav-text">378. Kth Smallest Element in a Sorted Matrix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#min-heap-max-heap-%EF%BC%9A"><span class="nav-number">23.0.1.</span> <span class="nav-text">min heap(max heap)：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#min-heap-in-python%EF%BC%9A"><span class="nav-number">23.0.2.</span> <span class="nav-text">min heap in python：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Amin-heap-best-solution"><span class="nav-number">23.0.3.</span> <span class="nav-text">Method1：min heap(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#958-Check-Completeness-of-a-Binary-Tree"><span class="nav-number">24.</span> <span class="nav-text">958. Check Completeness of a Binary Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#complete-binary-tree"><span class="nav-number">24.0.1.</span> <span class="nav-text">complete binary tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-label"><span class="nav-number">24.0.2.</span> <span class="nav-text">Method1：dfs(label)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9Abfs"><span class="nav-number">24.0.3.</span> <span class="nav-text">Method2：bfs</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Medium"><span class="nav-number">1.</span> <span class="nav-text">Medium</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Add-Two-Numbers"><span class="nav-number">2.</span> <span class="nav-text">2. Add Two Numbers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9Ajust-add-them-best-solution"><span class="nav-number">2.1.</span> <span class="nav-text">Method1：just add them(best solution)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Longest-Substring-Without-Repeating-Characters"><span class="nav-number">3.</span> <span class="nav-text">3. Longest Substring Without Repeating Characters</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9Atwo-pointers-sliding-window-best-solution"><span class="nav-number">3.1.</span> <span class="nav-text">Method1：two pointers - sliding window(best solution)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Longest-Palindromic-Substring"><span class="nav-number">4.</span> <span class="nav-text">5. Longest Palindromic Substring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9AExpand-from-every-center"><span class="nav-number">4.1.</span> <span class="nav-text">Method1：Expand from every center</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Method2%EF%BC%9Adynamic-programming"><span class="nav-number">4.2.</span> <span class="nav-text">Method2：dynamic programming</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-Container-With-Most-Water"><span class="nav-number">5.</span> <span class="nav-text">11. Container With Most Water</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9ATwo-pointers-sliding-window-best-solution"><span class="nav-number">5.1.</span> <span class="nav-text">Method1：Two pointers - sliding window(best solution)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-3Sum"><span class="nav-number">6.</span> <span class="nav-text">15. 3Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Method1%EF%BC%9ATwo-pointers-and-set-best-solution"><span class="nav-number">6.1.</span> <span class="nav-text">Method1：Two pointers and set(best solution)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#19-Remove-Nth-Node-From-End-of-List"><span class="nav-number">7.</span> <span class="nav-text">19. Remove Nth Node From End of List</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Acount"><span class="nav-number">7.0.1.</span> <span class="nav-text">Method1：count</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#22-Generate-Parentheses"><span class="nav-number">8.</span> <span class="nav-text">22. Generate Parentheses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Abacktracking"><span class="nav-number">8.0.1.</span> <span class="nav-text">Method1：backtracking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9ADP"><span class="nav-number">8.0.2.</span> <span class="nav-text">Method2：DP</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#33-Search-in-Rotated-Sorted-Array"><span class="nav-number">9.</span> <span class="nav-text">33. Search in Rotated Sorted Array</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Avariation-of-binary-search"><span class="nav-number">9.0.1.</span> <span class="nav-text">Method1：variation of binary search</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#39-Combination-Sum"><span class="nav-number">10.</span> <span class="nav-text">39. Combination Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-backtracking"><span class="nav-number">10.0.1.</span> <span class="nav-text">Method1：dfs(backtracking)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#48-Rotate-Image"><span class="nav-number">11.</span> <span class="nav-text">48. Rotate Image</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9ARotate-Groups-of-Four-Cells"><span class="nav-number">11.0.1.</span> <span class="nav-text">Method1：Rotate Groups of Four Cells</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9Atranspose-and-swap-the-matrix-best-solution"><span class="nav-number">11.0.2.</span> <span class="nav-text">Method2：transpose and swap the matrix(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#53-Maximum-Subarray"><span class="nav-number">12.</span> <span class="nav-text">53. Maximum Subarray</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9AKadane%E2%80%99s-Algorithm"><span class="nav-number">12.0.1.</span> <span class="nav-text">Method1：Kadane’s Algorithm</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#54-Spiral-Matrix"><span class="nav-number">13.</span> <span class="nav-text">54. Spiral Matrix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Ause-four-pointers-and-just-do-spiral-traverse-best-solution"><span class="nav-number">13.0.1.</span> <span class="nav-text">Method1：use four pointers and just do spiral traverse(best solution)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9Apop-and-rotate-worse-time-complexity-but-more-beautiful"><span class="nav-number">13.0.2.</span> <span class="nav-text">Method2：pop and rotate(worse time  complexity but more beautiful)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#57-Insert-Interval"><span class="nav-number">14.</span> <span class="nav-text">57. Insert Interval</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Abrute-force"><span class="nav-number">14.0.1.</span> <span class="nav-text">Method1：brute force</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2-use-extra-space-to-store-the-answer-best-solution"><span class="nav-number">14.0.2.</span> <span class="nav-text">Method2: use extra space to store the answer(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#73-Set-Matrix-Zeroes"><span class="nav-number">15.</span> <span class="nav-text">73. Set Matrix Zeroes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Afirst-row-and-column-as-signals-best-solution"><span class="nav-number">15.0.1.</span> <span class="nav-text">Method1：first row and column as signals(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#78-Subsets"><span class="nav-number">16.</span> <span class="nav-text">78. Subsets</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9A-dfs-backtracking-best-solution"><span class="nav-number">16.0.1.</span> <span class="nav-text">Method1： dfs(backtracking)(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#79-Word-Search"><span class="nav-number">17.</span> <span class="nav-text">79. Word Search</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-best-solution"><span class="nav-number">17.0.1.</span> <span class="nav-text">Method1：dfs(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#105-Construct-Binary-Tree-from-Preorder-and-Inorder-Traversal"><span class="nav-number">18.</span> <span class="nav-text">105. Construct Binary Tree from Preorder and Inorder Traversal</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Arecursion-best-solution"><span class="nav-number">18.0.1.</span> <span class="nav-text">Method1：recursion(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#116-Populating-Next-Right-Pointers-in-Each-Node"><span class="nav-number">19.</span> <span class="nav-text">116. Populating Next Right Pointers in Each Node</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-best-solution-1"><span class="nav-number">19.0.1.</span> <span class="nav-text">Method1：dfs(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#128-Longest-Consecutive-Sequence"><span class="nav-number">20.</span> <span class="nav-text">128. Longest Consecutive Sequence</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Asort-it"><span class="nav-number">20.0.1.</span> <span class="nav-text">Method1：sort it</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9Ahashset-best-solution"><span class="nav-number">20.0.2.</span> <span class="nav-text">Method2：hashset(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#130-Surrounded-Regions"><span class="nav-number">21.</span> <span class="nav-text">130. Surrounded Regions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-best-solution-2"><span class="nav-number">21.0.1.</span> <span class="nav-text">Method1：dfs(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#131-Palindrome-Partitioning"><span class="nav-number">22.</span> <span class="nav-text">131. Palindrome Partitioning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9ADFS-DP-best-solution"><span class="nav-number">22.0.1.</span> <span class="nav-text">Method1：DFS + DP(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#134-Gas-Station"><span class="nav-number">23.</span> <span class="nav-text">134. Gas Station</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Atwo-pointers-best-solution"><span class="nav-number">23.0.1.</span> <span class="nav-text">Method1：two pointers(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#142-Linked-List-Cycle-II"><span class="nav-number">24.</span> <span class="nav-text">142. Linked List Cycle II</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#146-LRU-Cache"><span class="nav-number">25.</span> <span class="nav-text">146. LRU Cache</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Ahashmap-and-doubly-linked-list-best-solution"><span class="nav-number">25.0.1.</span> <span class="nav-text">Method1：hashmap and doubly linked list(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#152-Maximum-Product-Subarray"><span class="nav-number">26.</span> <span class="nav-text">152. Maximum Product Subarray</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9ATwo-pointers-maintain-max-and-min-best-solution"><span class="nav-number">26.0.1.</span> <span class="nav-text">Method1：Two pointers(maintain max and min)(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#155-Min-Stack"><span class="nav-number">27.</span> <span class="nav-text">155. Min Stack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9AUse-tuple-to-keep-track-of-the-minimum"><span class="nav-number">27.0.1.</span> <span class="nav-text">Method1：Use tuple to keep track of the minimum</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#189-Rotate-Array"><span class="nav-number">28.</span> <span class="nav-text">189. Rotate Array</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Ashift-the-n-k-elements"><span class="nav-number">28.0.1.</span> <span class="nav-text">Method1：shift the n-k elements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9Areverse-the-array-best-solution"><span class="nav-number">28.0.2.</span> <span class="nav-text">Method2：reverse the array(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#200-Number-of-Islands"><span class="nav-number">29.</span> <span class="nav-text">200. Number of Islands</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-best-solution-3"><span class="nav-number">29.0.1.</span> <span class="nav-text">Method1：dfs(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#210-Course-Schedule-II"><span class="nav-number">30.</span> <span class="nav-text">210. Course Schedule II</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#230-Kth-Smallest-Element-in-a-BST"><span class="nav-number">31.</span> <span class="nav-text">230. Kth Smallest Element in a BST</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9ARecursive-Inorder-Traversal"><span class="nav-number">31.0.1.</span> <span class="nav-text">Method1：Recursive Inorder Traversal</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#238-Product-of-Array-Except-Self"><span class="nav-number">32.</span> <span class="nav-text">238. Product of Array Except Self</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Aprefix-amp-suffix-two-pass"><span class="nav-number">32.0.1.</span> <span class="nav-text">Method1：prefix &amp; suffix (two-pass)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9Aprefix-amp-suffix-one-pass-best-solution"><span class="nav-number">32.0.2.</span> <span class="nav-text">Method2：prefix &amp; suffix (one-pass, best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#334-Increasing-Triplet-Subsequence"><span class="nav-number">33.</span> <span class="nav-text">334. Increasing Triplet Subsequence</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Atwo-pointers-best-solution-1"><span class="nav-number">33.0.1.</span> <span class="nav-text">Method1：two pointers (best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#378-Kth-Smallest-Element-in-a-Sorted-Matrix"><span class="nav-number">34.</span> <span class="nav-text">378. Kth Smallest Element in a Sorted Matrix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#min-heap-max-heap-%EF%BC%9A"><span class="nav-number">34.0.1.</span> <span class="nav-text">min heap(max heap)：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#min-heap-in-python%EF%BC%9A"><span class="nav-number">34.0.2.</span> <span class="nav-text">min heap in python：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Amin-heap-best-solution"><span class="nav-number">34.0.3.</span> <span class="nav-text">Method1：min heap(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#395-Longest-Substring-with-At-Least-K-Repeating-Characters"><span class="nav-number">35.</span> <span class="nav-text">395. Longest Substring with At Least K Repeating Characters</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Asliding-window-best-solution"><span class="nav-number">35.0.1.</span> <span class="nav-text">Method1：sliding window(best solution)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#958-Check-Completeness-of-a-Binary-Tree"><span class="nav-number">36.</span> <span class="nav-text">958. Check Completeness of a Binary Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#complete-binary-tree"><span class="nav-number">36.0.1.</span> <span class="nav-text">complete binary tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method1%EF%BC%9Adfs-label"><span class="nav-number">36.0.2.</span> <span class="nav-text">Method1：dfs(label)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method2%EF%BC%9Abfs"><span class="nav-number">36.0.3.</span> <span class="nav-text">Method2：bfs</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
